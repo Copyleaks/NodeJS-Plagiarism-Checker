@@ -1,0 +1,19 @@
+{
+  "name": "copyleaks-sdk",
+  "version": "1.0.0",
+  "description": "Need to be changed",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Copyleaks",
+  "license": "MIT",
+  "dependencies": {
+    "request": "^2.72.0",
+    "request-promise": "^3.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Copyleaks"
+  }
+}
