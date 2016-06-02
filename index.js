@@ -5,8 +5,8 @@ var CopyleaksCloud = require('./src/Components/CopyleaksCloud.js');
 var clCloud = new CopyleaksCloud();
 
 // clCloud.test();
-var email = 'mrkisilenko@gmail.com';
-var apikey = '1C5C388F-69D7-48F2-9EFE-611779607041';
+var email = '<YOUR EMAIL>';
+var apikey = '<YOUR API KEY>';
 
 // console.log(config);
 

@@ -11,7 +11,6 @@ function CopyleaksCloud() { };
 
 //login API
 CopyleaksCloud.prototype.login = function(email,apikey,cback) {
-	console.log('LOGIN MATHAFAKA');
 	var reqObj = { Email: email, ApiKey : apikey};
 
 	var _url = 'https://api.copyleaks.com/v1/account/login-api';
