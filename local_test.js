@@ -1,14 +1,11 @@
 
 var CopyleaksCloud = require('./src/Components/CopyleaksCloud.js');
 
-
 var clCloud = new CopyleaksCloud();
 var config = clCloud.getConfig();
-// clCloud.test();
-var email = '<YOUR EMAIL>';
-var apikey = '<YOUR API KEY>';
 
-// console.log(config);
+var email = '<YOUR-EMAIL>';
+var apikey = '<YOUR-API-KEY>';
 
 /*TEST SERVER*/
 var http = require("http");
@@ -33,7 +30,19 @@ server.listen(8005,'127.0.0.1',function(){
 	    
 	    var _customHeaders = {};
 	    _customHeaders[config.SANDBOX_MODE_HEADER] = true;
+		//_customHeaders[config.HTTP_CALLBACK] = 'http://example.com/callback-path';
 
+		//create-by-url
+	    var url = 'https://www.copyleaks.com';
+	    clCloud.createByURL(url,_customHeaders,function(resp,err){
+
+	    	//check if we have credits
+	    	if(resp && resp.ProcessId){
+	    		console.log('API: create-by-url');
+	    		console.log('Process has been created: '+resp.ProcessId);
+	    	}
+	    });
+		
 	    //create-by-file example
 	    /*
 	    var _file = __dirname+'/tests/1.pdf';
@@ -61,17 +70,6 @@ server.listen(8005,'127.0.0.1',function(){
 	    });
 		*/
 
-	    //create-by-url
-	    var url = 'https://www.copyleaks.com';
-	    clCloud.createByURL(url,_customHeaders,function(resp,err){
-
-	    	//check if we have credits
-	    	if(resp && resp.ProcessId){
-	    		console.log('API: create-by-url');
-	    		console.log('Process has been created: '+resp.ProcessId);
-	    	}
-	    });
-
 	    //get processes list api
 	    clCloud.getProcessList(function(resp,err){
 	    	
@@ -84,23 +82,22 @@ server.listen(8005,'127.0.0.1',function(){
 
 
 	    //example for process getStatus,getResults & delete
-	    var _pid = 'deb15956-af92-42f2-9999-e3141e79147e';
-	    var _pid2 = 'b65f4fa6-c6ee-44d8-9134-6710c821c4ce';
+	    //var _pid = '<YOUR_PID_HERE>';
 
-	    //get process status
-	    clCloud.getProcessStatus(_pid,function(resp,err){
-	    	console.log(resp);
-	    });
+	    /* Get process status exmaple */
+	    //clCloud.getProcessStatus(_pid,function(resp,err){
+	    //	console.log(resp);
+	    //});
 
-	    //get process results
-	    clCloud.getProcessResults(_pid,function(resp,err){
-	    	console.log(resp);
-	    });
+	    /* Get process results example */
+	    //clCloud.getProcessResults(_pid,function(resp,err){
+	    //	console.log(resp);
+	    //});
 
-	    //delete process
-	    clCloud.deleteProcess(_pid2,function(resp,err){
-	    	console.log(resp);
-	    });
+	    /* Delete process example */
+	    //clCloud.deleteProcess(_pid,function(resp,err){
+	    //	console.log(resp);
+	    //});
 	}
 
 	clCloud.login(email,apikey,callback);

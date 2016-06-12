@@ -1,9 +1,3 @@
-// ructor
-// var Config : {
-//   // always initialize all instance properties
-//   'TEST' : 'something'
-// },
-
 var Config = {
 	 'HTTP_SUCCESS' : 500,
 	 'UNDEFINED_COPYLEAKS_HEADER_ERROR_CODE' : 9999,
