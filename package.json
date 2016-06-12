@@ -1,6 +1,6 @@
 {
   "name": "test-sdk",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "Need to be changed",
   "main": "./src/Components/CopyleaksCloud.js",
   "scripts": {
@@ -9,6 +9,7 @@
   "author": "Michael Kisilenko",
   "license": "MIT",
   "dependencies": {
+    "lodash": "^4.13.1",
     "request": "^2.72.0",
     "request-promise": "^3.0.0"
   },

@@ -148,5 +148,7 @@ CopyleaksCloud.prototype.deleteProcess = function(pid,cback){
 	_api.executeAPI(_requestOptions,cback);
 };
 
+CopyleaksCloud.prototype.getConfig = function(){ return config; };
+
 // export the class
 module.exports = CopyleaksCloud;

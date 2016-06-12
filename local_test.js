@@ -1,9 +1,9 @@
-var config = require('./src/Helpers/Config.js');
+
 var CopyleaksCloud = require('./src/Components/CopyleaksCloud.js');
 
 
 var clCloud = new CopyleaksCloud();
-
+var config = clCloud.getConfig();
 // clCloud.test();
 var email = '<YOUR EMAIL>';
 var apikey = '<YOUR API KEY>';
