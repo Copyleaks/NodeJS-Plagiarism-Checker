@@ -1,5 +1,6 @@
 
 var CopyleaksCloud = require('./src/Components/CopyleaksCloud.js');
+var _ = require('lodash');
 
 var clCloud = new CopyleaksCloud();
 var config = clCloud.getConfig();
@@ -77,6 +78,9 @@ server.listen(8005,'127.0.0.1',function(){
 	    	if(resp && resp.length > 0){
 	    		console.log('API: processes list');
 	    		console.log('There are '+resp.length+' processes running ');
+	    		_.forIn(resp,function(pval,pk){
+	    			console.log(pval);
+	    		});
 	    	}
 	    });
 
