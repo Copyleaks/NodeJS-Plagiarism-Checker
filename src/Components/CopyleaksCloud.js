@@ -13,7 +13,7 @@ function CopyleaksCloud() { };
 CopyleaksCloud.prototype.login = function(email,apikey,cback) {
 	var reqObj = { Email: email, ApiKey : apikey};
 
-	var _url = 'https://api.copyleaks.com/v1/account/login-api';
+	var _url = config.SERVICE_ENTRY_POINT+'/'+config.SERVICE_VERSION+'/account/login-api';
 
 	var _api = new API();
 	var _requestOptions = _api.optionsBuilder('POST',{},_url);
@@ -23,7 +23,7 @@ CopyleaksCloud.prototype.login = function(email,apikey,cback) {
 			var ltoken = JSON.parse(resp);
 
 	  		CopyleaksCloud.prototype.loginToken = new LoginToken(ltoken);
-
+	  		
 	  		if(cback) cback(resp ,err);
 	    	
 		})
@@ -38,11 +38,11 @@ CopyleaksCloud.prototype.login = function(email,apikey,cback) {
 
 //get-credit API
 CopyleaksCloud.prototype.getCreditBalance = function(cback){
-	var _url = 'https://api.copyleaks.com/v1/account/count-credits';
+	var _url = config.SERVICE_ENTRY_POINT+'/'+config.SERVICE_VERSION+'/account/count-credits';
 
-	var _api = new API();
-	var _headers = {'Authorization' : 'Bearer '+this.loginToken.getAuthHeader() };
-	var _requestOptions = _api.optionsBuilder('GET',_headers,_url);
+	var _api = new API(this.loginToken);
+	
+	var _requestOptions = _api.optionsBuilder('GET',{},_url);
 	_api.executeAPI(_requestOptions,cback);
 };
 
@@ -50,11 +50,11 @@ CopyleaksCloud.prototype.getCreditBalance = function(cback){
 
 //list api - get processes list
 CopyleaksCloud.prototype.getProcessList = function(cback){
-	var _url = 'https://api.copyleaks.com/v1/'+config.SERVICE_PAGE+'/list';
+	var _url = config.SERVICE_ENTRY_POINT+'/'+config.SERVICE_VERSION+'/'+config.SERVICE_PAGE+'/list';
 
-	var _api = new API();
-	var _headers = {'Authorization' : 'Bearer '+this.loginToken.getAuthHeader() };
-	var _requestOptions = _api.optionsBuilder('GET',_headers,_url);
+	var _api = new API(this.loginToken);
+
+	var _requestOptions = _api.optionsBuilder('GET',{},_url);
 	_api.executeAPI(_requestOptions,cback);
 };
 
@@ -64,14 +64,13 @@ CopyleaksCloud.prototype.createByFile = function(file,headers,cback){
 	_fstat.extension = path.extname(file).split('.').join('');
 	_fstat.original = file;
 
-	var _url = 'https://api.copyleaks.com/v1/'+config.SERVICE_PAGE+'/create-by-file';
+	var _url = config.SERVICE_ENTRY_POINT+'/'+config.SERVICE_VERSION+'/'+config.SERVICE_PAGE+'/create-by-file';
 
-	var _api = new API();
+	var _api = new API(this.loginToken);
 	_api.handleFile(_fstat,'FILE');
 	
 	//Manage custom headers,authorization header
-	var _headers = {'Authorization' : 'Bearer '+this.loginToken.getAuthHeader() };
-	_headers = _.merge(_headers,headers);
+	_headers = _.merge([],headers);
 
 	//handle file streaming
 	var _requestOptions = _api.optionsBuilderForFiles('POST',_headers,_url);
@@ -86,15 +85,14 @@ CopyleaksCloud.prototype.createByFileOCR = function(file,headers,language,cback)
 	_fstat.extension = path.extname(file).split('.').join('');
 	_fstat.original = file;
 
-	var _url = 'https://api.copyleaks.com/v1/'+config.SERVICE_PAGE+'/create-by-file-ocr?language='+language;
+	var _url = config.SERVICE_ENTRY_POINT+'/'+config.SERVICE_VERSION+'/'+config.SERVICE_PAGE+'/create-by-file-ocr?language='+language;
 
-	var _api = new API();
+	var _api = new API(this.loginToken);
 	_api.handleFile(_fstat,'OCR');
 	_api.checkOCRLanguage(language);
 
 	//Manage custom headers,authorization header
-	var _headers = {'Authorization' : 'Bearer '+this.loginToken.getAuthHeader() };
-	_headers = _.merge(_headers,headers);
+	_headers = _.merge([],headers);
 
 	//handle file streaming
 	var _requestOptions = _api.optionsBuilderForFiles('POST',_headers,_url);
@@ -105,49 +103,50 @@ CopyleaksCloud.prototype.createByFileOCR = function(file,headers,language,cback)
 
 //create-by-url API
 CopyleaksCloud.prototype.createByURL = function(url,headers,cback){
-	var _url = 'https://api.copyleaks.com/v1/'+config.SERVICE_PAGE+'/create-by-url';
+	var _url = config.SERVICE_ENTRY_POINT+'/'+config.SERVICE_VERSION+'/'+config.SERVICE_PAGE+'/create-by-url';
 	var _reqObj = { Url: url};
-	var _api = new API();
-	var _headers = {'Authorization' : 'Bearer '+this.loginToken.getAuthHeader() };
-	_headers = _.merge(_headers,headers);
-	var _requestOptions = _api.optionsBuilder('POST',_headers,_url);
+	var _api = new API(this.loginToken);
+	
+	_headers = _.merge([],headers);
+	var _requestOptions = _api.optionsBuilder('POST',{},_url);
 	_requestOptions.body = JSON.stringify(_reqObj);
 	_api.executeAPI(_requestOptions,cback);
 };
 
+//GET process status API
 CopyleaksCloud.prototype.getProcessStatus = function(pid,cback){
-	var _url = 'https://api.copyleaks.com/v1/'+config.SERVICE_PAGE+'/'+pid+'/status';
+	var _url = config.SERVICE_ENTRY_POINT+'/'+config.SERVICE_VERSION+'/'+config.SERVICE_PAGE+'/'+pid+'/status';
 	
-	var _api = new API();
-	var _headers = {'Authorization' : 'Bearer '+this.loginToken.getAuthHeader() };
+	var _api = new API(this.loginToken);
 	
-	var _requestOptions = _api.optionsBuilder('GET',_headers,_url);
+	var _requestOptions = _api.optionsBuilder('GET',{},_url);
 	
 	_api.executeAPI(_requestOptions,cback);
 };
 
+//GET process results API
 CopyleaksCloud.prototype.getProcessResults = function(pid,cback){
-	var _url = 'https://api.copyleaks.com/v1/'+config.SERVICE_PAGE+'/'+pid+'/result';
+	var _url = config.SERVICE_ENTRY_POINT+'/'+config.SERVICE_VERSION+'/'+config.SERVICE_PAGE+'/'+pid+'/result';
 	
-	var _api = new API();
-	var _headers = {'Authorization' : 'Bearer '+this.loginToken.getAuthHeader() };
+	var _api = new API(this.loginToken);
 	
-	var _requestOptions = _api.optionsBuilder('GET',_headers,_url);
+	var _requestOptions = _api.optionsBuilder('GET',{},_url);
 	
 	_api.executeAPI(_requestOptions,cback);
 };
 
+//DELTE process API
 CopyleaksCloud.prototype.deleteProcess = function(pid,cback){
-	var _url = 'https://api.copyleaks.com/v1/'+config.SERVICE_PAGE+'/'+pid+'/delete';
+	var _url = config.SERVICE_ENTRY_POINT+'/'+config.SERVICE_VERSION+'/'+config.SERVICE_PAGE+'/'+pid+'/delete';
 	
-	var _api = new API();
-	var _headers = {'Authorization' : 'Bearer '+this.loginToken.getAuthHeader() };
+	var _api = new API(this.loginToken);
 	
-	var _requestOptions = _api.optionsBuilder('DELETE',_headers,_url);
+	var _requestOptions = _api.optionsBuilder('DELETE',{},_url);
 	
 	_api.executeAPI(_requestOptions,cback);
 };
 
+//get constants config file
 CopyleaksCloud.prototype.getConfig = function(){ return config; };
 
 // export the class

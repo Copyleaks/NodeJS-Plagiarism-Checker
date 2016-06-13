@@ -1,3 +1,6 @@
+/*
+API class is the builder and helper for http requests towards api.copyleaks.com
+*/
 var _ = require('lodash');
 var fs = require('fs');
 var path = require('path');
@@ -5,12 +8,14 @@ var config = require(__dirname+'/../Helpers/config.js');
 var request = require('request-promise');
 
 // INIT CONSTRUCTOR
-function API() {
+function API(loginToken) {
 	this.file;
+	this.loginToken = loginToken ? loginToken : false;
 };
 
+//Validate file by extension & size
 API.prototype.handleFile = function(fileObj,type){
-	// console.log(fileObj);
+	
 	if(fileObj.size >= config.MAX_FILE_SIZE_BYTES)
 		throw 'FILE TOO BIG';
 
@@ -39,8 +44,11 @@ API.prototype.optionsBuilderForFiles = function(method,headers,url){
 	    'User-Agent': config.USER_AGENT,
 		'Accept' : config.CONTENT_TYPE_JSON
 	};
-
 	
+	if(this.loginToken.authHeader){
+		_defHeaders[config.AUTHORIZATION_HEADER] = this.loginToken.authHeader;
+	}
+
 	var temp = {'file' : fs.createReadStream(this.file.original), 
 	  filename: path.basename(this.file.original),
 	  contentType: config.FILES_EXTENSIONS[this.file.extension]
@@ -78,6 +86,10 @@ API.prototype.optionsBuilder = function(method,headers,url){
 		'Accept' : config.CONTENT_TYPE_JSON
 	};
 
+	if(this.loginToken.authHeader){
+		_defHeaders[config.AUTHORIZATION_HEADER] = this.loginToken.authHeader;
+	}
+	
 	if(headers && _.values(headers).length > 0){
 		_defHeaders = _.merge(_defHeaders,headers);
 	}
@@ -116,6 +128,7 @@ API.prototype.errorHandler = function(errorObj){
 		throw JSON.parse(errorObj.body).Message;
 };
 
+//Check if OCR language is valid
 API.prototype.checkOCRLanguage = function(language){
 	if(!config.OCR_LANGUGAES[language])
 		throw 'INCORRECT OCR LANGUAGE';

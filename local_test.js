@@ -25,6 +25,13 @@ server.listen(8005,'127.0.0.1',function(){
 	    });
 		*/
 
+		/*
+		Check if token still valid:
+
+		clCloud.loginToken.validateToken() //return true \ false
+		*/
+		
+
 	    var _customHeaders = {};
 	    _customHeaders[config.SANDBOX_MODE_HEADER] = true;
 		//_customHeaders[config.HTTP_CALLBACK] = 'http://example.com/callback-path';
