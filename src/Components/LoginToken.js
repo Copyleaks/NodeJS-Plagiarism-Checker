@@ -6,7 +6,6 @@ function LoginToken(token) {
 	this.issuedDatetime = token['.issued'];
 	this.expiresDatetime = token['.expires'];
 	this.originalObj = token;
-	// console.log('LoginToken',token);
 };
 
 LoginToken.prototype.getOriginalToken = function(){

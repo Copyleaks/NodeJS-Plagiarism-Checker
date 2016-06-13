@@ -13,9 +13,7 @@ var server = http.createServer();
 server.listen(8005,'127.0.0.1',function(){
 	
 	function callback(resp,err){
-		// console.log('getOriginalToken',clCloud.loginToken.getOriginalToken());
-	    // console.log('getAuthHeader',clCloud.loginToken.getAuthHeader())
-	    
+
 	    //CHECK CREDIT BALANCE FOR YOUR ACCOUNT
 	    /* 
 	    clCloud.getCreditBalance(function(resp,err){
@@ -26,14 +24,13 @@ server.listen(8005,'127.0.0.1',function(){
 	    });
 		*/
 
-	    
-	    
 	    var _customHeaders = {};
 	    _customHeaders[config.SANDBOX_MODE_HEADER] = true;
 		//_customHeaders[config.HTTP_CALLBACK] = 'http://example.com/callback-path';
-
+		// See more custom-options @ https://api.copyleaks.com/Documentation/RequestHeaders
+		
 		//create-by-url
-	    var url = 'https://www.copyleaks.com';
+	    var url = 'https://www.example.com'; // URL to scan
 	    clCloud.createByURL(url,_customHeaders,function(resp,err){
 
 	    	//check if we have credits
