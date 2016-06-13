@@ -50,7 +50,6 @@ API.prototype.optionsBuilderForFiles = function(method,headers,url){
 		_defHeaders = _.merge(_defHeaders,headers);
 	}
 
-	// console.log('optionsBuilderForFiles',this.file);
 	return {
 	  url: url,
 	  method : method,
