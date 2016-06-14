@@ -38,7 +38,7 @@ server.listen(8005,'127.0.0.1',function(){
 		// See more custom-options @ https://api.copyleaks.com/Documentation/RequestHeaders
 		
 		//create-by-url
-	    var url = 'https://www.example.com'; // URL to scan
+	    var url = 'https://www.copyleaks.com'; // URL to scan
 	    clCloud.createByURL(url,_customHeaders,function(resp,err){
 
 	    	//check if we have credits
@@ -81,9 +81,9 @@ server.listen(8005,'127.0.0.1',function(){
 	    	//check if we have credits
 	    	if(resp && resp.length > 0){
 	    		console.log('API: processes list');
-	    		console.log('There are '+resp.length+' processes running ');
+	    		console.log('There are '+resp.length+' processes running:');
 	    		_.forIn(resp,function(pval,pk){
-	    			console.log(pval);
+	    			console.log(pval.ProcessId);
 	    		});
 	    	}
 	    });
