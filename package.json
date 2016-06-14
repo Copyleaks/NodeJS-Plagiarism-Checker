@@ -1,5 +1,5 @@
 {
-  "name": "copyleaks-plagiarism-checker",
+  "name": "plagiarism-checker",
   "version": "1.0.1",
   "description": "Need to be changed",
   "main": "./src/Components/CopyleaksCloud.js",
