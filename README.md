@@ -18,11 +18,11 @@ Using Copyleaks SDK you can check for plagiarism in:
   <br>
   When integrating that way you will automatically be able to update the SDK to its latest version:
 <pre>
-npm i copyleaks-plagiarism-checker
+npm i plagiarism-checker
 </pre>
 Following that, in order to use the SDK, add this to your code:
 <pre>
-var CopyleaksCloud = require('copyleaks-plagiarism-checker');
+var CopyleaksCloud = require('plagiarism-checker');
 var clCloud = new CopyleaksCloud();
 var config = clCloud.getConfig();
 </pre>
