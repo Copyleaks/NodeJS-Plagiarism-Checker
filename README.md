@@ -69,8 +69,8 @@ var apikey = 'YOUR-API-KEY';
 	    });</pre>
 <h3>Read More</h3>
 <ul>
-<li><a href="https://api.copyleaks.com/Guides/HowToUse">Copyleaks API guide</a></li>
 <li><a href="https://api.copyleaks.com/Documentation">Copyleaks API documentation</a></li>
+<li><a href="https://api.copyleaks.com/Guides/HowToUse">Copyleaks API guide</a></li>
 </ul>
 
 
