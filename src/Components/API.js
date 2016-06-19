@@ -55,7 +55,7 @@ API.prototype.optionsBuilderForFiles = function(method,headers,url){
 	};
 
 	if(headers && _.values(headers).length > 0){
-		_defHeaders = _.merge(_defHeaders,headers);
+		_.forIn(headers,function(val,key){ _defHeaders[key] = val; });
 	}
 
 	return {
@@ -91,7 +91,7 @@ API.prototype.optionsBuilder = function(method,headers,url){
 	}
 	
 	if(headers && _.values(headers).length > 0){
-		_defHeaders = _.merge(_defHeaders,headers);
+		_.forIn(headers,function(val,key){ _defHeaders[key] = val; });
 	}
 
 	return {

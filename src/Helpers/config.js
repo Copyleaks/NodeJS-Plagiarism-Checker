@@ -22,6 +22,7 @@ var Config = {
      'USER_AGENT' : 'CopyleaksNodejsSDK/1.0',
      'DATE_FORMAT' : 'dd/MM/yyyy HH:mm:ss',
      'SERVICE_PAGE' : 'publisher',
+     'E_PRODUCT' : {'PUBLISHER':'publisher','ACADEMY':'academy'},
      'COPYLEAKS_INTERNAL_ERROR' : 'Sorry we have some internal issues, please try again shortly.',
 
      'MULTIPART_BOUNDARY' : '--------------------------',

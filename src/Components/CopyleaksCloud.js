@@ -10,7 +10,7 @@ var API = require(__dirname+'/API.js');
 function CopyleaksCloud() { };
 
 //login API
-CopyleaksCloud.prototype.login = function(email,apikey,cback) {
+CopyleaksCloud.prototype.login = function(email,apikey,type,cback) {
 	var reqObj = { Email: email, ApiKey : apikey};
 
 	var _url = config.SERVICE_ENTRY_POINT+'/'+config.SERVICE_VERSION+'/account/login-api';
@@ -23,7 +23,8 @@ CopyleaksCloud.prototype.login = function(email,apikey,cback) {
 			var ltoken = JSON.parse(resp);
 
 	  		CopyleaksCloud.prototype.loginToken = new LoginToken(ltoken);
-	  		
+	  		CopyleaksCloud.prototype.typeOfService = type;
+
 	  		if(cback) cback(resp ,err);
 	    	
 		})
@@ -50,7 +51,7 @@ CopyleaksCloud.prototype.getCreditBalance = function(cback){
 
 //list api - get processes list
 CopyleaksCloud.prototype.getProcessList = function(cback){
-	var _url = config.SERVICE_ENTRY_POINT+'/'+config.SERVICE_VERSION+'/'+config.SERVICE_PAGE+'/list';
+	var _url = config.SERVICE_ENTRY_POINT+'/'+config.SERVICE_VERSION+'/'+this.typeOfService+'/list';
 
 	var _api = new API(this.loginToken);
 
@@ -64,7 +65,7 @@ CopyleaksCloud.prototype.createByFile = function(file,headers,cback){
 	_fstat.extension = path.extname(file).split('.').join('');
 	_fstat.original = file;
 
-	var _url = config.SERVICE_ENTRY_POINT+'/'+config.SERVICE_VERSION+'/'+config.SERVICE_PAGE+'/create-by-file';
+	var _url = config.SERVICE_ENTRY_POINT+'/'+config.SERVICE_VERSION+'/'+this.typeOfService+'/create-by-file';
 
 	var _api = new API(this.loginToken);
 	_api.handleFile(_fstat,'FILE');
@@ -85,7 +86,7 @@ CopyleaksCloud.prototype.createByFileOCR = function(file,headers,language,cback)
 	_fstat.extension = path.extname(file).split('.').join('');
 	_fstat.original = file;
 
-	var _url = config.SERVICE_ENTRY_POINT+'/'+config.SERVICE_VERSION+'/'+config.SERVICE_PAGE+'/create-by-file-ocr?language='+language;
+	var _url = config.SERVICE_ENTRY_POINT+'/'+config.SERVICE_VERSION+'/'+this.typeOfService+'/create-by-file-ocr?language='+language;
 
 	var _api = new API(this.loginToken);
 	_api.handleFile(_fstat,'OCR');
@@ -103,19 +104,30 @@ CopyleaksCloud.prototype.createByFileOCR = function(file,headers,language,cback)
 
 //create-by-url API
 CopyleaksCloud.prototype.createByURL = function(url,headers,cback){
-	var _url = config.SERVICE_ENTRY_POINT+'/'+config.SERVICE_VERSION+'/'+config.SERVICE_PAGE+'/create-by-url';
+	var _url = config.SERVICE_ENTRY_POINT+'/'+config.SERVICE_VERSION+'/'+this.typeOfService+'/create-by-url';
 	var _reqObj = { Url: url};
 	var _api = new API(this.loginToken);
 	
 	_headers = _.merge([],headers);
-	var _requestOptions = _api.optionsBuilder('POST',{},_url);
+	var _requestOptions = _api.optionsBuilder('POST',_headers,_url);
 	_requestOptions.body = JSON.stringify(_reqObj);
+	_api.executeAPI(_requestOptions,cback);
+};
+
+//create-by-text API
+CopyleaksCloud.prototype.createByText = function(text,headers,cback){
+	var _url = config.SERVICE_ENTRY_POINT+'/'+config.SERVICE_VERSION+'/'+this.typeOfService+'/create-by-text';
+	var _api = new API(this.loginToken);
+	
+	_headers = _.merge([],headers);
+	var _requestOptions = _api.optionsBuilder('POST',_headers,_url);
+	_requestOptions.body = text;
 	_api.executeAPI(_requestOptions,cback);
 };
 
 //GET process status API
 CopyleaksCloud.prototype.getProcessStatus = function(pid,cback){
-	var _url = config.SERVICE_ENTRY_POINT+'/'+config.SERVICE_VERSION+'/'+config.SERVICE_PAGE+'/'+pid+'/status';
+	var _url = config.SERVICE_ENTRY_POINT+'/'+config.SERVICE_VERSION+'/'+this.typeOfService+'/'+pid+'/status';
 	
 	var _api = new API(this.loginToken);
 	
@@ -126,7 +138,7 @@ CopyleaksCloud.prototype.getProcessStatus = function(pid,cback){
 
 //GET process results API
 CopyleaksCloud.prototype.getProcessResults = function(pid,cback){
-	var _url = config.SERVICE_ENTRY_POINT+'/'+config.SERVICE_VERSION+'/'+config.SERVICE_PAGE+'/'+pid+'/result';
+	var _url = config.SERVICE_ENTRY_POINT+'/'+config.SERVICE_VERSION+'/'+this.typeOfService+'/'+pid+'/result';
 	
 	var _api = new API(this.loginToken);
 	
@@ -137,7 +149,7 @@ CopyleaksCloud.prototype.getProcessResults = function(pid,cback){
 
 //DELTE process API
 CopyleaksCloud.prototype.deleteProcess = function(pid,cback){
-	var _url = config.SERVICE_ENTRY_POINT+'/'+config.SERVICE_VERSION+'/'+config.SERVICE_PAGE+'/'+pid+'/delete';
+	var _url = config.SERVICE_ENTRY_POINT+'/'+config.SERVICE_VERSION+'/'+this.typeOfService+'/'+pid+'/delete';
 	
 	var _api = new API(this.loginToken);
 	

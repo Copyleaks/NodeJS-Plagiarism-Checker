@@ -12,6 +12,19 @@ var apikey = '<YOUR-API-KEY>';
 var http = require("http");
 var server = http.createServer();
 server.listen(8005,'127.0.0.1',function(){
+	/* 
+		LOGIN ACCEPTS 1 PARAMETER (type of product).
+		
+		ACCEPTED TYPES: 
+		1. publisher 
+		2. academy
+		
+		CONFIG HAS CONSTANTS FOR ACCEPTED TYPES:
+		1. config.E_PRODUCT.PUBLISHER
+		2. config.E_PRODUCT.ACADEMY
+		
+	*/
+	clCloud.login(email,apikey,config.E_PRODUCT.PUBLISHER,callback);
 	
 	function callback(resp,err){
 
@@ -75,6 +88,18 @@ server.listen(8005,'127.0.0.1',function(){
 	    });
 		*/
 
+		//create-by-text
+		/*
+	    clCloud.createByText('<PUT YOUR TEXT HERE>',_customHeaders,function(resp,err){
+
+	    	//check if we have credits
+	    	if(resp && resp.ProcessId){
+	    		console.log('API: create-by-text');
+	    		console.log('Process has been created: '+resp.ProcessId);
+	    	}
+	    });
+		*/
+
 	    //get processes list api
 	    clCloud.getProcessList(function(resp,err){
 	    	
@@ -107,8 +132,6 @@ server.listen(8005,'127.0.0.1',function(){
 	    //	console.log(resp);
 	    //});
 	}
-
-	clCloud.login(email,apikey,callback);
 
 	server.close();
 });
