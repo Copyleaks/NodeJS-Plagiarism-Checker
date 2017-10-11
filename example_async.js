@@ -45,7 +45,7 @@ server.listen(8005,'127.0.0.1',function(){
 			/* Optional Request Headers - for more information see - https://api.copyleaks.com/GeneralDocumentation/RequestHeaders */
 	    var _customHeaders = {};
 	    _customHeaders[config.SANDBOX_MODE_HEADER] = true;
-			_customHeaders[config.HTTP_CALLBACK] = 'https://requestb.in/1li5kcq1';//'http://your.website.com/callbacks/'
+			_customHeaders[config.HTTP_CALLBACK] = 'http://your.website.com/callbacks/'
 			//_customHeaders[config.IN_PROGRESS_RESULT] = 'http://your.website.com/callback/results/'
 			//_customHeaders[config.EMAIL_CALLBACK] = 'myemail@company.com'
 	    //_customHeaders[config.PARTIAL_SCAN_HEADER] = true;
@@ -136,7 +136,7 @@ server.listen(8005,'127.0.0.1',function(){
 
 
 	    /*example for process getStatus,getResults & delete*/
-	    var _pid = '<YOUR_PID_HERE>';
+	    //var _pid = '<YOUR_PID_HERE>';
 	    
 	    /* Get process status exmaple */
 	//    clCloud.getProcessStatus(_pid,function(resp,err){
