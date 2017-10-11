@@ -65,8 +65,7 @@ _customHeaders[config.IN_PROGRESS_RESULT] = 'http://your.website.com/callback/re
 _customHeaders[config.EMAIL_CALLBACK] = 'myemail@company.com'
 _customHeaders[config.PARTIAL_SCAN_HEADER] = true;
 _customHeaders[config.COMPARE_ONLY] = true; // Compare files in between - available only on createByFiles
-_customHeaders[config.IMPORT_FILE_TO_DATABASE] = true; // Import your file to our database only
- </pre>
+_customHeaders[config.IMPORT_FILE_TO_DATABASE] = true; // Import your file to our database only</pre>
 <p>For more info about the optional headers see <a href="https://api.copyleaks.com/GeneralDocumentation/RequestHeaders">API Request Headers</a>
 <h3>Read More</h3>
 <ul>
