@@ -5,8 +5,8 @@ var _ = require('lodash');
 var clCloud = new CopyleaksCloud();
 var config = clCloud.getConfig();
 
-var email = 'eladbitton1@gmail.com';//'<Your-email-address-here>';
-var apikey = '67DDFB8B-68B3-4816-8CDF-4BF2A66CCF25';//$apiKey = '<Your-API-Key-Here>';
+var email = '<Your-email-address-here>';
+var apikey = '<Your-API-Key-Here>';
 
 
 /*TEST SERVER*/
@@ -136,7 +136,7 @@ server.listen(8005,'127.0.0.1',function(){
 
 
 	    /*example for process getStatus,getResults & delete*/
-	    var _pid = '23963236-3ed6-4e61-8b32-85e4f0b12911';//'<YOUR_PID_HERE>';
+	    var _pid = '<YOUR_PID_HERE>';
 	    
 	    /* Get process status exmaple */
 	//    clCloud.getProcessStatus(_pid,function(resp,err){
