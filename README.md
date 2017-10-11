@@ -1,6 +1,6 @@
 <h2>Copyleaks NodeJs SDK</h2>
 <p>
-Copyleaks SDK enables you to scan text for plagiarism and detect content distribution online, using the <a href="https://copyleaks.com">Copyleaks plagiarism checker cloud</a>.
+Copyleaks SDK enables you to scan text for plagiarism and detect content distribution online, using the <a href="https://copyleaks.com">Copyleaks plagiarism checker</a> API.
 </p>
 <p>
 Using Copyleaks SDK you can check for plagiarism in:  
@@ -34,42 +34,44 @@ var config = clCloud.getConfig();
  <p>As a signed user you can generate your personal API key. Do so on your dashboard (<a href="https://api.copyleaks.com/businessesapi">Businesses dashboard/</a><a href="https://api.copyleaks.com/academicapi">Academic dashboard/</a><a href="https://api.copyleaks.com/websitesapi">Websites dashboard</a>) under 'Access Keys'.
  <p>For more information check out our <a href="https://api.copyleaks.com/Guides/HowToUse">API guide</a>.</p>
 <h3>Example</h3>
-<p><a href="https://github.com/Copyleaks/NodeJS-Plagiarism-Checker/blob/master/local_test.js">local_tests.js</a> will show you how to check for plagiarism in the URL: 'https://www.copyleaks.com'. All you have to do is to update the following two lines with your email and API key:
+<p>See <a href="https://github.com/Copyleaks/NodeJS-Plagiarism-Checker/blob/master/example_async.js"><code>example_async.js</code></a> for an example using callbacks.</p>
+<h3>Usage</h3>
+<p>Set your credentials:
 </p>
 <pre>
 var email = 'YOUR-EMAIL';
 var apikey = 'YOUR-API-KEY';
 </pre>
-
-<p>This example shows how to scan a URL using the following code:</p>
-<pre> clCloud.createByURL(url,_customHeaders,function(resp,err){
-
-	    	//check if we have credits
-	    	if(resp && resp.ProcessId){
-	    		console.log('API: create-by-url');
-	    		console.log('Process has been created: '+resp.ProcessId);
-	    	}
-	    }); </pre>
-<p>You can change 'createByURL' with 'createByFile' to scan local files:</p>
-<pre>  clCloud.createByFile(_file,_customHeaders,function(resp,err){
-	    	//check if we have credits
-	    	if(resp && resp.ProcessId){
-	    		console.log('API: create-by-file');
-	    		console.log('Process has been created: '+resp.ProcessId);
-	    	}
-	    }); </pre>
-<p>or with 'createByOCR to scan local images containing text:</p>
-<pre> clCloud.createByFileOCR(_ocrFile,_customHeaders,language,function(resp,err){
-			
-	    	//check if we have credits
-	    	if(resp && resp.ProcessId){
-	    		console.log('API: create-by-file-ocr');
-	    		console.log('Process has been created: '+resp.ProcessId);
-	    	}
-	    });</pre>
+<p>Set custom headers for the process:</p>
+<pre>var _customHeaders = {};
+_customHeaders[config.SANDBOX_MODE_HEADER] = true; // Sandbox mode - Scan without consuming any credits and get back dummy results
+_customHeaders[config.HTTP_CALLBACK] = 'http://your.website.com/callbacks/' // Callback url - For a fast testing of callbacks option we recommend to use http://requestb.in
+</pre>
+<p>Create a process using createByUrl method:</p>
+<pre>clCloud.createByURL(url,_customHeaders,function(resp,err){
+	if(resp && resp.ProcessId){
+		console.log('API: create-by-url');
+		console.log('Process has been created: '+resp.ProcessId);
+	}
+}); 
+</pre>
+<p>Available create methods are: <code>createByURL</code>, <code>createByFile</code>, <code>createByFiles</code>, <code>createByOCR</code> and <code>createByText</code>.</p>
+<h3>Configuration</h3>
+<p>You can set aditional headers and add them to your process:</p>
+<pre>var _customHeaders = {};
+_customHeaders[config.SANDBOX_MODE_HEADER] = true;
+_customHeaders[config.HTTP_CALLBACK] = 'https://requestb.in/1li5kcq1';//'http://your.website.com/callbacks/'
+_customHeaders[config.IN_PROGRESS_RESULT] = 'http://your.website.com/callback/results/'
+_customHeaders[config.EMAIL_CALLBACK] = 'myemail@company.com'
+_customHeaders[config.PARTIAL_SCAN_HEADER] = true;
+_customHeaders[config.COMPARE_ONLY] = true; // Compare files in between - available only on createByFiles
+_customHeaders[config.IMPORT_FILE_TO_DATABASE] = true; // Import your file to our database only
+ </pre>
+<p>For more info about the optional headers see <a href="https://api.copyleaks.com/GeneralDocumentation/RequestHeaders">API Request Headers</a>
 <h3>Read More</h3>
 <ul>
+<li><a href="https://api.copyleaks.com/">API Homepage</a></li>
 <li><a href="https://api.copyleaks.com/Guides/HowToUse">Copyleaks API guide</a></li>
+<li><a href="https://copyleaks.com/">Copyleaks Homepage</a></li>
 </ul>
-
 
