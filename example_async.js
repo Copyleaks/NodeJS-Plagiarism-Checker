@@ -45,12 +45,12 @@ server.listen(8005,'127.0.0.1',function(){
 			/* Optional Request Headers - for more information see - https://api.copyleaks.com/GeneralDocumentation/RequestHeaders */
 	    var _customHeaders = {};
 	    _customHeaders[config.SANDBOX_MODE_HEADER] = true;
-			_customHeaders[config.HTTP_CALLBACK] = 'http://your.website.com/callbacks/'
-			//_customHeaders[config.IN_PROGRESS_RESULT] = 'http://your.website.com/callback/results/'
-			//_customHeaders[config.EMAIL_CALLBACK] = 'myemail@company.com'
+		_customHeaders[config.HTTP_CALLBACK] = 'http://your.website.com/callbacks/'
+		//_customHeaders[config.IN_PROGRESS_RESULT] = 'http://your.website.com/callback/results/'
+		//_customHeaders[config.EMAIL_CALLBACK] = 'myemail@company.com'
 	    //_customHeaders[config.PARTIAL_SCAN_HEADER] = true;
-			//_customHeaders[config.COMPARE_ONLY] = true; // Compare files in between - available only on createByFiles
-			//_customHeaders[config.IMPORT_FILE_TO_DATABASE] = true; // Import your file to our database only
+		//_customHeaders[config.COMPARE_ONLY] = true; // Compare files in between - available only on createByFiles
+		//_customHeaders[config.IMPORT_FILE_TO_DATABASE] = true; // Import your file to our database only
 
 
 		// See more custom-options @ https://api.copyleaks.com/Documentation/RequestHeaders
@@ -62,23 +62,23 @@ server.listen(8005,'127.0.0.1',function(){
 	    		console.log('API: create-by-url');
 	    		console.log('Process has been created: ' + resp.ProcessId);
 	    	}
-				if(!isNaN(err))
-					console.log('Error: ' + err);
+			if(!isNaN(err))
+				console.log('Error: ' + err);
 	    });
 		
 	    /* Create a process using a file - to get full list of supported file types use the example bellow */
-	//    var _file = 'C:/Users/EB/Desktop/text.txt';//'YOUR_FILE_LOCATION';
+	//    var _file = 'YOUR_FILE_LOCATION';
 	//    clCloud.createByFile(_file,_customHeaders,function(resp,err){
 	//    	if(resp && resp.ProcessId){
 	//    		console.log('API: create-by-file');
 	//    		console.log('Process has been created: '+resp.ProcessId);
 	//    	}
-	//			if(!isNaN(err))
-	//				console.log('Error: ' + err);
+	//		if(!isNaN(err))
+	//			console.log('Error: ' + err);
 	//    });
 
 	    /* Create a process using a file - to get full list of supported file types use the example bellow */
-	//    var _files = ['C:/Users/EB/Desktop/text.txt', 'C:/Users/EB/Desktop/text2.txt'];//[first_file_path, second_file_path];
+	//    var _files = [first_file_path, second_file_path];
 	//    clCloud.createByFiles(_files,_customHeaders,function(resp,err){
 	//    	if(resp){
 	//				if(resp.Success.length != 0){
@@ -93,8 +93,8 @@ server.listen(8005,'127.0.0.1',function(){
 	//						console.log(resp.Errors[i]);
 	//				}
 	//    	}
-	//			if(!isNaN(err))
-	//				console.log('Error: ' + err);
+	//		if(!isNaN(err))
+	//			console.log('Error: ' + err);
 	//    });
 			
 	    /* Create a process using image of text - to get full list of ocr languages or supported file types use the examples bellow */
@@ -106,18 +106,18 @@ server.listen(8005,'127.0.0.1',function(){
 	//    		console.log('API: create-by-file-ocr');
 	//    		console.log('Process has been created: '+resp.ProcessId);
 	//    	}
-	//			if(!isNaN(err))
-	//				console.log('Error: ' + err);
+	//		if(!isNaN(err))
+	//			console.log('Error: ' + err);
 	//    });
 
-			/* Create a process using raw text */
+		/* Create a process using raw text */
 	//    clCloud.createByText('<PUT YOUR TEXT HERE>',_customHeaders,function(resp,err){
 	//    	if(resp && resp.ProcessId){
 	//    		console.log('API: create-by-text');
 	//    		console.log('Process has been created: '+resp.ProcessId);
 	//    	}
-	//			if(!isNaN(err))
-	//				console.log('Error: ' + err);
+	//		if(!isNaN(err))
+	//			console.log('Error: ' + err);
 	//		});
 
 	    /*Get list of your processes*/
@@ -130,24 +130,24 @@ server.listen(8005,'127.0.0.1',function(){
 	//    			console.log(pval.ProcessId);
 	//    		});
 	//    	}
-	//			if(!isNaN(err))
-	//				console.log('Error: ' + err);
+	//		if(!isNaN(err))
+	//			console.log('Error: ' + err);
 	//    });
 
 
 	    /*example for process getStatus,getResults & delete*/
-	    //var _pid = '<YOUR_PID_HERE>';
+	//	  var _pid = '<YOUR_PID_HERE>';
 	    
 	    /* Get process status exmaple */
 	//    clCloud.getProcessStatus(_pid,function(resp,err){
 	//    	console.log(resp);
-	//			if(!isNaN(err))
-	//				console.log('Error: ' + err);
+	//		if(!isNaN(err))
+	//			console.log('Error: ' + err);
 	//    });
 	    
 	    /* Get process results example */
 	//    clCloud.getProcessResults(_pid,function(resp,err){
-	//    	console.log(resp);
+	//    		console.log(resp);
 	//			if(isNaN(err))
 	//				console.log('Error: ' + err);
 	//			/* Get the raw text the process and the first result, and the comparison report between them. */
@@ -174,19 +174,19 @@ server.listen(8005,'127.0.0.1',function(){
 	//			if(isNaN(err))
 	//				console.log("Process deleted");
 	//			else
-	//					console.log('Error: ' + err);
+	//				console.log('Error: ' + err);
 	//    });
 
-			/* Get Supported file types - https://api.copyleaks.com/GeneralDocumentation/SupportedFileTypes */
+		/* Get Supported file types - https://api.copyleaks.com/GeneralDocumentation/SupportedFileTypes */
 	//    clCloud.getSupportedFileTypes(function(resp,err){
-	//    	console.log(resp);
+	//    		console.log(resp);
 	//			if(!isNaN(err))
 	//					console.log('Error: ' + err);
 	//    });
 
 			/* Get OCR supported languages list - https://api.copyleaks.com/GeneralDocumentation/OcrLanguagesList */
 	//    clCloud.getOcrSupportedLanguages(function(resp,err){
-	//    	console.log(resp);
+	//    		console.log(resp);
 	//			if(!isNaN(err))
 	//					console.log('Error: ' + err);
 	//    });
