@@ -60,17 +60,20 @@ _customHeaders[config.HTTP_CALLBACK] = 'http://your.website.com/callbacks/' // C
 <p>You can set aditional headers and add them to your process:</p>
 <pre>var _customHeaders = {};
 _customHeaders[config.SANDBOX_MODE_HEADER] = true;
-_customHeaders[config.HTTP_CALLBACK] = 'https://requestb.in/1li5kcq1';//'http://your.website.com/callbacks/'
+_customHeaders[config.HTTP_CALLBACK] = 'http://your.website.com/callbacks/'
 _customHeaders[config.IN_PROGRESS_RESULT] = 'http://your.website.com/callback/results/'
 _customHeaders[config.EMAIL_CALLBACK] = 'myemail@company.com'
 _customHeaders[config.PARTIAL_SCAN_HEADER] = true;
 _customHeaders[config.COMPARE_ONLY] = true; // Compare files in between - available only on createByFiles
 _customHeaders[config.IMPORT_FILE_TO_DATABASE] = true; // Import your file to our database only</pre>
 <p>For more info about the optional headers see <a href="https://api.copyleaks.com/GeneralDocumentation/RequestHeaders">API Request Headers</a>
+<p>For more info about the optional headers visit https://api.copyleaks.com/documentation/headers</p>
 <h3>Read More</h3>
 <ul>
 <li><a href="https://api.copyleaks.com/">API Homepage</a></li>
+<li><a href="https://api.copyleaks.com/documentation">API Documentation</a></li>
 <li><a href="https://api.copyleaks.com/Guides/HowToUse">Copyleaks API guide</a></li>
 <li><a href="https://copyleaks.com/">Copyleaks Homepage</a></li>
+<li><a href="https://copyleaks.com/support/which-copyleaks-product-is-for-me">Which Product Is For Me?</a></li>
 </ul>
 
