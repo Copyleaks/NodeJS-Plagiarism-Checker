@@ -29,6 +29,14 @@ var config = clCloud.getConfig();
 </li>
 <li>Download the code from this repository and add it to your project.
 </ul>
+<p>In any case, make sure you have the following dependencies installed:</p>
+<pre>
+$ npm install lodash
+$ npm install request
+$ npm install request-promise
+$ npm install mime-types
+</pre>
+
 <h3>Register and Get Your API Key</h3>
  <p>To use the Copyleaks API you need to first be a registered user. The registration to Copyleaks takes a minute and is free of charge. <a href="https://copyleaks.com/Account/Register">Signup</a> and make sure to confirm your account.</p>
  <p>As a signed user you can generate your personal API key. Do so on your dashboard (<a href="https://api.copyleaks.com/businessesapi">Businesses dashboard/</a><a href="https://api.copyleaks.com/academicapi">Academic dashboard/</a><a href="https://api.copyleaks.com/websitesapi">Websites dashboard</a>) under 'Access Keys'.
