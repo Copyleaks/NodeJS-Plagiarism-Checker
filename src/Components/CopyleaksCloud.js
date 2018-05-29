@@ -36,7 +36,7 @@ CopyleaksCloud.prototype.login = function(email,apikey,type,cback) {
 
 //get-credit API
 CopyleaksCloud.prototype.getCreditBalance = function(cback){
-	var _url = config.SERVICE_ENTRY_POINT+'/'+config.SERVICE_VERSION+'/account/count-credits';
+	var _url = config.SERVICE_ENTRY_POINT+'/'+config.SERVICE_VERSION+'/'+this.typeOfService+'/count-credits';
 
 	var _api = new API(this.loginToken);
 	
