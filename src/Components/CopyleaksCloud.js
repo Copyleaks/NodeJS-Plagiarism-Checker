@@ -29,11 +29,8 @@ CopyleaksCloud.prototype.login = function(email,apikey,type,cback) {
 	    	
 		})
 		.catch(function(err){
-			if(err && err.response)
-				_api.errorHandler(err.response.toJSON());
-
 			if(cback) cback({} ,err);
-		});
+		})
 
 };
 
