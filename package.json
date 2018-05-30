@@ -1,6 +1,6 @@
 {
   "name": "plagiarism-checker",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Copyleaks detects plagiarism and checks content distribution. Use Copyleaks to find out if textual content is original and if it has been used online. With Copyleaks cloud you can scan files (pdf, doc, docx, ocr...), URLs and free text for plagiarism.",
   "main": "./src/Components/CopyleaksCloud.js",
   "author": "Copyleaks ltd.",
