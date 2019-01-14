@@ -80,7 +80,7 @@ API.prototype.executeAPI = function(requestOptions,cback){
 		.catch(function(err){
 			if(err && err.response) {
 				try {
-          API.prototype.errorHandler(err.response.toJSON());
+					API.prototype.errorHandler(err.response.toJSON());
 				} catch(e) {
 					err = e;
 				}
