@@ -8,6 +8,11 @@ var config = clCloud.getConfig();
 var email = '<Your-email-address-here>';
 var apikey = '<Your-API-Key-Here>';
 
+console.log('Hello World');
+
+var thisWayPleaseMyMajorStudentAndTeacher = 42;
+
+// var x = 98;
 
 /*TEST SERVER*/
 var http = require("http");
