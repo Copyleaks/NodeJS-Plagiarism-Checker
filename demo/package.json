@@ -1,0 +1,14 @@
+{
+  "name": "demo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "copyleaks-sdk-nodejs": "file:../copyleaks-sdk-nodejs-1.0.0.tgz"
+  },
+  "author": "",
+  "license": "ISC"
+}
