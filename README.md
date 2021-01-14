@@ -16,11 +16,6 @@ Install using npm
 npm i plagiarism-checker
 ```
 
-For V1 version (not recommended)
-```bash
-npm i plagiarism-checker@1.2.1
-```
-
 ## Register and Get Your API Key
 To use the Copyleaks API you need to first be a registered user. The registration to Copyleaks takes a minute and is free of charge. [Signup](https://api.copyleaks.com/?register=true) and make sure to confirm your account.
 
@@ -58,5 +53,4 @@ See [index.js](./demo/index.js) under demo folder for an example using javascrip
 ## Read More
 * [API Homepage](https://api.copyleaks.com/)
 * [API Documentation](https://api.copyleaks.com/documentation)
-* [Copyleaks Homepage](https://copyleaks.com/)
-* [Which Product Is For Me?](https://copyleaks.com/support/which-copyleaks-product-is-for-me)
+* [Plagiarism Report](https://github.com/Copyleaks/plagiarism-report)
