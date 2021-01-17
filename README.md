@@ -10,7 +10,7 @@ Using Copyleaks SDK you can check for plagiarism in:
 
 ## Installation
 
-Install using npm
+Install using [npm](https://www.npmjs.com/package/plagiarism-checker).
 
 ```bash
 npm i plagiarism-checker
@@ -29,7 +29,7 @@ For more information check out our [API guide](https://api.copyleaks.com/documen
 ```js
 const { Copyleaks } = require('plagiarism-checker');  
 const copyleaks = new Copyleaks();
-copyleaks.loginAsync(<your email>,<you api key>).then(res=> {...} , err=> {...});
+copyleaks.loginAsync(<your email>,<your api key>).then(res=> {...} , err=> {...});
 ```
 #### Typescript
 ```ts
@@ -39,7 +39,7 @@ export class MyClass{
     public copyleaks = new Copyleaks();
     public async getCopyleaksAuthTokenAsync(){
         try{
-           return await this.copyleaks.loginAsync(<your email>,<you api key>); 
+           return await this.copyleaks.loginAsync(<your email>,<your api key>); 
         }
         catch{
          ...   
