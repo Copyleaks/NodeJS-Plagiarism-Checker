@@ -114,7 +114,7 @@ class Copyleaks {
                 'User-Agent': app_config_1.CopyleaksConfig.USER_AGENT,
                 'Authorization': `Bearer ${authToken['access_token']}`
             };
-            const response = yield axios_1.default.put(url, submission, { headers });
+            const response = yield axios_1.default.put(url, submission, { headers, maxBodyLength: Infinity });
             if (utils_1.isSuccessStatusCode(response.status))
                 return; // Completed successfully
             else if (utils_1.isUnderMaintenanceResponse(response.status)) {

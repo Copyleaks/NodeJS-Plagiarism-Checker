@@ -115,7 +115,7 @@ export class Copyleaks {
       'Authorization': `Bearer ${authToken['access_token']}`
     }
 
-    const response = await axios.put(url, submission, { headers });
+    const response = await axios.put(url, submission, { headers, maxBodyLength: Infinity });
     if (isSuccessStatusCode(response.status))
       return; // Completed successfully
     else if (isUnderMaintenanceResponse(response.status)) {
