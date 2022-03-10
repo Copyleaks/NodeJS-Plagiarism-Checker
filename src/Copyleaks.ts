@@ -170,15 +170,13 @@ export class Copyleaks {
   public async submitFileOcrAsync(product: 'education' | 'businesses', authToken: CopyleaksAuthToken, scanId: string, submission: CopyleaksFileOcrSubmissionModel) {
     this.verifyAuthToken(authToken);
 
-    const url = `${CopyleaksConfig.API_SERVER_URI}/v3/${product}/submit/ocr/${scanId}`;
-
-    const headers = {
-      'Content-Type': 'application/json',
-      'User-Agent': CopyleaksConfig.USER_AGENT,
-      'Authorization': `Bearer ${authToken['access_token']}`
-    }
-
-    const response = await axios.put(url, submission, { headers });
+    const response = await this.request({
+      method: 'PUT',
+      url: `/v3/${product}/submit/ocr/${scanId}`,
+      data: submission,
+      headers: { 'Authorization': `Bearer ${authToken['access_token']}` },
+      maxBodyLength: Infinity
+    });
     if (isSuccessStatusCode(response.status))
       return; // Completed successfully
     else if (isUnderMaintenanceResponse(response.status)) {
@@ -207,15 +205,13 @@ export class Copyleaks {
   public async submitUrlAsync(product: 'education' | 'businesses', authToken: CopyleaksAuthToken, scanId: string, submission: CopyleaksURLSubmissionModel) {
     this.verifyAuthToken(authToken);
 
-    const url = `${CopyleaksConfig.API_SERVER_URI}/v3/${product}/submit/url/${scanId}`;
-
-    const headers = {
-      'Content-Type': 'application/json',
-      'User-Agent': CopyleaksConfig.USER_AGENT,
-      'Authorization': `Bearer ${authToken['access_token']}`
-    }
-
-    const response = await axios.put(url, submission, { headers });
+    const response = await this.request({
+      method: 'PUT',
+      url: `/v3/${product}/submit/url/${scanId}`,
+      data: submission,
+      headers: { 'Authorization': `Bearer ${authToken['access_token']}` },
+      maxBodyLength: Infinity
+    });
     if (isSuccessStatusCode(response.status))
       return; // Completed successfully
     else if (isUnderMaintenanceResponse(response.status)) {
@@ -243,16 +239,13 @@ export class Copyleaks {
   public async exportAsync(authToken: CopyleaksAuthToken, scanId: string, exportId: string, model: CopyleaksExportModel) {
     this.verifyAuthToken(authToken);
 
-    const url = `${CopyleaksConfig.API_SERVER_URI}/v3/downloads/${scanId}/export/${exportId}`;
-
-    const headers = {
-      'Content-Type': 'application/json',
-      'User-Agent': CopyleaksConfig.USER_AGENT,
-      'Authorization': `Bearer ${authToken['access_token']}`
-    }
-
-    const response = await axios.post(url, model, { headers });
-
+    const response = await this.request({
+      method: 'POST',
+      url: `/v3/downloads/${scanId}/export/${exportId}`,
+      data: model,
+      headers: { 'Authorization': `Bearer ${authToken['access_token']}` },
+      maxBodyLength: Infinity
+    });
     if (isSuccessStatusCode(response.status)) {
       return; // Completed successfully
     } else if (isUnderMaintenanceResponse(response.status)) {
@@ -279,16 +272,14 @@ export class Copyleaks {
    */
   public async startAsync(product: 'education' | 'businesses', authToken: CopyleaksAuthToken, model: CopyleaksStartRequestModel) {
     this.verifyAuthToken(authToken);
-    const url = `${CopyleaksConfig.API_SERVER_URI}/v3/${product}/start`;
 
-    const headers = {
-      'Content-Type': 'application/json',
-      'User-Agent': CopyleaksConfig.USER_AGENT,
-      'Authorization': `Bearer ${authToken['access_token']}`
-    }
-
-    const response = await axios.patch(url, model, { headers });
-
+    const response = await this.request({
+      method: 'PATCH',
+      url: `/v3/${product}/start`,
+      data: model,
+      headers: { 'Authorization': `Bearer ${authToken['access_token']}` },
+      maxBodyLength: Infinity
+    });
     if (isSuccessStatusCode(response.status)) {
       return response.data; // Completed successfully
     } else if (isUnderMaintenanceResponse(response.status)) {
@@ -317,16 +308,13 @@ export class Copyleaks {
 
     this.verifyAuthToken(authToken);
 
-    const url = `${CopyleaksConfig.API_SERVER_URI}/v3.1/${product}/delete`;
-
-    const headers = {
-      'Content-Type': 'application/json',
-      'User-Agent': CopyleaksConfig.USER_AGENT,
-      'Authorization': `Bearer ${authToken['access_token']}`
-    }
-
-    const response = await axios.patch(url, payloads, { headers });
-
+    const response = await this.request({
+      method: 'PATCH',
+      url: `/v3.1/${product}/delete`,
+      data: payloads,
+      headers: { 'Authorization': `Bearer ${authToken['access_token']}` },
+      maxBodyLength: Infinity
+    });
     if (isSuccessStatusCode(response.status))
       return; // Completed successfully;
     else if (isUnderMaintenanceResponse(response.status)) {
@@ -356,16 +344,12 @@ export class Copyleaks {
   public async resendWebhookAsync(product: 'education' | 'businesses', authToken: CopyleaksAuthToken, scanId: string) {
     this.verifyAuthToken(authToken);
 
-    const url = `${CopyleaksConfig.API_SERVER_URI}/v3/${product}/scans/${scanId}/webhooks/resend`;
-
-    const headers = {
-      'Content-Type': 'application/json',
-      'User-Agent': CopyleaksConfig.USER_AGENT,
-      'Authorization': `Bearer ${authToken['access_token']}`
-    }
-
-    const response = await axios.post(url, null, { headers });
-
+    const response = await this.request({
+      method: 'POST',
+      url: `/v3/${product}/scans/${scanId}/webhooks/resend`,
+      data: null,
+      headers: { 'Authorization': `Bearer ${authToken['access_token']}` },
+    });
     if (isSuccessStatusCode(response.status))
       return;  // Completed successfully
     else if (isUnderMaintenanceResponse(response.status)) {
@@ -393,15 +377,11 @@ export class Copyleaks {
   public async getCreditsBalanceAsync(product: 'education' | 'businesses', authToken: CopyleaksAuthToken) {
     this.verifyAuthToken(authToken);
 
-    const url = `${CopyleaksConfig.API_SERVER_URI}/v3/${product}/credits`;
-
-    const headers = {
-      'User-Agent': CopyleaksConfig.USER_AGENT,
-      'Authorization': `Bearer ${authToken['access_token']}`
-    }
-
-    const response = await axios.get(url, { headers });
-
+    const response = await this.request({
+      method: 'GET',
+      url: `/v3/${product}/credits`,
+      headers: { 'Authorization': `Bearer ${authToken['access_token']}` },
+    });
     if (isSuccessStatusCode(response.status))
       return response.data;
     else if (isUnderMaintenanceResponse(response.status)) {
@@ -434,16 +414,11 @@ export class Copyleaks {
   public async getUsagesHistoryCsvAsync(product: 'education' | 'businesses', authToken: CopyleaksAuthToken, startDate: string, endDate: string) {
     this.verifyAuthToken(authToken);
 
-    const url = `${CopyleaksConfig.API_SERVER_URI}/v3/${product}/usages/history?start=${startDate}&end=${endDate}`;
-
-    const headers = {
-      'Content-Type': 'application/json',
-      'User-Agent': CopyleaksConfig.USER_AGENT,
-      'Authorization': `Bearer ${authToken['access_token']}`
-    }
-
-    const response = await axios.get(url, { headers });
-
+    const response = await this.request({
+      method: 'GET',
+      url: `/v3/${product}/usages/history?start=${startDate}&end=${endDate}`,
+      headers: { 'Authorization': `Bearer ${authToken['access_token']}` },
+    });
     if (isSuccessStatusCode(response.status))
       return response.data;
     else if (isUnderMaintenanceResponse(response.status)) {
@@ -468,15 +443,10 @@ export class Copyleaks {
    * @returns List of release notes.
    */
   public async getReleaseNotesAsync() {
-    const url = `${CopyleaksConfig.API_SERVER_URI}/v3/release-logs.json`;
-
-    const headers = {
-      'Content-Type': 'application/json',
-      'User-Agent': CopyleaksConfig.USER_AGENT,
-    }
-
-    const response = await axios.get(url, { headers });
-
+    const response = await this.request({
+      method: 'GET',
+      url: `/v3/release-logs.json`,
+    });
     if (isSuccessStatusCode(response.status))
       return response.data;
     else if (isUnderMaintenanceResponse(response.status)) {
@@ -501,15 +471,10 @@ export class Copyleaks {
    * @returns List of supported file types.
    */
   public async getSupportedFileTypesAsync() {
-    const url = `${CopyleaksConfig.API_SERVER_URI}/v3/miscellaneous/supported-file-types`;
-
-    const headers = {
-      'Content-Type': 'application/json',
-      'User-Agent': CopyleaksConfig.USER_AGENT,
-    }
-
-    const response = await axios.get(url, { headers });
-
+    const response = await this.request({
+      method: 'GET',
+      url: `/v3/miscellaneous/supported-file-types`,
+    });
     if (isSuccessStatusCode(response.status))
       return response.data;
     else if (isUnderMaintenanceResponse(response.status)) {
@@ -534,15 +499,10 @@ export class Copyleaks {
    * @returns List of supported OCR languages.
    */
   public async getOCRSupportedLanguagesAsync() {
-    const url = `${CopyleaksConfig.API_SERVER_URI}/v3/miscellaneous/ocr-languages-list`;
-
-    const headers = {
-      'Content-Type': 'application/json',
-      'User-Agent': CopyleaksConfig.USER_AGENT,
-    }
-
-    const response = await axios.get(url, { headers });
-
+    const response = await this.request({
+      method: 'GET',
+      url: `/v3/miscellaneous/ocr-languages-list`,
+    });
     if (isSuccessStatusCode(response.status))
       return response.data;
     else if (isUnderMaintenanceResponse(response.status)) {
