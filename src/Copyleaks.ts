@@ -37,7 +37,7 @@ export class Copyleaks {
 
   constructor() {
     this.api = axios.create({
-      baseURL: `${CopyleaksConfig.API_SERVER_URI}/v3`,
+      baseURL: `${CopyleaksConfig.API_SERVER_URI}`,
       headers: {
         'Content-Type': 'application/json',
         'User-Agent': CopyleaksConfig.USER_AGENT,
@@ -121,7 +121,7 @@ export class Copyleaks {
 
     const response = await this.request({
       method: 'PUT',
-      url: `/${product}/submit/file/${scanId}`,
+      url: `/v3/${product}/submit/file/${scanId}`,
       data: submission,
       headers: { 'Authorization': `Bearer ${authToken['access_token']}` },
       maxBodyLength: Infinity
