@@ -38,6 +38,15 @@ const app_config_1 = require("./app.config");
 const exceptions_1 = require("./models/exceptions");
 const utils_1 = require("./utils");
 class Copyleaks {
+    constructor() {
+        this.api = axios_1.default.create({
+            baseURL: `${app_config_1.CopyleaksConfig.API_SERVER_URI}`,
+            headers: {
+                'Content-Type': 'application/json',
+                'User-Agent': app_config_1.CopyleaksConfig.USER_AGENT,
+            }
+        });
+    }
     /**
      * Login to Copyleaks authentication server.
      * For more info: https://api.copyleaks.com/documentation/v3/account/login.
@@ -108,13 +117,13 @@ class Copyleaks {
     submitFileAsync(product, authToken, scanId, submission) {
         return __awaiter(this, void 0, void 0, function* () {
             this.verifyAuthToken(authToken);
-            const url = `${app_config_1.CopyleaksConfig.API_SERVER_URI}/v3/${product}/submit/file/${scanId}`;
-            const headers = {
-                'Content-Type': 'application/json',
-                'User-Agent': app_config_1.CopyleaksConfig.USER_AGENT,
-                'Authorization': `Bearer ${authToken['access_token']}`
-            };
-            const response = yield axios_1.default.put(url, submission, { headers, maxBodyLength: Infinity });
+            const response = yield this.request({
+                method: 'PUT',
+                url: `/v3/${product}/submit/file/${scanId}`,
+                data: submission,
+                headers: { 'Authorization': `Bearer ${authToken['access_token']}` },
+                maxBodyLength: Infinity
+            });
             if (utils_1.isSuccessStatusCode(response.status))
                 return; // Completed successfully
             else if (utils_1.isUnderMaintenanceResponse(response.status)) {
@@ -122,6 +131,23 @@ class Copyleaks {
             }
             else {
                 throw new exceptions_1.CommandException(response);
+            }
+        });
+    }
+    request(config, retries = 10, backoff = 2000) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                return yield this.api(config);
+            }
+            catch (error) {
+                if (retries < 1) {
+                    throw error;
+                }
+                if (error.response && [429, 500].includes(error.response.status)) {
+                    yield new Promise((resolve) => setTimeout(resolve, backoff));
+                    return yield this.request(config, retries - 1, backoff * 2);
+                }
+                throw error;
             }
         });
     }

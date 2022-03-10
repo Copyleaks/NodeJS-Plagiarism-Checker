@@ -4,6 +4,8 @@ import { CopyleaksStartRequestModel } from './models/request/CopyleaksStartReque
 import { CopyleaksAuthToken } from './models/response';
 import { CopyleaksFileOcrSubmissionModel, CopyleaksFileSubmissionModel, CopyleaksURLSubmissionModel } from './models/submissions';
 export declare class Copyleaks {
+    private api;
+    constructor();
     /**
      * Login to Copyleaks authentication server.
      * For more info: https://api.copyleaks.com/documentation/v3/account/login.
@@ -42,6 +44,7 @@ export declare class Copyleaks {
      * @param submission Submission properties
      */
     submitFileAsync(product: 'education' | 'businesses', authToken: CopyleaksAuthToken, scanId: string, submission: CopyleaksFileSubmissionModel): Promise<void>;
+    private request;
     /**
      * Starting a new process by providing a OCR image file to scan.
      * For more info:
