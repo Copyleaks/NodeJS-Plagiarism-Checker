@@ -21,7 +21,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
 */
-import axios from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
 
 import { CopyleaksConfig } from './app.config';
 import { UnderMaintenanceException, CommandException, AuthExipredException, RateLimitException } from './models/exceptions';
@@ -115,13 +115,35 @@ export class Copyleaks {
       'Authorization': `Bearer ${authToken['access_token']}`
     }
 
-    const response = await axios.put(url, submission, { headers, maxBodyLength: Infinity });
+    const response = await this.request({
+      method: 'PUT',
+      url,
+      data: submission,
+      headers,
+      maxBodyLength: Infinity
+    });
     if (isSuccessStatusCode(response.status))
       return; // Completed successfully
     else if (isUnderMaintenanceResponse(response.status)) {
       throw new UnderMaintenanceException()
     } else {
       throw new CommandException(response)
+    }
+  }
+
+  private async request(config: AxiosRequestConfig, retries: number = 10, backoff: number = 2000): Promise<any> {
+    try {
+      return await axios(config);
+    }
+    catch(error: any) {
+      if(retries < 1) {
+        throw error;
+      }
+      if(error.response && [ 429, 500 ].includes(error.response.status)) {
+        await new Promise((resolve) => setTimeout(resolve, backoff));
+        return await this.request(config, retries - 1, backoff * 2);
+      }
+      throw error;
     }
   }
 
