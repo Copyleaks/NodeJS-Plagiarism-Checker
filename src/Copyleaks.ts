@@ -21,7 +21,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
 */
-import axios, { AxiosRequestConfig } from 'axios';
+import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 
 import { CopyleaksConfig } from './app.config';
 import { UnderMaintenanceException, CommandException, AuthExipredException, RateLimitException } from './models/exceptions';
@@ -33,6 +33,18 @@ import { CopyleaksFileOcrSubmissionModel, CopyleaksFileSubmissionModel, Copyleak
 import { isRateLimitResponse, isSuccessStatusCode, isUnderMaintenanceResponse } from './utils';
 
 export class Copyleaks {
+  private api: AxiosInstance;
+
+  constructor() {
+    this.api = axios.create({
+      baseURL: `${CopyleaksConfig.API_SERVER_URI}/v3`,
+      headers: {
+        'Content-Type': 'application/json',
+        'User-Agent': CopyleaksConfig.USER_AGENT,
+      }
+    });
+  }
+
   /**
    * Login to Copyleaks authentication server.
    * For more info: https://api.copyleaks.com/documentation/v3/account/login.
@@ -107,19 +119,11 @@ export class Copyleaks {
   public async submitFileAsync(product: 'education' | 'businesses', authToken: CopyleaksAuthToken, scanId: string, submission: CopyleaksFileSubmissionModel) {
     this.verifyAuthToken(authToken);
 
-    const url = `${CopyleaksConfig.API_SERVER_URI}/v3/${product}/submit/file/${scanId}`;
-
-    const headers = {
-      'Content-Type': 'application/json',
-      'User-Agent': CopyleaksConfig.USER_AGENT,
-      'Authorization': `Bearer ${authToken['access_token']}`
-    }
-
     const response = await this.request({
       method: 'PUT',
-      url,
+      url: `/${product}/submit/file/${scanId}`,
       data: submission,
-      headers,
+      headers: { 'Authorization': `Bearer ${authToken['access_token']}` },
       maxBodyLength: Infinity
     });
     if (isSuccessStatusCode(response.status))
@@ -133,7 +137,7 @@ export class Copyleaks {
 
   private async request(config: AxiosRequestConfig, retries: number = 10, backoff: number = 2000): Promise<any> {
     try {
-      return await axios(config);
+      return await this.api(config);
     }
     catch(error: any) {
       if(retries < 1) {
