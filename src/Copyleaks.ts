@@ -91,23 +91,21 @@ export class Copyleaks {
   /**
    * Starting a new process by providing a file to scan.
    * For more info:
-   * https://api.copyleaks.com/documentation/v3/education/submit/file
-   * https://api.copyleaks.com/documentation/v3/businesses/submit/file
+   * https://api.copyleaks.com/documentation/v3/scans/submit/file
    * * Exceptions:
    *  * CommandExceptions: Server reject the request. See response status code,
    *     headers and content for more info.
    *  * UnderMaintenanceException: Copyleaks servers are unavailable for maintenance.
    *     We recommend to implement exponential backoff algorithm as described here:
    *     https://api.copyleaks.com/documentation/v3/exponential-backoff
-   * @param product Which product (education or business) is being use.
    * @param authToken Copyleaks authentication token
    * @param scanId Attach your own scan Id
    * @param submission Submission properties
    */
-  public async submitFileAsync(product: 'education' | 'businesses', authToken: CopyleaksAuthToken, scanId: string, submission: CopyleaksFileSubmissionModel) {
+  public async submitFileAsync(authToken: CopyleaksAuthToken, scanId: string, submission: CopyleaksFileSubmissionModel) {
     this.verifyAuthToken(authToken);
 
-    const url = `${CopyleaksConfig.API_SERVER_URI}/v3/${product}/submit/file/${scanId}`;
+    const url = `${CopyleaksConfig.API_SERVER_URI}/v3/scans/submit/file/${scanId}`;
 
     const headers = {
       'Content-Type': 'application/json',
@@ -128,23 +126,21 @@ export class Copyleaks {
   /**
    * Starting a new process by providing a OCR image file to scan.
    * For more info:
-   * https://api.copyleaks.com/documentation/v3/education/submit/ocr
-   * https://api.copyleaks.com/documentation/v3/businesses/submit/ocr
+   * https://api.copyleaks.com/documentation/v3/scans/submit/ocr
    * * Exceptions:
    *  * CommandExceptions: Server reject the request. See response status code,
    *     headers and content for more info.
    *  * UnderMaintenanceException: Copyleaks servers are unavailable for maintenance.
    *     We recommend to implement exponential backoff algorithm as described here:
    *     https://api.copyleaks.com/documentation/v3/exponential-backoff
-   * @param product Which product (education or business) is being use.
    * @param authToken Copyleaks authentication token
    * @param scanId Attach your own scan Id
    * @param submission Submission properties
    */
-  public async submitFileOcrAsync(product: 'education' | 'businesses', authToken: CopyleaksAuthToken, scanId: string, submission: CopyleaksFileOcrSubmissionModel) {
+  public async submitFileOcrAsync(authToken: CopyleaksAuthToken, scanId: string, submission: CopyleaksFileOcrSubmissionModel) {
     this.verifyAuthToken(authToken);
-
-    const url = `${CopyleaksConfig.API_SERVER_URI}/v3/${product}/submit/ocr/${scanId}`;
+    
+    const url = `${CopyleaksConfig.API_SERVER_URI}/v3/scans/submit/ocr/${scanId}`;
 
     const headers = {
       'Content-Type': 'application/json',
@@ -165,23 +161,21 @@ export class Copyleaks {
   /**
    * Starting a new process by providing a URL to scan.
    * For more info:
-   * https://api.copyleaks.com/documentation/v3/education/submit/url
-   * https://api.copyleaks.com/documentation/v3/businesses/submit/url
+   * https://api.copyleaks.com/documentation/v3/scans/submit/url
    * * Exceptions:
    *  * CommandExceptions: Server reject the request. See response status code,
    *     headers and content for more info.
    *  * UnderMaintenanceException: Copyleaks servers are unavailable for maintenance.
    *     We recommend to implement exponential backoff algorithm as described here:
    *     https://api.copyleaks.com/documentation/v3/exponential-backoff
-   * @param product Which product (education or business) is being use.
    * @param authToken Copyleaks authentication token
    * @param scanId Attach your own scan Id
    * @param submission Submission properties
    */
-  public async submitUrlAsync(product: 'education' | 'businesses', authToken: CopyleaksAuthToken, scanId: string, submission: CopyleaksURLSubmissionModel) {
+  public async submitUrlAsync(authToken: CopyleaksAuthToken, scanId: string, submission: CopyleaksURLSubmissionModel) {
     this.verifyAuthToken(authToken);
 
-    const url = `${CopyleaksConfig.API_SERVER_URI}/v3/${product}/submit/url/${scanId}`;
+    const url = `${CopyleaksConfig.API_SERVER_URI}/v3/scans/submit/url/${scanId}`;
 
     const headers = {
       'Content-Type': 'application/json',
@@ -239,21 +233,19 @@ export class Copyleaks {
   /**
    * Start scanning all the files you submitted for a price-check.
    * For more info:
-   * https://api.copyleaks.com/documentation/v3/education/start
-   * https://api.copyleaks.com/documentation/v3/businesses/start
+   * https://api.copyleaks.com/documentation/v3/scans/start
    * * Exceptions:
    *  * CommandExceptions: Server reject the request. See response status code,
    *     headers and content for more info.
    *  * UnderMaintenanceException: Copyleaks servers are unavailable for maintenance.
    *     We recommend to implement exponential backoff algorithm as described here:
    *     https://api.copyleaks.com/documentation/v3/exponential-backoff
-   * @param product Which product (education or business) is being use.
    * @param authToken Your login token to Copyleaks server.
    * @param model Include information about which scans should be started.
    */
-  public async startAsync(product: 'education' | 'businesses', authToken: CopyleaksAuthToken, model: CopyleaksStartRequestModel) {
+  public async startAsync(authToken: CopyleaksAuthToken, model: CopyleaksStartRequestModel) {
     this.verifyAuthToken(authToken);
-    const url = `${CopyleaksConfig.API_SERVER_URI}/v3/${product}/start`;
+    const url = `${CopyleaksConfig.API_SERVER_URI}/v3/scans/start`;
 
     const headers = {
       'Content-Type': 'application/json',
@@ -275,23 +267,21 @@ export class Copyleaks {
   /**
    * Delete the specific process from the server.
    * For more info:
-   * https://api.copyleaks.com/documentation/v3/education/delete
-   * https://api.copyleaks.com/documentation/v3/businesses/delete
+   * https://api.copyleaks.com/documentation/v3/scans/delete
    * * Exceptions:
    *  * CommandExceptions: Server reject the request. See response status code,
    *     headers and content for more info.
    *  * UnderMaintenanceException: Copyleaks servers are unavailable for maintenance.
    *     We recommend to implement exponential backoff algorithm as described here:
    *     https://api.copyleaks.com/documentation/v3/exponential-backoff
-   * @param product Which product (education or business) is being use.
    * @param authToken Copyleaks authentication token
    * @param payloads
    */
-  public async deleteAsync(product: 'education' | 'businesses', authToken: CopyleaksAuthToken, payloads: CopyleaksDeleteRequestModel) {
+  public async deleteAsync(authToken: CopyleaksAuthToken, payloads: CopyleaksDeleteRequestModel) {
 
     this.verifyAuthToken(authToken);
 
-    const url = `${CopyleaksConfig.API_SERVER_URI}/v3.1/${product}/delete`;
+    const url = `${CopyleaksConfig.API_SERVER_URI}/v3.1/scans/delete`;
 
     const headers = {
       'Content-Type': 'application/json',
@@ -315,22 +305,20 @@ export class Copyleaks {
   /**
    * Resend status webhooks for existing scans.
    * For more info:
-   * https://api.copyleaks.com/documentation/v3/education/webhook-resend
-   * https://api.copyleaks.com/documentation/v3/businesses/webhook-resend
+   * https://api.copyleaks.com/documentation/v3/scans/webhook-resend
    * * Exceptions:
    *  * CommandExceptions: Server reject the request. See response status code,
    *     headers and content for more info.
    *  * UnderMaintenanceException: Copyleaks servers are unavailable for maintenance.
    *     We recommend to implement exponential backoff algorithm as described here:
    *     https://api.copyleaks.com/documentation/v3/exponential-backoff
-   * @param product Which product (education or business) is being use.
    * @param authToken Copyleaks authentication token
    * @param scanId Copyleaks scan Id
    */
-  public async resendWebhookAsync(product: 'education' | 'businesses', authToken: CopyleaksAuthToken, scanId: string) {
+  public async resendWebhookAsync(authToken: CopyleaksAuthToken, scanId: string) {
     this.verifyAuthToken(authToken);
 
-    const url = `${CopyleaksConfig.API_SERVER_URI}/v3/${product}/scans/${scanId}/webhooks/resend`;
+    const url = `${CopyleaksConfig.API_SERVER_URI}/v3/scans/${scanId}/webhooks/resend`;
 
     const headers = {
       'Content-Type': 'application/json',
@@ -352,8 +340,7 @@ export class Copyleaks {
   /**
    * Get current credits balance for the Copyleaks account.
    * For more info:
-   * https://api.copyleaks.com/documentation/v3/education/credits
-   * https://api.copyleaks.com/documentation/v3/businesses/credits
+   * https://api.copyleaks.com/documentation/v3/scans/credits
    * * Exceptions:
    *  * CommandExceptions: Server reject the request. See response status code,
    *     headers and content for more info.
@@ -361,13 +348,12 @@ export class Copyleaks {
    *     We recommend to implement exponential backoff algorithm as described here:
    *     https://api.copyleaks.com/documentation/v3/exponential-backoff
    *  * RateLimitException: Too many requests. Please wait before calling again.
-   * @param product Which product (education or business) is being use.
    * @param authToken Copyleaks authentication token
    */
-  public async getCreditsBalanceAsync(product: 'education' | 'businesses', authToken: CopyleaksAuthToken) {
+  public async getCreditsBalanceAsync(authToken: CopyleaksAuthToken) {
     this.verifyAuthToken(authToken);
 
-    const url = `${CopyleaksConfig.API_SERVER_URI}/v3/${product}/credits`;
+    const url = `${CopyleaksConfig.API_SERVER_URI}/v3/scans/credits`;
 
     const headers = {
       'User-Agent': CopyleaksConfig.USER_AGENT,
@@ -391,8 +377,7 @@ export class Copyleaks {
    * This endpoint allows you to export your usage history between two dates.
    * The output results will be exported to a csv file and it will be attached to the response.
    * For more info:
-   * https://api.copyleaks.com/documentation/v3/education/usages/history
-   * https://api.copyleaks.com/documentation/v3/businesses/usages/history
+   * https://api.copyleaks.com/documentation/v3/scans/usages/history
    * * Exceptions:
    *  * CommandExceptions: Server reject the request. See response status code,
    *     headers and content for more info.
@@ -400,15 +385,14 @@ export class Copyleaks {
    *     We recommend to implement exponential backoff algorithm as described here:
    *     https://api.copyleaks.com/documentation/v3/exponential-backoff
    *  * RateLimitException: Too many requests. Please wait before calling again.
-   * @param product Which product (education or business) is being use.
    * @param authToken Copyleaks authentication token.
    * @param startDate The start date to collect usage history from. Date Format: `dd-MM-yyyy`.
    * @param endDate The end date to collect usage history from. Date Format: `dd-MM-yyyy`.
    */
-  public async getUsagesHistoryCsvAsync(product: 'education' | 'businesses', authToken: CopyleaksAuthToken, startDate: string, endDate: string) {
+  public async getUsagesHistoryCsvAsync(authToken: CopyleaksAuthToken, startDate: string, endDate: string) {
     this.verifyAuthToken(authToken);
 
-    const url = `${CopyleaksConfig.API_SERVER_URI}/v3/${product}/usages/history?start=${startDate}&end=${endDate}`;
+    const url = `${CopyleaksConfig.API_SERVER_URI}/v3/scans/usages/history?start=${startDate}&end=${endDate}`;
 
     const headers = {
       'Content-Type': 'application/json',

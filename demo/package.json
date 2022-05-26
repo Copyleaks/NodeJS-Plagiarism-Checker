@@ -7,7 +7,7 @@
     "start": "node index.js"
   },
   "dependencies": {
-    "copyleaks-sdk-nodejs": "file:../copyleaks-sdk-nodejs-1.0.0.tgz"
+    "plagiarism-checker": "^3.0.1"
   },
   "author": "",
   "license": "ISC"
