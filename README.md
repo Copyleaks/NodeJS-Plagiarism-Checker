@@ -47,7 +47,15 @@ export class MyClass{
     }
 }
 ```
-
+#### Note
+* To change the Identity server URI (default:"https://id.copyleaks.com"):
+```rb
+CopyleaksConfig.IDENTITY_SERVER_URI = "<your identity server uri>";
+```
+* To change the API server URI (default:"https://api.copyleaks.com"):
+```rb
+CopyleaksConfig.API_SERVER_URI = "<your api server uri>";
+```
 ## Demo
 See [index.js](./demo/index.js) under demo folder for an example using javascript.
 ## Read More
