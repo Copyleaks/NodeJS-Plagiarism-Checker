@@ -16,7 +16,8 @@
     "gh-pages": "npm run docs && gh-pages -d docs"
   },
   "dependencies": {
-    "axios": "^0.21.1"
+    "axios": "^0.21.1",
+    "rimraf": "^3.0.2"
   },
   "peerDependencies": {
     "axios": "^0.21.1"

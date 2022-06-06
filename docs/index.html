@@ -72,11 +72,8 @@
 				<a href="#installation" id="installation" style="color: inherit; text-decoration: none;">
 					<h2>Installation</h2>
 				</a>
-				<p>Install using npm</p>
+				<p>Install using <a href="https://www.npmjs.com/package/plagiarism-checker">npm</a>.</p>
 				<pre><code class="language-bash"><span style="color: #000000">npm i plagiarism-checker</span>
-</code></pre>
-				<p>For V1 version (not recommended)</p>
-				<pre><code class="language-bash"><span style="color: #000000">npm i plagiarism-checker@1.2.1</span>
 </code></pre>
 				<a href="#register-and-get-your-api-key" id="register-and-get-your-api-key" style="color: inherit; text-decoration: none;">
 					<h2>Register and Get Your API Key</h2>
@@ -91,8 +88,8 @@
 					<h4>Javascript</h4>
 				</a>
 				<pre><code class="language-js"><span style="color: #0000FF">const</span><span style="color: #000000"> { </span><span style="color: #0070C1">Copyleaks</span><span style="color: #000000"> } = </span><span style="color: #795E26">require</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;plagiarism-checker&#039;</span><span style="color: #000000">);  </span>
-<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">copyleaks</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #267F99">Copyleaks</span><span style="color: #000000">();</span>
-<span style="color: #001080">copyleaks</span><span style="color: #000000">.</span><span style="color: #795E26">loginAsync</span><span style="color: #000000">(</span><span style="color: #800000">&lt;your</span><span style="color: #000000"> </span><span style="color: #FF0000">email</span><span style="color: #800000">&gt;</span><span style="color: #000000">,</span><span style="color: #800000">&lt;you</span><span style="color: #000000"> </span><span style="color: #FF0000">api</span><span style="color: #000000"> </span><span style="color: #FF0000">key</span><span style="color: #800000">&gt;</span><span style="color: #000000">).then(res=&gt; </span><span style="color: #0000FF">{</span><span style="color: #000000">...</span><span style="color: #0000FF">}</span><span style="color: #000000"> , err=&gt; </span><span style="color: #0000FF">{</span><span style="color: #000000">...</span><span style="color: #0000FF">}</span><span style="color: #000000">);</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">copyleaks</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Copyleaks</span><span style="color: #000000">();</span>
+<span style="color: #001080">copyleaks</span><span style="color: #000000">.</span><span style="color: #795E26">loginAsync</span><span style="color: #000000">(</span><span style="color: #800000">&lt;your</span><span style="color: #000000"> </span><span style="color: #FF0000">email</span><span style="color: #800000">&gt;</span><span style="color: #000000">,</span><span style="color: #800000">&lt;your</span><span style="color: #000000"> </span><span style="color: #FF0000">api</span><span style="color: #000000"> </span><span style="color: #FF0000">key</span><span style="color: #800000">&gt;</span><span style="color: #000000">).then(res=&gt; </span><span style="color: #0000FF">{</span><span style="color: #000000">...</span><span style="color: #0000FF">}</span><span style="color: #000000"> , err=&gt; </span><span style="color: #0000FF">{</span><span style="color: #000000">...</span><span style="color: #0000FF">}</span><span style="color: #000000">);</span>
 </code></pre>
 				<a href="#typescript" id="typescript" style="color: inherit; text-decoration: none;">
 					<h4>Typescript</h4>
@@ -100,10 +97,10 @@
 				<pre><code class="language-ts"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">Copyleaks</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;plagiarism-checker&#039;</span><span style="color: #000000">;  </span>
 
 <span style="color: #AF00DB">export</span><span style="color: #000000"> </span><span style="color: #0000FF">class</span><span style="color: #000000"> </span><span style="color: #267F99">MyClass</span><span style="color: #000000">{</span>
-<span style="color: #000000">    </span><span style="color: #0000FF">public</span><span style="color: #000000"> </span><span style="color: #001080">copyleaks</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #267F99">Copyleaks</span><span style="color: #000000">();</span>
+<span style="color: #000000">    </span><span style="color: #0000FF">public</span><span style="color: #000000"> </span><span style="color: #001080">copyleaks</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Copyleaks</span><span style="color: #000000">();</span>
 <span style="color: #000000">    </span><span style="color: #0000FF">public</span><span style="color: #000000"> </span><span style="color: #0000FF">async</span><span style="color: #000000"> </span><span style="color: #795E26">getCopyleaksAuthTokenAsync</span><span style="color: #000000">(){</span>
 <span style="color: #000000">        </span><span style="color: #AF00DB">try</span><span style="color: #000000">{</span>
-<span style="color: #000000">           </span><span style="color: #AF00DB">return</span><span style="color: #000000"> </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #0000FF">this</span><span style="color: #000000">.</span><span style="color: #001080">copyleaks</span><span style="color: #000000">.</span><span style="color: #795E26">loginAsync</span><span style="color: #000000">(&lt;</span><span style="color: #267F99">your</span><span style="color: #000000"> </span><span style="color: #267F99">email</span><span style="color: #000000">&gt;,&lt;</span><span style="color: #267F99">you</span><span style="color: #000000"> </span><span style="color: #267F99">api</span><span style="color: #000000"> </span><span style="color: #267F99">key</span><span style="color: #000000">&gt;); </span>
+<span style="color: #000000">           </span><span style="color: #AF00DB">return</span><span style="color: #000000"> </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #0000FF">this</span><span style="color: #000000">.</span><span style="color: #001080">copyleaks</span><span style="color: #000000">.</span><span style="color: #795E26">loginAsync</span><span style="color: #000000">(&lt;</span><span style="color: #267F99">your</span><span style="color: #000000"> </span><span style="color: #267F99">email</span><span style="color: #000000">&gt;,&lt;</span><span style="color: #267F99">your</span><span style="color: #000000"> </span><span style="color: #267F99">api</span><span style="color: #000000"> </span><span style="color: #267F99">key</span><span style="color: #000000">&gt;); </span>
 <span style="color: #000000">        }</span>
 <span style="color: #000000">        </span><span style="color: #AF00DB">catch</span><span style="color: #000000">{</span>
 <span style="color: #000000">         ...   </span>
@@ -111,18 +108,26 @@
 <span style="color: #000000">    }</span>
 <span style="color: #000000">}</span>
 </code></pre>
-				<a href="#demo" id="demo" style="color: inherit; text-decoration: none;">
-					<h2>Demo</h2>
-				</a>
-				<p>See <a href="./demo/index.js">index.js</a> under demo folder for an example using javascript.</p>
-				<a href="#read-more" id="read-more" style="color: inherit; text-decoration: none;">
-					<h2>Read More</h2>
+				<a href="#note" id="note" style="color: inherit; text-decoration: none;">
+					<h4>Note</h4>
 				</a>
 				<ul>
+					<li>To change the Identity server URI (default:&quot;<a href="https://id.copyleaks.com&quot;">https://id.copyleaks.com&quot;</a>):<pre><code class="language-rb">CopyleaksConfig.IDENTITY_SERVER_URI = &quot;&lt;your identity server uri&gt;&quot;;
+</code></pre>
+					</li>
+					<li>To change the API server URI (default:&quot;<a href="https://api.copyleaks.com&quot;">https://api.copyleaks.com&quot;</a>):<pre><code class="language-rb">CopyleaksConfig.API_SERVER_URI = &quot;&lt;your api server uri&gt;&quot;;
+</code></pre>
+						<a href="#demo" id="demo" style="color: inherit; text-decoration: none;">
+							<h2>Demo</h2>
+						</a>
+						See <a href="./demo/index.js">index.js</a> under demo folder for an example using javascript.
+						<a href="#read-more" id="read-more" style="color: inherit; text-decoration: none;">
+							<h2>Read More</h2>
+						</a>
+					</li>
 					<li><a href="https://api.copyleaks.com/">API Homepage</a></li>
 					<li><a href="https://api.copyleaks.com/documentation">API Documentation</a></li>
-					<li><a href="https://copyleaks.com/">Copyleaks Homepage</a></li>
-					<li><a href="https://copyleaks.com/support/which-copyleaks-product-is-for-me">Which Product Is For Me?</a></li>
+					<li><a href="https://github.com/Copyleaks/plagiarism-report">Plagiarism Report</a></li>
 				</ul>
 			</div>
 		</div>
