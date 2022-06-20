@@ -8,12 +8,9 @@ const {
   CopyleaksFileOcrSubmissionModel,
   CopyleaksDeleteRequestModel,
   CopyleaksExportModel
-} = require('copyleaks-sdk-nodejs');
+} = require('../dist');
 
 const base64Img = require('./base64.img');
-
-// CopyleaksConfig.API_SERVER_URI = "https://api.copyleaks.com";
-// CopyleaksConfig.IDENTITY_SERVER_URI = "https://id.copyleaks.com";
 
 const hostname = '127.0.0.1';
 const port = 3000;
@@ -60,7 +57,7 @@ TEST_copyleaks = () => {
 
         // TEST_submitOcrFileAsync(loginResult);
 
-        // TEST_deleteScanAsync(loginResult);
+        // TEST_deleteScanAsync(["1653575562405", "1653575774429"],loginResult);
 
         // TEST_exportAsync(loginResult);
 
@@ -98,13 +95,11 @@ function TEST_MISC() {
 
 function TEST_CreditsBalance(loginResult) {
 
-  copyleaks.getCreditsBalanceAsync('businesses', loginResult).then(res => logSuccess('getCreditsBalanceAsync - business', res), err => logError('getCreditsBalanceAsync - business', err));
-  copyleaks.getCreditsBalanceAsync('education', loginResult).then(res => logSuccess('getCreditsBalanceAsync - education', res), err => logError('getCreditsBalanceAsync - education', err));
+  copyleaks.getCreditsBalanceAsync(loginResult).then(res => logSuccess('getCreditsBalanceAsync', res), err => logError('getCreditsBalanceAsync', err));
 }
 
 function TEST_UsageHistory(loginResult) {
-  copyleaks.getUsagesHistoryCsvAsync('businesses', loginResult, '01-01-2020', '02-02-2020').then(res => logSuccess('getUsagesHistoryCsvAsync - businesses', res), err => logError('getUsagesHistoryCsvAsync - businesses', err));
-  copyleaks.getUsagesHistoryCsvAsync('education', loginResult, '01-01-2020', '02-02-2020').then(res => logSuccess('getUsagesHistoryCsvAsync - education', res), err => logError('getUsagesHistoryCsvAsync - education', err));
+  copyleaks.getUsagesHistoryCsvAsync(loginResult, '01-01-2020', '02-02-2020').then(res => logSuccess('getUsagesHistoryCsvAsync', res), err => logError('getUsagesHistoryCsvAsync', err));
 }
 
 function TEST_submitUrlAsync(loginResult) {
@@ -120,8 +115,7 @@ function TEST_submitUrlAsync(loginResult) {
     }
   );
 
-  copyleaks.submitUrlAsync('education', loginResult, Date.now() + 1, submission).then(res => logSuccess('submitUrlAsync - education', res), err => { logError('submitUrlAsync - education', err) });
-  copyleaks.submitUrlAsync('businesses', loginResult, Date.now() + 2, submission).then(res => logSuccess('submitUrlAsync - businesses', res), err => logError('submitUrlAsync - businesses', err));
+  copyleaks.submitUrlAsync(loginResult, Date.now() + 1, submission).then(res => logSuccess('submitUrlAsync', res), err => { logError('submitUrlAsync', err) });
 }
 
 function TEST_submitFileAsync(loginResult) {
@@ -137,8 +131,7 @@ function TEST_submitFileAsync(loginResult) {
     }
   );
 
-  copyleaks.submitFileAsync('education', loginResult, Date.now() + 1, submission).then(res => logSuccess('submitFileAsync - education', res), err => { logError('submitFileAsync - education', err) });
-  copyleaks.submitFileAsync('businesses', loginResult, Date.now() + 2, submission).then(res => logSuccess('submitFileAsync - businesses', res), err => logError('submitFileAsync - businesses', err));
+  copyleaks.submitFileAsync(loginResult, Date.now() + 1, submission).then(res => logSuccess('submitFileAsync', res), err => { logError('submitFileAsync', err) });
 }
 
 function TEST_submitOcrFileAsync(loginResult) {
@@ -155,28 +148,18 @@ function TEST_submitOcrFileAsync(loginResult) {
     }
   );
 
-  copyleaks.submitFileOcrAsync('education', loginResult, Date.now() + 1, submission).then(res => logSuccess('submitFileOcrAsync - education', res), err => { logError('submitFileOcrAsync - education', err) });
-  copyleaks.submitFileOcrAsync('businesses', loginResult, Date.now() + 2, submission).then(res => logSuccess('submitFileOcrAsync - businesses', res), err => logError('submitFileOcrAsync - businesses', err));
+  copyleaks.submitFileOcrAsync(loginResult, Date.now() + 1, submission).then(res => logSuccess('submitFileOcrAsync', res), err => { logError('submitFileOcrAsync', err) });
 }
 
-function TEST_deleteScanAsync(loginResult) {
-  if (educationScanId.length) {
+function TEST_deleteScanAsync(scansId, loginResult) {
+  if (scansId.length) {
     const model = new CopyleaksDeleteRequestModel(
-      // add your own education ids to remove
-      ['1610626300310'].map(id => ({ id })),
+      // add your own scan ids to remove
+      scansId.map(id => ({ id })),
       false,
-      `${WEBHOOK_URL}/delete-education`
+      `${WEBHOOK_URL}/delete`
     )
-    copyleaks.deleteAsync('education', loginResult, model).then(res => logSuccess('deleteAsync - education', res), err => { logError('deleteAsync - education', err) });;
-  }
-  if (businessesScanId.length) {
-    const model = new CopyleaksDeleteRequestModel(
-      // add your own businesses ids to remove
-      ['1610626300311'].map(id => ({ id })),
-      false,
-      `${WEBHOOK_URL}/delete-businesses`
-    )
-    copyleaks.deleteAsync('businesses', loginResult, model).then(res => logSuccess('deleteAsync - businesses', res), err => { logError('deleteAsync - businesses', err) });;;
+    copyleaks.deleteAsync(loginResult, model).then(res => logSuccess('deleteAsync', res), err => { logError('deleteAsync', err) });;
   }
 }
 

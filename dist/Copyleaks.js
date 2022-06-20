@@ -64,10 +64,10 @@ class Copyleaks {
                 'User-Agent': app_config_1.CopyleaksConfig.USER_AGENT
             };
             const response = yield axios_1.default.post(url, payload, { headers });
-            if (utils_1.isSuccessStatusCode(response.status)) {
+            if ((0, utils_1.isSuccessStatusCode)(response.status)) {
                 return response.data;
             }
-            else if (utils_1.isUnderMaintenanceResponse(response.status)) {
+            else if ((0, utils_1.isUnderMaintenanceResponse)(response.status)) {
                 throw new exceptions_1.UnderMaintenanceException();
             }
             else {
@@ -92,32 +92,30 @@ class Copyleaks {
     /**
      * Starting a new process by providing a file to scan.
      * For more info:
-     * https://api.copyleaks.com/documentation/v3/education/submit/file
-     * https://api.copyleaks.com/documentation/v3/businesses/submit/file
+     * https://api.copyleaks.com/documentation/v3/scans/submit/file
      * * Exceptions:
      *  * CommandExceptions: Server reject the request. See response status code,
      *     headers and content for more info.
      *  * UnderMaintenanceException: Copyleaks servers are unavailable for maintenance.
      *     We recommend to implement exponential backoff algorithm as described here:
      *     https://api.copyleaks.com/documentation/v3/exponential-backoff
-     * @param product Which product (education or business) is being use.
      * @param authToken Copyleaks authentication token
      * @param scanId Attach your own scan Id
      * @param submission Submission properties
      */
-    submitFileAsync(product, authToken, scanId, submission) {
+    submitFileAsync(authToken, scanId, submission) {
         return __awaiter(this, void 0, void 0, function* () {
             this.verifyAuthToken(authToken);
-            const url = `${app_config_1.CopyleaksConfig.API_SERVER_URI}/v3/${product}/submit/file/${scanId}`;
+            const url = `${app_config_1.CopyleaksConfig.API_SERVER_URI}/v3/scans/submit/file/${scanId}`;
             const headers = {
                 'Content-Type': 'application/json',
                 'User-Agent': app_config_1.CopyleaksConfig.USER_AGENT,
                 'Authorization': `Bearer ${authToken['access_token']}`
             };
             const response = yield axios_1.default.put(url, submission, { headers });
-            if (utils_1.isSuccessStatusCode(response.status))
+            if ((0, utils_1.isSuccessStatusCode)(response.status))
                 return; // Completed successfully
-            else if (utils_1.isUnderMaintenanceResponse(response.status)) {
+            else if ((0, utils_1.isUnderMaintenanceResponse)(response.status)) {
                 throw new exceptions_1.UnderMaintenanceException();
             }
             else {
@@ -128,32 +126,30 @@ class Copyleaks {
     /**
      * Starting a new process by providing a OCR image file to scan.
      * For more info:
-     * https://api.copyleaks.com/documentation/v3/education/submit/ocr
-     * https://api.copyleaks.com/documentation/v3/businesses/submit/ocr
+     * https://api.copyleaks.com/documentation/v3/scans/submit/ocr
      * * Exceptions:
      *  * CommandExceptions: Server reject the request. See response status code,
      *     headers and content for more info.
      *  * UnderMaintenanceException: Copyleaks servers are unavailable for maintenance.
      *     We recommend to implement exponential backoff algorithm as described here:
      *     https://api.copyleaks.com/documentation/v3/exponential-backoff
-     * @param product Which product (education or business) is being use.
      * @param authToken Copyleaks authentication token
      * @param scanId Attach your own scan Id
      * @param submission Submission properties
      */
-    submitFileOcrAsync(product, authToken, scanId, submission) {
+    submitFileOcrAsync(authToken, scanId, submission) {
         return __awaiter(this, void 0, void 0, function* () {
             this.verifyAuthToken(authToken);
-            const url = `${app_config_1.CopyleaksConfig.API_SERVER_URI}/v3/${product}/submit/ocr/${scanId}`;
+            const url = `${app_config_1.CopyleaksConfig.API_SERVER_URI}/v3/scans/submit/ocr/${scanId}`;
             const headers = {
                 'Content-Type': 'application/json',
                 'User-Agent': app_config_1.CopyleaksConfig.USER_AGENT,
                 'Authorization': `Bearer ${authToken['access_token']}`
             };
             const response = yield axios_1.default.put(url, submission, { headers });
-            if (utils_1.isSuccessStatusCode(response.status))
+            if ((0, utils_1.isSuccessStatusCode)(response.status))
                 return; // Completed successfully
-            else if (utils_1.isUnderMaintenanceResponse(response.status)) {
+            else if ((0, utils_1.isUnderMaintenanceResponse)(response.status)) {
                 throw new exceptions_1.UnderMaintenanceException();
             }
             else {
@@ -164,32 +160,30 @@ class Copyleaks {
     /**
      * Starting a new process by providing a URL to scan.
      * For more info:
-     * https://api.copyleaks.com/documentation/v3/education/submit/url
-     * https://api.copyleaks.com/documentation/v3/businesses/submit/url
+     * https://api.copyleaks.com/documentation/v3/scans/submit/url
      * * Exceptions:
      *  * CommandExceptions: Server reject the request. See response status code,
      *     headers and content for more info.
      *  * UnderMaintenanceException: Copyleaks servers are unavailable for maintenance.
      *     We recommend to implement exponential backoff algorithm as described here:
      *     https://api.copyleaks.com/documentation/v3/exponential-backoff
-     * @param product Which product (education or business) is being use.
      * @param authToken Copyleaks authentication token
      * @param scanId Attach your own scan Id
      * @param submission Submission properties
      */
-    submitUrlAsync(product, authToken, scanId, submission) {
+    submitUrlAsync(authToken, scanId, submission) {
         return __awaiter(this, void 0, void 0, function* () {
             this.verifyAuthToken(authToken);
-            const url = `${app_config_1.CopyleaksConfig.API_SERVER_URI}/v3/${product}/submit/url/${scanId}`;
+            const url = `${app_config_1.CopyleaksConfig.API_SERVER_URI}/v3/scans/submit/url/${scanId}`;
             const headers = {
                 'Content-Type': 'application/json',
                 'User-Agent': app_config_1.CopyleaksConfig.USER_AGENT,
                 'Authorization': `Bearer ${authToken['access_token']}`
             };
             const response = yield axios_1.default.put(url, submission, { headers });
-            if (utils_1.isSuccessStatusCode(response.status))
+            if ((0, utils_1.isSuccessStatusCode)(response.status))
                 return; // Completed successfully
-            else if (utils_1.isUnderMaintenanceResponse(response.status)) {
+            else if ((0, utils_1.isUnderMaintenanceResponse)(response.status)) {
                 throw new exceptions_1.UnderMaintenanceException();
             }
             else {
@@ -222,10 +216,10 @@ class Copyleaks {
                 'Authorization': `Bearer ${authToken['access_token']}`
             };
             const response = yield axios_1.default.post(url, model, { headers });
-            if (utils_1.isSuccessStatusCode(response.status)) {
+            if ((0, utils_1.isSuccessStatusCode)(response.status)) {
                 return; // Completed successfully
             }
-            else if (utils_1.isUnderMaintenanceResponse(response.status)) {
+            else if ((0, utils_1.isUnderMaintenanceResponse)(response.status)) {
                 throw new exceptions_1.UnderMaintenanceException();
             }
             else {
@@ -236,32 +230,30 @@ class Copyleaks {
     /**
      * Start scanning all the files you submitted for a price-check.
      * For more info:
-     * https://api.copyleaks.com/documentation/v3/education/start
-     * https://api.copyleaks.com/documentation/v3/businesses/start
+     * https://api.copyleaks.com/documentation/v3/scans/start
      * * Exceptions:
      *  * CommandExceptions: Server reject the request. See response status code,
      *     headers and content for more info.
      *  * UnderMaintenanceException: Copyleaks servers are unavailable for maintenance.
      *     We recommend to implement exponential backoff algorithm as described here:
      *     https://api.copyleaks.com/documentation/v3/exponential-backoff
-     * @param product Which product (education or business) is being use.
      * @param authToken Your login token to Copyleaks server.
      * @param model Include information about which scans should be started.
      */
-    startAsync(product, authToken, model) {
+    startAsync(authToken, model) {
         return __awaiter(this, void 0, void 0, function* () {
             this.verifyAuthToken(authToken);
-            const url = `${app_config_1.CopyleaksConfig.API_SERVER_URI}/v3/${product}/start`;
+            const url = `${app_config_1.CopyleaksConfig.API_SERVER_URI}/v3/scans/start`;
             const headers = {
                 'Content-Type': 'application/json',
                 'User-Agent': app_config_1.CopyleaksConfig.USER_AGENT,
                 'Authorization': `Bearer ${authToken['access_token']}`
             };
             const response = yield axios_1.default.patch(url, model, { headers });
-            if (utils_1.isSuccessStatusCode(response.status)) {
+            if ((0, utils_1.isSuccessStatusCode)(response.status)) {
                 return response.data; // Completed successfully
             }
-            else if (utils_1.isUnderMaintenanceResponse(response.status)) {
+            else if ((0, utils_1.isUnderMaintenanceResponse)(response.status)) {
                 throw new exceptions_1.UnderMaintenanceException();
             }
             else {
@@ -272,34 +264,32 @@ class Copyleaks {
     /**
      * Delete the specific process from the server.
      * For more info:
-     * https://api.copyleaks.com/documentation/v3/education/delete
-     * https://api.copyleaks.com/documentation/v3/businesses/delete
+     * https://api.copyleaks.com/documentation/v3/scans/delete
      * * Exceptions:
      *  * CommandExceptions: Server reject the request. See response status code,
      *     headers and content for more info.
      *  * UnderMaintenanceException: Copyleaks servers are unavailable for maintenance.
      *     We recommend to implement exponential backoff algorithm as described here:
      *     https://api.copyleaks.com/documentation/v3/exponential-backoff
-     * @param product Which product (education or business) is being use.
      * @param authToken Copyleaks authentication token
      * @param payloads
      */
-    deleteAsync(product, authToken, payloads) {
+    deleteAsync(authToken, payloads) {
         return __awaiter(this, void 0, void 0, function* () {
             this.verifyAuthToken(authToken);
-            const url = `${app_config_1.CopyleaksConfig.API_SERVER_URI}/v3.1/${product}/delete`;
+            const url = `${app_config_1.CopyleaksConfig.API_SERVER_URI}/v3.1/scans/delete`;
             const headers = {
                 'Content-Type': 'application/json',
                 'User-Agent': app_config_1.CopyleaksConfig.USER_AGENT,
                 'Authorization': `Bearer ${authToken['access_token']}`
             };
             const response = yield axios_1.default.patch(url, payloads, { headers });
-            if (utils_1.isSuccessStatusCode(response.status))
+            if ((0, utils_1.isSuccessStatusCode)(response.status))
                 return; // Completed successfully;
-            else if (utils_1.isUnderMaintenanceResponse(response.status)) {
+            else if ((0, utils_1.isUnderMaintenanceResponse)(response.status)) {
                 throw new exceptions_1.UnderMaintenanceException();
             }
-            else if (utils_1.isRateLimitResponse(response.status)) {
+            else if ((0, utils_1.isRateLimitResponse)(response.status)) {
                 throw new exceptions_1.RateLimitException();
             }
             else {
@@ -310,31 +300,29 @@ class Copyleaks {
     /**
      * Resend status webhooks for existing scans.
      * For more info:
-     * https://api.copyleaks.com/documentation/v3/education/webhook-resend
-     * https://api.copyleaks.com/documentation/v3/businesses/webhook-resend
+     * https://api.copyleaks.com/documentation/v3/scans/webhook-resend
      * * Exceptions:
      *  * CommandExceptions: Server reject the request. See response status code,
      *     headers and content for more info.
      *  * UnderMaintenanceException: Copyleaks servers are unavailable for maintenance.
      *     We recommend to implement exponential backoff algorithm as described here:
      *     https://api.copyleaks.com/documentation/v3/exponential-backoff
-     * @param product Which product (education or business) is being use.
      * @param authToken Copyleaks authentication token
      * @param scanId Copyleaks scan Id
      */
-    resendWebhookAsync(product, authToken, scanId) {
+    resendWebhookAsync(authToken, scanId) {
         return __awaiter(this, void 0, void 0, function* () {
             this.verifyAuthToken(authToken);
-            const url = `${app_config_1.CopyleaksConfig.API_SERVER_URI}/v3/${product}/scans/${scanId}/webhooks/resend`;
+            const url = `${app_config_1.CopyleaksConfig.API_SERVER_URI}/v3/scans/${scanId}/webhooks/resend`;
             const headers = {
                 'Content-Type': 'application/json',
                 'User-Agent': app_config_1.CopyleaksConfig.USER_AGENT,
                 'Authorization': `Bearer ${authToken['access_token']}`
             };
             const response = yield axios_1.default.post(url, null, { headers });
-            if (utils_1.isSuccessStatusCode(response.status))
+            if ((0, utils_1.isSuccessStatusCode)(response.status))
                 return; // Completed successfully
-            else if (utils_1.isUnderMaintenanceResponse(response.status)) {
+            else if ((0, utils_1.isUnderMaintenanceResponse)(response.status)) {
                 throw new exceptions_1.UnderMaintenanceException();
             }
             else {
@@ -345,8 +333,7 @@ class Copyleaks {
     /**
      * Get current credits balance for the Copyleaks account.
      * For more info:
-     * https://api.copyleaks.com/documentation/v3/education/credits
-     * https://api.copyleaks.com/documentation/v3/businesses/credits
+     * https://api.copyleaks.com/documentation/v3/scans/credits
      * * Exceptions:
      *  * CommandExceptions: Server reject the request. See response status code,
      *     headers and content for more info.
@@ -354,24 +341,23 @@ class Copyleaks {
      *     We recommend to implement exponential backoff algorithm as described here:
      *     https://api.copyleaks.com/documentation/v3/exponential-backoff
      *  * RateLimitException: Too many requests. Please wait before calling again.
-     * @param product Which product (education or business) is being use.
      * @param authToken Copyleaks authentication token
      */
-    getCreditsBalanceAsync(product, authToken) {
+    getCreditsBalanceAsync(authToken) {
         return __awaiter(this, void 0, void 0, function* () {
             this.verifyAuthToken(authToken);
-            const url = `${app_config_1.CopyleaksConfig.API_SERVER_URI}/v3/${product}/credits`;
+            const url = `${app_config_1.CopyleaksConfig.API_SERVER_URI}/v3/scans/credits`;
             const headers = {
                 'User-Agent': app_config_1.CopyleaksConfig.USER_AGENT,
                 'Authorization': `Bearer ${authToken['access_token']}`
             };
             const response = yield axios_1.default.get(url, { headers });
-            if (utils_1.isSuccessStatusCode(response.status))
+            if ((0, utils_1.isSuccessStatusCode)(response.status))
                 return response.data;
-            else if (utils_1.isUnderMaintenanceResponse(response.status)) {
+            else if ((0, utils_1.isUnderMaintenanceResponse)(response.status)) {
                 throw new exceptions_1.UnderMaintenanceException();
             }
-            else if (utils_1.isRateLimitResponse(response.status)) {
+            else if ((0, utils_1.isRateLimitResponse)(response.status)) {
                 throw new exceptions_1.RateLimitException();
             }
             else {
@@ -383,8 +369,7 @@ class Copyleaks {
      * This endpoint allows you to export your usage history between two dates.
      * The output results will be exported to a csv file and it will be attached to the response.
      * For more info:
-     * https://api.copyleaks.com/documentation/v3/education/usages/history
-     * https://api.copyleaks.com/documentation/v3/businesses/usages/history
+     * https://api.copyleaks.com/documentation/v3/scans/usages/history
      * * Exceptions:
      *  * CommandExceptions: Server reject the request. See response status code,
      *     headers and content for more info.
@@ -392,27 +377,26 @@ class Copyleaks {
      *     We recommend to implement exponential backoff algorithm as described here:
      *     https://api.copyleaks.com/documentation/v3/exponential-backoff
      *  * RateLimitException: Too many requests. Please wait before calling again.
-     * @param product Which product (education or business) is being use.
      * @param authToken Copyleaks authentication token.
      * @param startDate The start date to collect usage history from. Date Format: `dd-MM-yyyy`.
      * @param endDate The end date to collect usage history from. Date Format: `dd-MM-yyyy`.
      */
-    getUsagesHistoryCsvAsync(product, authToken, startDate, endDate) {
+    getUsagesHistoryCsvAsync(authToken, startDate, endDate) {
         return __awaiter(this, void 0, void 0, function* () {
             this.verifyAuthToken(authToken);
-            const url = `${app_config_1.CopyleaksConfig.API_SERVER_URI}/v3/${product}/usages/history?start=${startDate}&end=${endDate}`;
+            const url = `${app_config_1.CopyleaksConfig.API_SERVER_URI}/v3/scans/usages/history?start=${startDate}&end=${endDate}`;
             const headers = {
                 'Content-Type': 'application/json',
                 'User-Agent': app_config_1.CopyleaksConfig.USER_AGENT,
                 'Authorization': `Bearer ${authToken['access_token']}`
             };
             const response = yield axios_1.default.get(url, { headers });
-            if (utils_1.isSuccessStatusCode(response.status))
+            if ((0, utils_1.isSuccessStatusCode)(response.status))
                 return response.data;
-            else if (utils_1.isUnderMaintenanceResponse(response.status)) {
+            else if ((0, utils_1.isUnderMaintenanceResponse)(response.status)) {
                 throw new exceptions_1.UnderMaintenanceException();
             }
-            else if (utils_1.isRateLimitResponse(response.status)) {
+            else if ((0, utils_1.isRateLimitResponse)(response.status)) {
                 throw new exceptions_1.RateLimitException();
             }
             else {
@@ -440,12 +424,12 @@ class Copyleaks {
                 'User-Agent': app_config_1.CopyleaksConfig.USER_AGENT,
             };
             const response = yield axios_1.default.get(url, { headers });
-            if (utils_1.isSuccessStatusCode(response.status))
+            if ((0, utils_1.isSuccessStatusCode)(response.status))
                 return response.data;
-            else if (utils_1.isUnderMaintenanceResponse(response.status)) {
+            else if ((0, utils_1.isUnderMaintenanceResponse)(response.status)) {
                 throw new exceptions_1.UnderMaintenanceException();
             }
-            else if (utils_1.isRateLimitResponse(response.status)) {
+            else if ((0, utils_1.isRateLimitResponse)(response.status)) {
                 throw new exceptions_1.RateLimitException();
             }
             else {
@@ -473,12 +457,12 @@ class Copyleaks {
                 'User-Agent': app_config_1.CopyleaksConfig.USER_AGENT,
             };
             const response = yield axios_1.default.get(url, { headers });
-            if (utils_1.isSuccessStatusCode(response.status))
+            if ((0, utils_1.isSuccessStatusCode)(response.status))
                 return response.data;
-            else if (utils_1.isUnderMaintenanceResponse(response.status)) {
+            else if ((0, utils_1.isUnderMaintenanceResponse)(response.status)) {
                 throw new exceptions_1.UnderMaintenanceException();
             }
-            else if (utils_1.isRateLimitResponse(response.status)) {
+            else if ((0, utils_1.isRateLimitResponse)(response.status)) {
                 throw new exceptions_1.RateLimitException();
             }
             else {
@@ -506,12 +490,12 @@ class Copyleaks {
                 'User-Agent': app_config_1.CopyleaksConfig.USER_AGENT,
             };
             const response = yield axios_1.default.get(url, { headers });
-            if (utils_1.isSuccessStatusCode(response.status))
+            if ((0, utils_1.isSuccessStatusCode)(response.status))
                 return response.data;
-            else if (utils_1.isUnderMaintenanceResponse(response.status)) {
+            else if ((0, utils_1.isUnderMaintenanceResponse)(response.status)) {
                 throw new exceptions_1.UnderMaintenanceException();
             }
-            else if (utils_1.isRateLimitResponse(response.status)) {
+            else if ((0, utils_1.isRateLimitResponse)(response.status)) {
                 throw new exceptions_1.RateLimitException();
             }
             else {
