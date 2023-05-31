@@ -38,8 +38,6 @@ import { SubmissionWebhooks } from './Webhooks';
 
 export interface SubmissionProperties {
   webhooks: SubmissionWebhooks;
-
-  allowPartialScan?: boolean;
   /**
    * Scan priority
    */
