@@ -22,11 +22,13 @@
  SOFTWARE.
 */
 
-import { SubmissionIndexingRepository } from './IndexingRepository';
-
-export interface SubmissionIndexing {
-  /**
-   * Check inner properties for more details.
-   */
-  repositories?: SubmissionIndexingRepository[];
-}
+export enum ScanMethodAlgorithm {
+    /**
+     * prioritize higher similarity.
+     */
+    MaximumCoverage,
+    /**
+     * prioritize finding more sources.
+     */
+    MaximumResults,
+  }

@@ -22,11 +22,10 @@
  SOFTWARE.
 */
 
-import { SubmissionIndexingRepository } from './IndexingRepository';
+export enum Priority {
+    Low = 1,
 
-export interface SubmissionIndexing {
-  /**
-   * Check inner properties for more details.
-   */
-  repositories?: SubmissionIndexingRepository[];
-}
+    Normal,
+
+    High
+  }

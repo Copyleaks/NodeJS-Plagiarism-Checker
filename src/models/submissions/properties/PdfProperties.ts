@@ -22,6 +22,8 @@
  SOFTWARE.
 */
 
+import { PdfReportVersion } from "./PdfReportVersion";
+
 export interface SubmissionPDF {
   /**
    * Add a request to generate a customizable export of the scan report, in a pdf format.
@@ -36,8 +38,15 @@ export interface SubmissionPDF {
    * Customize the logo image in the PDF report.
    */
   largeLogo: string;
+
+  smallLogo: string;
   /**
    * When set to true the text in the report will be aligned from right to left.
    */
   rtl: boolean;
+  /**
+   * PDF version to generate. By default version 1 will be generated as it our current stable version. 
+   * Version 2 is our latest iteration of our PDF report and is currently in beta.
+   */
+  version: PdfReportVersion;
 }

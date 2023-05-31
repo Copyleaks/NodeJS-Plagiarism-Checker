@@ -22,11 +22,9 @@
  SOFTWARE.
 */
 
-import { SubmissionIndexingRepository } from './IndexingRepository';
-
-export interface SubmissionIndexing {
+export interface AIGeneratedText {
   /**
-   * Check inner properties for more details.
+   * Enable detection of AI generated text.
    */
-  repositories?: SubmissionIndexingRepository[];
+  detect: boolean;
 }

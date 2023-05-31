@@ -22,11 +22,13 @@
  SOFTWARE.
 */
 
-import { SubmissionIndexingRepository } from './IndexingRepository';
+import { MaskingPolicy } from './Policies';
+import { SubmissionRepository } from './Repository';
 
-export interface SubmissionIndexing {
+export interface SubmissionIndexingRepository extends SubmissionRepository {
   /**
-   * Check inner properties for more details.
+   * Compare the scanned document against MY submittions in the repository.
    */
-  repositories?: SubmissionIndexingRepository[];
+  maskingPolicy: MaskingPolicy;
+
 }

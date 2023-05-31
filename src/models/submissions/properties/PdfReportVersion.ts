@@ -22,11 +22,13 @@
  SOFTWARE.
 */
 
-import { SubmissionIndexingRepository } from './IndexingRepository';
-
-export interface SubmissionIndexing {
-  /**
-   * Check inner properties for more details.
-   */
-  repositories?: SubmissionIndexingRepository[];
-}
+export enum PdfReportVersion {
+    /**
+     * pdf version 1.
+     */
+    V1 = 1,
+    /**
+     * pdf version 2.
+     */
+    V2,
+  }

@@ -22,11 +22,9 @@
  SOFTWARE.
 */
 
-import { SubmissionIndexingRepository } from './IndexingRepository';
+export interface CustomMetadata {
 
-export interface SubmissionIndexing {
-  /**
-   * Check inner properties for more details.
-   */
-  repositories?: SubmissionIndexingRepository[];
-}
+    key: string;
+
+    value: string;
+  }

@@ -22,11 +22,7 @@
  SOFTWARE.
 */
 
-import { SubmissionIndexingRepository } from './IndexingRepository';
+export interface ExcludeCode {
 
-export interface SubmissionIndexing {
-  /**
-   * Check inner properties for more details.
-   */
-  repositories?: SubmissionIndexingRepository[];
+    comments?: boolean;
 }

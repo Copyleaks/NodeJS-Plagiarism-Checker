@@ -22,11 +22,17 @@
  SOFTWARE.
 */
 
-import { SubmissionIndexingRepository } from './IndexingRepository';
-
-export interface SubmissionIndexing {
-  /**
-   * Check inner properties for more details.
-   */
-  repositories?: SubmissionIndexingRepository[];
-}
+export enum MaskingPolicy {
+    /**
+     * don't mask results from this document.
+     */
+    NoMasking,
+    /**
+     * Mask all results coming from this document, unless the requesting user owns this file.
+     */
+    MaskUnlessOwner,
+    /**
+     * Mask all results from this document.
+     */
+    MaskAll
+  }

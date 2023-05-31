@@ -22,18 +22,28 @@
  SOFTWARE.
 */
 
+import { AIGeneratedText } from './AIGeneratedText';
 import { SubmissionActions } from './Actions';
 import { SubmissionAuthor } from './Author';
+import { CustomMetadata } from './CustomMetadata';
 import { SubmissionExclude } from './Exclude';
 import { SubmissionFilter } from './Filter';
 import { SubmissionIndexing } from './Indexing';
 import { SubmissionPDF } from './PdfProperties';
+import { Priority } from './Priority';
+import { ScanMethodAlgorithm } from './ScanMethods';
 import { SubmissionScanning } from './Scanning';
 import { SubmissionSensitiveData } from './SensitiveDataProtection';
 import { SubmissionWebhooks } from './Webhooks';
 
 export interface SubmissionProperties {
   webhooks: SubmissionWebhooks;
+
+  allowPartialScan?: boolean;
+  /**
+   * Scan priority
+   */
+  priority?: Priority;
   /**
    * By default, Copyleaks will present the report in text format. If set to true, Copyleaks will also include html format.
    */
@@ -64,9 +74,26 @@ export interface SubmissionProperties {
    */
   sensitivityLevel?: number;
   /**
+   * Choose the algorithm goal. You can set this value depending on your use-case.
+   */
+  scanMethodAlgorithm?: ScanMethodAlgorithm;
+
+  /**
+   * Add custom properties that will be attached to your document in a Copyleaks repository.
+   * 
+   * If this document is found as a repository result, your custom properties will be added to the result.
+   */
+  customMetadata?: CustomMetadata[];
+  /**
    * When set to true the submitted document will be checked for cheating. If a cheating will be detected, a scan alert will be added to the completed webhook.
    */
   cheatDetection?: boolean;
+/**
+ * Detects whether the text was written by an AI.
+ * 
+ * Upon detection a scan alert of type "suspected-ai-text" will be added to the scan completion webhook.
+ */
+  aiGeneratedText?: AIGeneratedText;
   /**
    * Types of content submission actions.
    *
