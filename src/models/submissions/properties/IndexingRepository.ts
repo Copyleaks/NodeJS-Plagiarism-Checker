@@ -27,7 +27,9 @@ import { SubmissionRepository } from './Repository';
 
 export interface SubmissionIndexingRepository extends SubmissionRepository {
   /**
-   * Compare the scanned document against MY submittions in the repository.
+   * allows to specify a document masking policy on the document level.
+   * 
+   * If the repo has it's own masking policy, the stricter policy will be applied to results from this document.
    */
   maskingPolicy: MaskingPolicy;
 

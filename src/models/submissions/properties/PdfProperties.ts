@@ -22,6 +22,7 @@
  SOFTWARE.
 */
 
+import { PdfReportColors } from "./PdfReportColors";
 import { PdfReportVersion } from "./PdfReportVersion";
 
 export interface SubmissionPDF {
@@ -38,8 +39,6 @@ export interface SubmissionPDF {
    * Customize the logo image in the PDF report.
    */
   largeLogo: string;
-
-  smallLogo: string;
   /**
    * When set to true the text in the report will be aligned from right to left.
    */
@@ -49,4 +48,9 @@ export interface SubmissionPDF {
    * Version 2 is our latest iteration of our PDF report and is currently in beta.
    */
   version: PdfReportVersion;
+
+  /**
+   * Customizable colors
+   */
+  colors?: PdfReportColors;
 }

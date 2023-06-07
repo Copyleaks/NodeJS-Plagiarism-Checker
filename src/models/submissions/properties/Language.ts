@@ -22,9 +22,10 @@
  SOFTWARE.
 */
 
-export interface AIGeneratedText {
+export interface Language {
   /**
-   * Enable detection of AI generated text.
+   * Language code for cross language plagiarism detection.
    */
-  detect: boolean;
+  code: string;
+
 }

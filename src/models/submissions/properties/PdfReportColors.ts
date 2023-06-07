@@ -22,9 +22,25 @@
  SOFTWARE.
 */
 
-export interface AIGeneratedText {
-  /**
-   * Enable detection of AI generated text.
-   */
-  detect: boolean;
+export interface PdfReportColors {
+    /**
+     * The color of the main strip in the header
+     */
+    MainStrip?: string;
+    /**
+     * The color for titles in copyleaks result report
+     */
+    title?: string;
+    /**
+     * The highlight color for identical matches
+     */
+    Identical?: string;
+    /**
+     * The highlight color for minor changes matches
+     */
+    MinorChanges?: string;
+    /**
+     * The highlight color for related meaning matches
+     */
+    RelatedMeaning?: string;
 }

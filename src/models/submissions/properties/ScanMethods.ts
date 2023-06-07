@@ -32,3 +32,4 @@ export enum ScanMethodAlgorithm {
      */
     MaximumResults,
   }
+  
