@@ -26,7 +26,7 @@ export interface PdfReportColors {
     /**
      * The color of the main strip in the header
      */
-    MainStrip?: string;
+    mainStrip?: string;
     /**
      * The color for titles in copyleaks result report
      */
@@ -34,13 +34,13 @@ export interface PdfReportColors {
     /**
      * The highlight color for identical matches
      */
-    Identical?: string;
+    identical?: string;
     /**
      * The highlight color for minor changes matches
      */
-    MinorChanges?: string;
+    minorChanges?: string;
     /**
      * The highlight color for related meaning matches
      */
-    RelatedMeaning?: string;
+    relatedMeaning?: string;
 }
