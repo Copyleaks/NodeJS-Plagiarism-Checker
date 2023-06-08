@@ -30,7 +30,6 @@ import { SubmissionExclude } from './Exclude';
 import { SubmissionFilter } from './Filter';
 import { SubmissionIndexing } from './Indexing';
 import { SubmissionPDF } from './PdfProperties';
-import { Priority } from './Priority';
 import { ScanMethodAlgorithm } from './ScanMethods';
 import { SubmissionScanning } from './Scanning';
 import { SubmissionSensitiveData } from './SensitiveDataProtection';
@@ -38,10 +37,6 @@ import { SubmissionWebhooks } from './Webhooks';
 
 export interface SubmissionProperties {
   webhooks: SubmissionWebhooks;
-  /**
-   * Scan priority
-   */
-  priority?: Priority;
   /**
    * By default, Copyleaks will present the report in text format. If set to true, Copyleaks will also include html format.
    */
