@@ -22,11 +22,11 @@
  SOFTWARE.
 */
 
-import { SubmissionRepository } from './Repository';
+import { SubmissionIndexingRepository } from './IndexingRepository';
 
 export interface SubmissionIndexing {
   /**
    * Check inner properties for more details.
    */
-  repositories?: SubmissionRepository[]
+  repositories?: SubmissionIndexingRepository[];
 }
