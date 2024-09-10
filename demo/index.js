@@ -7,7 +7,10 @@ const {
   CopyleaksFileSubmissionModel,
   CopyleaksFileOcrSubmissionModel,
   CopyleaksDeleteRequestModel,
-  CopyleaksExportModel
+  CopyleaksExportModel,
+  CopyleaksSourceCodeSubmissionModel,
+  CopyleaksNaturalLanguageSubmissionModel,
+  CopyleaksWritingAssistantSubmissionModel
 } = require('../dist');
 
 const base64Img = require('./base64.img');
@@ -61,6 +64,13 @@ TEST_copyleaks = () => {
 
         // TEST_exportAsync(loginResult);
 
+        // TEST_submitAIDetectionNaturalLanguage(loginResult);
+
+        // TEST_submitAIDetectionSourceCode(loginResult);
+
+        // TEST_submitWritingAssistText(loginResult);
+
+        // TEST_getCorrectionTypes(loginResult);
       },
       err => logError('loginAsync', err)
     )
@@ -186,6 +196,76 @@ function TEST_exportAsync(loginResult) {
   );
 
   copyleaks.exportAsync(loginResult, scanId, scanId, model).then(res => logSuccess('exportAsync', res), err => { logError('exportAsync', err) });
+}
+
+function TEST_submitAIDetectionNaturalLanguage(loginResult) {
+  const sampleText = "Lions are social animals, living in groups called prides, typically consisting of several females, their offspring, and a few males. Female lions are the primary hunters, working together to catch prey. Lions are known for their strength, teamwork, and complex social structures.";
+  const submission = new CopyleaksNaturalLanguageSubmissionModel(sampleText);
+  submission.sandbox = true;
+
+  copyleaks.aiDetectionClient.submitNaturalTextAsync(loginResult, Date.now() + 1, submission)
+    .then(response => {
+      logSuccess('TEST_submitAIDetectionNaturalLanguage', response);
+    })
+    .catch(error => {
+      logError('TEST_submitAIDetectionNaturalLanguage', error);
+    });
+}
+
+function TEST_submitAIDetectionSourceCode(loginResult) {
+  const sampleCode = `
+  def add(a, b):
+      return a + b
+  
+  def multiply(a, b):
+      return a * b
+  
+  def main():
+      x = 5
+      y = 10
+      sum_result = add(x, y)
+      product_result = multiply(x, y)
+      print(f'Sum: {sum_result}')
+      print(f'Product: {product_result}')
+  
+  if __name__ == '__main__':
+      main()
+  `;
+  const submission = new CopyleaksSourceCodeSubmissionModel(sampleCode, 'example.py');
+  submission.sandbox = true;
+
+  copyleaks.aiDetectionClient.submitNaturalTextAsync(loginResult, Date.now() + 1, submission)
+    .then(response => {
+      logSuccess('TEST_submitAIDetectionSourceCode', response);
+    })
+    .catch(error => {
+      logError('TEST_submitAIDetectionSourceCode', error);
+    });
+}
+
+function TEST_submitWritingAssistText(loginResult) {
+  const sampleText = "Lions are the only cat that live in groups, called pride. A prides typically consists of a few adult males, several feales, and their offspring. This social structure is essential for hunting and raising young cubs. Female lions, or lionesses are the primary hunters of the prid. They work together in cordinated groups to take down prey usually targeting large herbiores like zbras, wildebeest and buffalo. Their teamwork and strategy during hunts highlight the intelligence and coperation that are key to their survival.";
+  const submission = new CopyleaksWritingAssistantSubmissionModel(sampleText);
+  submission.sandbox = true;
+
+  copyleaks.writingAssistantClient.submitTextAsync(loginResult, Date.now() + 1, submission)
+    .then(response => {
+      logSuccess('TEST_submitWritingAssistText', response);
+    })
+    .catch(error => {
+      logError('TEST_submitWritingAssistText', error);
+    });
+}
+
+function TEST_getCorrectionTypes(loginResult) {
+
+  copyleaks.writingAssistantClient.getCorrectionTypesAsync(loginResult, "en")
+    .then(response => {
+      logSuccess('TEST_submitAIDetectionNaturalLanguage', response);
+    })
+    .catch(error => {
+      logError('TEST_submitAIDetectionNaturalLanguage', error);
+    });
 }
 
 function logError(title, err) {
