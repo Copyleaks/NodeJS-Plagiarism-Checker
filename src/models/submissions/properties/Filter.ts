@@ -57,4 +57,9 @@ export interface SubmissionFilter {
    * When Exclude is selected, Copyleaks will only find results outside of the properties.filters.domains list.
    */
   domainsMode?: SubmissionFilterDomainsMode
+
+  /**
+   * when set to true it will allow results from the same domain as the submitted url.
+   */
+  allowSameDomain?: boolean;
 }
