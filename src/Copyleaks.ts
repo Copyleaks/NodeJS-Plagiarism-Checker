@@ -31,8 +31,18 @@ import { CopyleaksStartRequestModel } from './models/request/CopyleaksStartReque
 import { CopyleaksAuthToken } from './models/response';
 import { CopyleaksFileOcrSubmissionModel, CopyleaksFileSubmissionModel, CopyleaksURLSubmissionModel } from './models/submissions';
 import { isRateLimitResponse, isSuccessStatusCode, isUnderMaintenanceResponse } from './utils';
+import { AIDetectionClient } from './clients/AIDetectionClient';
+import { WritingAssistantClient } from './clients/WritingAssistantClient';
 
 export class Copyleaks {
+
+  public readonly aiDetectionClient: AIDetectionClient;
+  public readonly writingAssistantClient: WritingAssistantClient;
+
+  constructor() {
+    this.aiDetectionClient = new AIDetectionClient();
+    this.writingAssistantClient = new WritingAssistantClient();
+  }
   /**
    * Login to Copyleaks authentication server.
    * For more info: https://api.copyleaks.com/documentation/v3/account/login.
