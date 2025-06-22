@@ -71,6 +71,8 @@ TEST_copyleaks = () => {
         // TEST_submitWritingAssistText(loginResult);
 
         // TEST_getCorrectionTypes(loginResult);
+        
+        //TEST_submitTextModerationText(loginResult);
       },
       err => logError('loginAsync', err)
     )
@@ -267,7 +269,27 @@ function TEST_getCorrectionTypes(loginResult) {
       logError('TEST_submitAIDetectionNaturalLanguage', error);
     });
 }
+function TEST_submitTextModerationText(loginResult) {
 
+  var model = new TextModerationRequestModel({
+      text: "hello world",
+      sandbox: true,
+      language: "en",
+      labels: [
+          { id: "other-v1" },
+          { id: "adult-v1" },
+          { id: "toxic-v1" },
+      ]
+  });
+
+    copyleaks.textModerationClient.submitTextAsync(loginResult, Date.now() + 1, model)
+      .then(response => {
+        logSuccess('TEST_submitTextModerationText', response);
+      })
+      .catch(error => {
+        logError('TEST_submitTextModerationText', error);
+      });
+}
 function logError(title, err) {
   console.error('----------ERROR----------');
   console.error(`${title}:`);

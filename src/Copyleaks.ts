@@ -33,15 +33,18 @@ import { CopyleaksFileOcrSubmissionModel, CopyleaksFileSubmissionModel, Copyleak
 import { isRateLimitResponse, isSuccessStatusCode, isUnderMaintenanceResponse } from './utils';
 import { AIDetectionClient } from './clients/AIDetectionClient';
 import { WritingAssistantClient } from './clients/WritingAssistantClient';
+import { TextModerationClient } from './clients/TextModerationClient';
 
 export class Copyleaks {
 
   public readonly aiDetectionClient: AIDetectionClient;
   public readonly writingAssistantClient: WritingAssistantClient;
+  public readonly textModerationClient: TextModerationClient;
 
   constructor() {
     this.aiDetectionClient = new AIDetectionClient();
     this.writingAssistantClient = new WritingAssistantClient();
+    this.textModerationClient = new TextModerationClient();
   }
   /**
    * Login to Copyleaks authentication server.

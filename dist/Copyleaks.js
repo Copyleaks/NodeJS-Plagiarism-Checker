@@ -37,7 +37,15 @@ const axios_1 = require("axios");
 const app_config_1 = require("./app.config");
 const exceptions_1 = require("./models/exceptions");
 const utils_1 = require("./utils");
+const AIDetectionClient_1 = require("./clients/AIDetectionClient");
+const WritingAssistantClient_1 = require("./clients/WritingAssistantClient");
+const TextModerationClient_1 = require("./clients/TextModerationClient");
 class Copyleaks {
+    constructor() {
+        this.aiDetectionClient = new AIDetectionClient_1.AIDetectionClient();
+        this.writingAssistantClient = new WritingAssistantClient_1.WritingAssistantClient();
+        this.textModerationClient = new TextModerationClient_1.TextModerationClient();
+    }
     /**
      * Login to Copyleaks authentication server.
      * For more info: https://api.copyleaks.com/documentation/v3/account/login.
@@ -64,10 +72,10 @@ class Copyleaks {
                 'User-Agent': app_config_1.CopyleaksConfig.USER_AGENT
             };
             const response = yield axios_1.default.post(url, payload, { headers });
-            if ((0, utils_1.isSuccessStatusCode)(response.status)) {
+            if (utils_1.isSuccessStatusCode(response.status)) {
                 return response.data;
             }
-            else if ((0, utils_1.isUnderMaintenanceResponse)(response.status)) {
+            else if (utils_1.isUnderMaintenanceResponse(response.status)) {
                 throw new exceptions_1.UnderMaintenanceException();
             }
             else {
@@ -113,9 +121,9 @@ class Copyleaks {
                 'Authorization': `Bearer ${authToken['access_token']}`
             };
             const response = yield axios_1.default.put(url, submission, { headers });
-            if ((0, utils_1.isSuccessStatusCode)(response.status))
+            if (utils_1.isSuccessStatusCode(response.status))
                 return; // Completed successfully
-            else if ((0, utils_1.isUnderMaintenanceResponse)(response.status)) {
+            else if (utils_1.isUnderMaintenanceResponse(response.status)) {
                 throw new exceptions_1.UnderMaintenanceException();
             }
             else {
@@ -147,9 +155,9 @@ class Copyleaks {
                 'Authorization': `Bearer ${authToken['access_token']}`
             };
             const response = yield axios_1.default.put(url, submission, { headers });
-            if ((0, utils_1.isSuccessStatusCode)(response.status))
+            if (utils_1.isSuccessStatusCode(response.status))
                 return; // Completed successfully
-            else if ((0, utils_1.isUnderMaintenanceResponse)(response.status)) {
+            else if (utils_1.isUnderMaintenanceResponse(response.status)) {
                 throw new exceptions_1.UnderMaintenanceException();
             }
             else {
@@ -181,9 +189,9 @@ class Copyleaks {
                 'Authorization': `Bearer ${authToken['access_token']}`
             };
             const response = yield axios_1.default.put(url, submission, { headers });
-            if ((0, utils_1.isSuccessStatusCode)(response.status))
+            if (utils_1.isSuccessStatusCode(response.status))
                 return; // Completed successfully
-            else if ((0, utils_1.isUnderMaintenanceResponse)(response.status)) {
+            else if (utils_1.isUnderMaintenanceResponse(response.status)) {
                 throw new exceptions_1.UnderMaintenanceException();
             }
             else {
@@ -216,10 +224,10 @@ class Copyleaks {
                 'Authorization': `Bearer ${authToken['access_token']}`
             };
             const response = yield axios_1.default.post(url, model, { headers });
-            if ((0, utils_1.isSuccessStatusCode)(response.status)) {
+            if (utils_1.isSuccessStatusCode(response.status)) {
                 return; // Completed successfully
             }
-            else if ((0, utils_1.isUnderMaintenanceResponse)(response.status)) {
+            else if (utils_1.isUnderMaintenanceResponse(response.status)) {
                 throw new exceptions_1.UnderMaintenanceException();
             }
             else {
@@ -250,10 +258,10 @@ class Copyleaks {
                 'Authorization': `Bearer ${authToken['access_token']}`
             };
             const response = yield axios_1.default.patch(url, model, { headers });
-            if ((0, utils_1.isSuccessStatusCode)(response.status)) {
+            if (utils_1.isSuccessStatusCode(response.status)) {
                 return response.data; // Completed successfully
             }
-            else if ((0, utils_1.isUnderMaintenanceResponse)(response.status)) {
+            else if (utils_1.isUnderMaintenanceResponse(response.status)) {
                 throw new exceptions_1.UnderMaintenanceException();
             }
             else {
@@ -284,12 +292,12 @@ class Copyleaks {
                 'Authorization': `Bearer ${authToken['access_token']}`
             };
             const response = yield axios_1.default.patch(url, payloads, { headers });
-            if ((0, utils_1.isSuccessStatusCode)(response.status))
+            if (utils_1.isSuccessStatusCode(response.status))
                 return; // Completed successfully;
-            else if ((0, utils_1.isUnderMaintenanceResponse)(response.status)) {
+            else if (utils_1.isUnderMaintenanceResponse(response.status)) {
                 throw new exceptions_1.UnderMaintenanceException();
             }
-            else if ((0, utils_1.isRateLimitResponse)(response.status)) {
+            else if (utils_1.isRateLimitResponse(response.status)) {
                 throw new exceptions_1.RateLimitException();
             }
             else {
@@ -320,9 +328,9 @@ class Copyleaks {
                 'Authorization': `Bearer ${authToken['access_token']}`
             };
             const response = yield axios_1.default.post(url, null, { headers });
-            if ((0, utils_1.isSuccessStatusCode)(response.status))
+            if (utils_1.isSuccessStatusCode(response.status))
                 return; // Completed successfully
-            else if ((0, utils_1.isUnderMaintenanceResponse)(response.status)) {
+            else if (utils_1.isUnderMaintenanceResponse(response.status)) {
                 throw new exceptions_1.UnderMaintenanceException();
             }
             else {
@@ -352,12 +360,12 @@ class Copyleaks {
                 'Authorization': `Bearer ${authToken['access_token']}`
             };
             const response = yield axios_1.default.get(url, { headers });
-            if ((0, utils_1.isSuccessStatusCode)(response.status))
+            if (utils_1.isSuccessStatusCode(response.status))
                 return response.data;
-            else if ((0, utils_1.isUnderMaintenanceResponse)(response.status)) {
+            else if (utils_1.isUnderMaintenanceResponse(response.status)) {
                 throw new exceptions_1.UnderMaintenanceException();
             }
-            else if ((0, utils_1.isRateLimitResponse)(response.status)) {
+            else if (utils_1.isRateLimitResponse(response.status)) {
                 throw new exceptions_1.RateLimitException();
             }
             else {
@@ -391,12 +399,12 @@ class Copyleaks {
                 'Authorization': `Bearer ${authToken['access_token']}`
             };
             const response = yield axios_1.default.get(url, { headers });
-            if ((0, utils_1.isSuccessStatusCode)(response.status))
+            if (utils_1.isSuccessStatusCode(response.status))
                 return response.data;
-            else if ((0, utils_1.isUnderMaintenanceResponse)(response.status)) {
+            else if (utils_1.isUnderMaintenanceResponse(response.status)) {
                 throw new exceptions_1.UnderMaintenanceException();
             }
-            else if ((0, utils_1.isRateLimitResponse)(response.status)) {
+            else if (utils_1.isRateLimitResponse(response.status)) {
                 throw new exceptions_1.RateLimitException();
             }
             else {
@@ -424,12 +432,12 @@ class Copyleaks {
                 'User-Agent': app_config_1.CopyleaksConfig.USER_AGENT,
             };
             const response = yield axios_1.default.get(url, { headers });
-            if ((0, utils_1.isSuccessStatusCode)(response.status))
+            if (utils_1.isSuccessStatusCode(response.status))
                 return response.data;
-            else if ((0, utils_1.isUnderMaintenanceResponse)(response.status)) {
+            else if (utils_1.isUnderMaintenanceResponse(response.status)) {
                 throw new exceptions_1.UnderMaintenanceException();
             }
-            else if ((0, utils_1.isRateLimitResponse)(response.status)) {
+            else if (utils_1.isRateLimitResponse(response.status)) {
                 throw new exceptions_1.RateLimitException();
             }
             else {
@@ -457,12 +465,12 @@ class Copyleaks {
                 'User-Agent': app_config_1.CopyleaksConfig.USER_AGENT,
             };
             const response = yield axios_1.default.get(url, { headers });
-            if ((0, utils_1.isSuccessStatusCode)(response.status))
+            if (utils_1.isSuccessStatusCode(response.status))
                 return response.data;
-            else if ((0, utils_1.isUnderMaintenanceResponse)(response.status)) {
+            else if (utils_1.isUnderMaintenanceResponse(response.status)) {
                 throw new exceptions_1.UnderMaintenanceException();
             }
-            else if ((0, utils_1.isRateLimitResponse)(response.status)) {
+            else if (utils_1.isRateLimitResponse(response.status)) {
                 throw new exceptions_1.RateLimitException();
             }
             else {
@@ -490,12 +498,12 @@ class Copyleaks {
                 'User-Agent': app_config_1.CopyleaksConfig.USER_AGENT,
             };
             const response = yield axios_1.default.get(url, { headers });
-            if ((0, utils_1.isSuccessStatusCode)(response.status))
+            if (utils_1.isSuccessStatusCode(response.status))
                 return response.data;
-            else if ((0, utils_1.isUnderMaintenanceResponse)(response.status)) {
+            else if (utils_1.isUnderMaintenanceResponse(response.status)) {
                 throw new exceptions_1.UnderMaintenanceException();
             }
-            else if ((0, utils_1.isRateLimitResponse)(response.status)) {
+            else if (utils_1.isRateLimitResponse(response.status)) {
                 throw new exceptions_1.RateLimitException();
             }
             else {
