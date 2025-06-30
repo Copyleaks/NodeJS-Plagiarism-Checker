@@ -24,12 +24,23 @@
 import { MetadataModel } from "../baseModels/metadataModel";
 
 export class NewResultInternetModel {
+  
+  /*Unique result ID to identify the result. */
   id?: string;
+
+  /*Document title. Mostly extracted from the document content. */
   title?: string;
+  
+  /*Document brief introduction. Mostly extracted from the document content. */
   introduction?: string;
+  
+  /*Total matched words between this result and the scanned document. */
   matchedWords?: number;
-  scanId?: string;
+  
+  /*Metadata object */
   metadata?: MetadataModel;
+  
+  /*Public URL of the resource. */
   url?: string;
 
   constructor(init?: Partial<NewResultInternetModel>) {

@@ -22,6 +22,8 @@
  SOFTWARE.
 */
 export class NewResultScoreModel {
+  
+  /*The percentage of similar words from all results. The calculation does not include excluded references, quotations, etc... */
   aggregatedScore?: number;
 
   constructor(init?: Partial<NewResultScoreModel>) {

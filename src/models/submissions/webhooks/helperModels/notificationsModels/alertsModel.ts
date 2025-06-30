@@ -22,12 +22,26 @@
  SOFTWARE.
 */
 export class AlertsModel {
+  
+  /*Scan alert category. */
   category!: string;
+  
+  /*Scan alert code. The code is unique for each scan alert. */
   code!: string;
+  
+  /*Scan alert human-readable title. */
   title!: string;
+  
+  /*Provides human-readable information about the scan alert. */
   message!: string;
+
+  /*Url to a resource describing the specific scan alert. */
   helpLink!: string;
+
+  /*Specifies the importance of the scan alert. */
   severity!: string;
+
+  /*Additional data about the scan alert. Supplied as a json string. */
   additionalData!: string;
 
   constructor(init?: Partial<AlertsModel>) {

@@ -22,8 +22,14 @@
  SOFTWARE.
 */
 export class TaskModel {
+  
+  /*The endpoint address of the export task. */
   endpoint?: string;
+  
+  /*This flag gives an indication whether the scan was completed without internal errors on the Copyleaks side. */
   isHealthy?: boolean;
+  
+  /*The status code reported by the customer servers. If the tasks.isHealthy is equal to false - this field will be null. */
   httpStatusCode?: number;
 
   constructor(init?: Partial<TaskModel>) {

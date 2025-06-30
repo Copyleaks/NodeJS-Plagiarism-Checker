@@ -24,6 +24,8 @@
 import { MetadataModel } from "../baseModels/metadataModel";
 
 export class RepositoriesMetadataModel extends MetadataModel {
+  
+  /*Email of the user which added this document to the repository. */
   submittedBy?: string;
 
   constructor(init?: Partial<RepositoriesMetadataModel>) {

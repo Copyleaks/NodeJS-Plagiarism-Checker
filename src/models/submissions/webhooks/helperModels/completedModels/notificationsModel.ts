@@ -24,6 +24,8 @@
 import { AlertsModel } from "../notificationsModels/alertsModel";
 
 export class NotificationsModel {
+  
+  /*An array of scan alerts that were detected in the scan. */
   alerts?: AlertsModel[];
 
   constructor(init?: Partial<NotificationsModel>) {

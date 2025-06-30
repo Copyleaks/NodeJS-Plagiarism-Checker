@@ -24,11 +24,23 @@
 import { MetadataModel } from "../baseModels/metadataModel";
 
 export class SharedResultsModel {
+  
+  /*Unique result ID to identify this result.*/
   id?: string;
+
+  /*Document title. Mostly extracted from the document content. */
   title?: string;
+
+  /*Document brief introduction. Mostly extracted from the document content. */
   introduction?: string;
+
+  /*Total matched words between this result and the scanned document. */
   matchedWords?: string;
+
+  /*In case a result was found in the Copyleaks internal database, and was submitted by you, this will show the scan id of the specific result. Otherwise, this field will remain empty. */
   scanId?: string;
+  
+  /*Metdata object */
   metadata?: MetadataModel;
 
   constructor(init?: Partial<SharedResultsModel>) {

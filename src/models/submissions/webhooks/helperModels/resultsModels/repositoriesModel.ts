@@ -25,7 +25,11 @@ import { RepositoriesMetadataModel } from "./repositoriesMetadataModel";
 import { SharedResultsModel } from "./sharedResultsModel";
 
 export class RepositoriesModel extends SharedResultsModel {
+  
+  /*The repository Id that has the result.*/
   repositoryId?: string;
+  
+  /*Metadata object */
   metadata?: RepositoriesMetadataModel;
 
   constructor(init?: Partial<RepositoriesModel>) {

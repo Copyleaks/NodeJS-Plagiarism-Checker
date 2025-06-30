@@ -22,7 +22,11 @@
  SOFTWARE.
 */
 export class ErrorModel {
+  
+  /*Error code that represents the reason for failure. See below the full error table. */
   code?: number;
+  
+  /*Error message that represents the reason for failure. */
   message?: string;
 
   constructor(init?: Partial<ErrorModel>) {

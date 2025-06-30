@@ -35,7 +35,7 @@ export class ScannedDocumentModel {
     if (init) {
       Object.assign(this, init);
 
-      // Deep-instantiate nested Metadata so you get class features
+      
       if (init.metadata) {
         this.metadata = new MetadataModel(init.metadata);
       }

@@ -22,9 +22,17 @@
  SOFTWARE.
 */
 export class ScoreModel {
+  
+  /*Number of words which matched exactly */
   identicalWords?: number;
+
+  /*Number of nearly identical words with small differences like 'slow' and 'slowly'.*/
   minorChangedWords?: number;
+
+  /*Number of paraphrased words showing similar ideas with different words. */
   relatedMeaningWords?: number;
+
+  /*The percentage of similar words from all results. The calculation does not include excluded references, quotations, etc... */
   aggregatedScore?: number;
 
   constructor(init?: Partial<ScoreModel>) {

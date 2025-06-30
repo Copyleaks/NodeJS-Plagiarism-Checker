@@ -25,6 +25,8 @@ import { SharedResultsModel } from "./sharedResultsModel";
 import { TagsModel } from "./tagsModel";
 
 export class BatchModel extends SharedResultsModel {
+  
+  /*Tags object */
   tags?: TagsModel[];
 
   constructor(init?: Partial<BatchModel>) {

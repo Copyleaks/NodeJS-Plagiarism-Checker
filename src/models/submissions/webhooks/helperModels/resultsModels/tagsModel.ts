@@ -22,8 +22,14 @@
  SOFTWARE.
 */
 export class TagsModel {
+  
+  /*Unique ID that signifies the type of result tag. */
   code?: string;
+  
+  /*A simple name for this tag.*/
   title?: string;
+  
+  /*Short text describing this tag. */
   description?: string;
 
   constructor(init?: Partial<TagsModel>) {
