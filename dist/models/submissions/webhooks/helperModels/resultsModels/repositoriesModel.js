@@ -26,11 +26,15 @@ exports.RepositoriesModel = void 0;
 */
 const repositoriesMetadataModel_1 = require("./repositoriesMetadataModel");
 const sharedResultsModel_1 = require("./sharedResultsModel");
+const tagsModel_1 = require("./tagsModel");
 class RepositoriesModel extends sharedResultsModel_1.SharedResultsModel {
     constructor(init) {
         super(init);
         if (init === null || init === void 0 ? void 0 : init.metadata) {
             this.metadata = new repositoriesMetadataModel_1.RepositoriesMetadataModel(init.metadata);
+        }
+        if (init === null || init === void 0 ? void 0 : init.tags) {
+            this.tags = init.tags.map((tag) => new tagsModel_1.TagsModel(tag));
         }
     }
 }

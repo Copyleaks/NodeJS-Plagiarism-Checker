@@ -23,12 +23,16 @@
 */
 import { RepositoriesMetadataModel } from "./repositoriesMetadataModel";
 import { SharedResultsModel } from "./sharedResultsModel";
+import { TagsModel } from "./tagsModel";
 
 export class RepositoriesModel extends SharedResultsModel {
   
   /*The repository Id that has the result.*/
   repositoryId?: string;
   
+  /*Tags object array*/
+  tags?: TagsModel[];
+
   /*Metadata object */
   metadata?: RepositoriesMetadataModel;
 
@@ -37,5 +41,8 @@ export class RepositoriesModel extends SharedResultsModel {
     if (init?.metadata) {
       this.metadata = new RepositoriesMetadataModel(init.metadata);
     }
+     if (init?.tags) {
+          this.tags = init.tags.map((tag) => new TagsModel(tag));
+        }
   }
 }
