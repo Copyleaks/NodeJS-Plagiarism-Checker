@@ -29,7 +29,6 @@ class ScannedDocumentModel {
     constructor(init) {
         if (init) {
             Object.assign(this, init);
-            // Deep-instantiate nested Metadata so you get class features
             if (init.metadata) {
                 this.metadata = new metadataModel_1.MetadataModel(init.metadata);
             }

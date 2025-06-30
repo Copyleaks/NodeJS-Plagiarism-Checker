@@ -1,10 +1,10 @@
 export declare class AlertsModel {
-    category: string;
+    category: number;
     code: string;
     title: string;
     message: string;
     helpLink: string;
-    severity: string;
+    severity: number;
     additionalData: string;
     constructor(init?: Partial<AlertsModel>);
 }

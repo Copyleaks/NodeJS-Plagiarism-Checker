@@ -33,10 +33,11 @@ app.post("/submit-url-webhook/completed", (req, res) => {
   try {
     const completed = new CompletedWebhookModel(req.body);
     console.log("Deserialized into CompletedWebhook:", completed);
+
+    res.status(200).send(`Completed webhook received ${JSON.stringify(completed, null, 2)}`);
   } catch (err) {
-    console.error("[Webhook Server ERROR - completed]:", err.message);
+    console.error(`[Webhook Server ERROR - completed]:`, err.message);
   }
-  res.status(200).send("Completed webhook received");
 });
 
 //  ERROR webhook
@@ -45,10 +46,10 @@ app.post("/submit-url-webhook/error", (req, res) => {
   try {
     const errorData = new ErrorWebhookModel(req.body);
     console.log("Deserialized into ErrorWebhook:", errorData);
+    res.status(200).send(`Error webhook received ${JSON.stringify(errorData, null, 2)}`);
   } catch (err) {
     console.error("[Webhook Server ERROR - error]:", err.message);
   }
-  res.status(200).send("Error webhook received");
 });
 
 //  INDEXED webhook
@@ -57,10 +58,10 @@ app.post("/submit-url-webhook/indexed", (req, res) => {
   try {
     const indexed = new IndexedWebhookModel(req.body);
     console.log("Deserialized into IndexedWebhook:", indexed);
+    res.status(200).send(`Indexed webhook received ${JSON.stringify(indexed, null, 2)}`);
   } catch (err) {
     console.error("[Webhook Server ERROR - indexed]:", err.message);
   }
-  res.status(200).send("Indexed webhook received");
 });
 
 //  CREDITS CHECKED webhook
@@ -69,10 +70,10 @@ app.post("/submit-url-webhook/creditsChecked", (req, res) => {
   try {
     const creditsChecked = new CreditsCheckedWebhookModel(req.body);
     console.log("Deserialized into CreditsCheckedWebhook:", creditsChecked);
+    res.status(200).send(`Credits Checked webhook received ${JSON.stringify(creditsChecked,null,2)}`);
   } catch (err) {
     console.error("[Webhook Server ERROR - creditsChecked]:", err.message);
   }
-  res.status(200).send("Credits Checked webhook received");
 });
 
 //  NEW RESULTS webhook
@@ -81,13 +82,13 @@ app.post("/submit-url-webhook/new-results", (req, res) => {
   try {
     const newResults = new NewResultWebhookModel(req.body);
     console.log("Deserialized into NewResultWebhookModel:", newResults);
+    res.status(200).send(`Credits Checked webhook received ${JSON.stringify(newResults,null,2)}`);
   } catch (err) {
     console.error(
       "[Webhook Server ERROR - NewResultWebhookModel]:",
       err.message
     );
   }
-  res.status(200).send("Credits Checked webhook received");
 });
 
 app.listen(webhookPort, () => {

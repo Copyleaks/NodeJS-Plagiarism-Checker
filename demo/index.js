@@ -65,13 +65,13 @@ TEST_copyleaks = () => {
       logSuccess("loginAsync", loginResult);
 
       // TEST_MISC();
-      TEST_submitFileAsync(loginResult);
+      // TEST_submitFileAsync(loginResult);
 
       // TEST_CreditsBalance(loginResult);
 
       // TEST_UsageHistory(loginResult);
 
-      // TEST_submitUrlAsync(loginResult);
+      TEST_submitUrlAsync(loginResult);
 
       // TEST_submitOcrFileAsync(loginResult);
 

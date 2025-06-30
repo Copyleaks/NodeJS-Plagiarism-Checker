@@ -4,7 +4,6 @@ export declare class NewResultInternetModel {
     title?: string;
     introduction?: string;
     matchedWords?: number;
-    scanId?: string;
     metadata?: MetadataModel;
     url?: string;
     constructor(init?: Partial<NewResultInternetModel>);
