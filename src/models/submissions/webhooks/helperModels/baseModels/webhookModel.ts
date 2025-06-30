@@ -22,6 +22,8 @@
  SOFTWARE.
 */
 export class WebhookModel {
+  
+  /*The developer payload that was provided in the submit method. */
   developerPayload?: string;
 
   constructor(init?: Partial<WebhookModel>) {

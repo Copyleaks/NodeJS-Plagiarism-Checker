@@ -24,11 +24,22 @@
 import { MetadataModel } from "../baseModels/metadataModel";
 
 export class ScannedDocumentModel {
+  /*The unique scan id provided by you.*/
   scanId?: string;
+  
+  /*Total number of words found in the scanned text. */
   totalWords?: number;
+  
+  /*Number of excluded words in the submitted content. */
   totalExecluded?: number;
+  
+  /*Overall credits used for the scan. */
   credits?: number;
+  
+  /*The creation time of the scan. */
   creationTime?: string;
+  
+  /*Metadata object */
   metadata?: MetadataModel;
 
   constructor(init?: Partial<ScannedDocumentModel>) {

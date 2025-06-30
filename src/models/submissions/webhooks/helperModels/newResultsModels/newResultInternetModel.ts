@@ -36,7 +36,7 @@ export class NewResultInternetModel {
   
   /*Total matched words between this result and the scanned document. */
   matchedWords?: number;
-  
+
   /*Metadata object */
   metadata?: MetadataModel;
   

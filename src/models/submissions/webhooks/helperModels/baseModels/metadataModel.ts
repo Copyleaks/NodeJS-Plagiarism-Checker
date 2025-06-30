@@ -22,13 +22,28 @@
  SOFTWARE.
 */
 export class MetadataModel {
+  /*The submitted url after all http redirects.*/ 
   finalUrl?: string;
+
+  /*Extracted canonical url from the scanned document.*/
   canonicalUrl?: string;
+  
+  /* Publication date of the scanned document.*/
   publishDate?: string;
+
+  /* Creation date of the scanned document.*/
   creationDate?: string;
+  
+  /*Last modification date of the scanned document. */
   lastModificationDate?: string;
+
+  /*Scanned document author. */
   author?: string;
+
+  /* Scanned document organization.*/
   organization?: string;
+
+  /* Scanned document filename.*/
   filename?: string;
 
   constructor(init?: Partial<MetadataModel>) {

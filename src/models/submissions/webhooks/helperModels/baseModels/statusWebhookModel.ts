@@ -23,6 +23,8 @@
 */
 import { WebhookModel } from "./webhookModel";
 export class StatusWebhookModel extends WebhookModel {
+  
+  /*The current status of the scan. */
   status?: number;
 
   constructor(init?: Partial<StatusWebhookModel>) {
