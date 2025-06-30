@@ -24,7 +24,7 @@
 export class AlertsModel {
   
   /*Scan alert category. */
-  category!: string;
+  category!: number;
   
   /*Scan alert code. The code is unique for each scan alert. */
   code!: string;
@@ -39,7 +39,7 @@ export class AlertsModel {
   helpLink!: string;
 
   /*Specifies the importance of the scan alert. */
-  severity!: string;
+  severity!: number;
 
   /*Additional data about the scan alert. Supplied as a json string. */
   additionalData!: string;
