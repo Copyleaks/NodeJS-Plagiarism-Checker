@@ -24,11 +24,7 @@
 */
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
 }) : (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     o[k2] = m[k];
@@ -41,3 +37,32 @@ __exportStar(require("./CopyleaksFileSubmissionModel"), exports);
 __exportStar(require("./CopyleaksFileOcrSubmissionModel"), exports);
 __exportStar(require("./CopyleaksURLSubmissionModel"), exports);
 __exportStar(require("./CopyleaksSubmissionModel"), exports);
+__exportStar(require("./ai-detector/CopyleaksSourceCodeSubmissionModel"), exports);
+__exportStar(require("./ai-detector/CopyleaksNaturalLanguageSubmissionModel"), exports);
+__exportStar(require("./writing-feedback/CopyleaksWritingAssistantSubmissionModel"), exports);
+__exportStar(require("./webhooks/completedWebhookModel"), exports);
+__exportStar(require("./webhooks/creditsCheckedWebhookModel"), exports);
+__exportStar(require("./webhooks/errorWebhookModel"), exports);
+__exportStar(require("./webhooks/exportCompletedWebhookModel"), exports);
+__exportStar(require("./webhooks/indexedWebhookModel"), exports);
+__exportStar(require("./webhooks/newResultsWebhookModel"), exports);
+__exportStar(require("./webhooks/helperModels/baseModels/metadataModel"), exports);
+__exportStar(require("./webhooks/helperModels/baseModels/statusWebhookModel"), exports);
+__exportStar(require("./webhooks/helperModels/baseModels/webhookModel"), exports);
+__exportStar(require("./webhooks/helperModels/completedModels/notificationsModel"), exports);
+__exportStar(require("./webhooks/helperModels/completedModels/resultsModel"), exports);
+__exportStar(require("./webhooks/helperModels/completedModels/scannedDocumentModel"), exports);
+__exportStar(require("./webhooks/helperModels/errorModels/errorModel"), exports);
+__exportStar(require("./webhooks/helperModels/exportModels/taskModel"), exports);
+__exportStar(require("./webhooks/helperModels/newResultsModels/newResultInternetModel"), exports);
+__exportStar(require("./webhooks/helperModels/newResultsModels/newResultScoreModel"), exports);
+__exportStar(require("./webhooks/helperModels/newResultsModels/NewResultsRepositoriesModel"), exports);
+__exportStar(require("./webhooks/helperModels/notificationsModels/alertsModel"), exports);
+__exportStar(require("./webhooks/helperModels/resultsModels/batchModel"), exports);
+__exportStar(require("./webhooks/helperModels/resultsModels/databaseModel"), exports);
+__exportStar(require("./webhooks/helperModels/resultsModels/internetModel"), exports);
+__exportStar(require("./webhooks/helperModels/resultsModels/repositoriesMetadataModel"), exports);
+__exportStar(require("./webhooks/helperModels/resultsModels/repositoriesModel"), exports);
+__exportStar(require("./webhooks/helperModels/resultsModels/scoreModel"), exports);
+__exportStar(require("./webhooks/helperModels/resultsModels/sharedResultsModel"), exports);
+__exportStar(require("./webhooks/helperModels/resultsModels/tagsModel"), exports);

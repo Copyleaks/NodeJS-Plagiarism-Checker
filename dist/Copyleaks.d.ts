@@ -3,7 +3,12 @@ import { CopyleaksDeleteRequestModel } from './models/request';
 import { CopyleaksStartRequestModel } from './models/request/CopyleaksStartRequestModel';
 import { CopyleaksAuthToken } from './models/response';
 import { CopyleaksFileOcrSubmissionModel, CopyleaksFileSubmissionModel, CopyleaksURLSubmissionModel } from './models/submissions';
+import { AIDetectionClient } from './clients/AIDetectionClient';
+import { WritingAssistantClient } from './clients/WritingAssistantClient';
 export declare class Copyleaks {
+    readonly aiDetectionClient: AIDetectionClient;
+    readonly writingAssistantClient: WritingAssistantClient;
+    constructor();
     /**
      * Login to Copyleaks authentication server.
      * For more info: https://api.copyleaks.com/documentation/v3/account/login.
