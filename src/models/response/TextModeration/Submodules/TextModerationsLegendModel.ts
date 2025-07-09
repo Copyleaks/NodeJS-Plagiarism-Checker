@@ -23,17 +23,16 @@
 */
 
 export class TextModerationsLegendModel {
-
   /*The numerical index of the label.*/
-  public index: any;
+  public index: number;
 
   /*A unique string identifier for the label. This ID serves as a machine-readable way to identify the label type.*/
-  public id: any;
+  public id: string;
 
   /**
    * @param init Initialization object
    */
-  constructor(init: { index: any; id: any }) {
+  constructor(init: { index: number; id: string }) {
     this.index = init.index;
     this.id = init.id;
   }
