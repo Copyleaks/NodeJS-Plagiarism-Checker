@@ -1,11 +1,11 @@
 import { TextModerationCharsModel } from "./TextModerationCharsModel";
 export declare class Text {
-    chars?: TextModerationCharsModel[];
+    chars?: TextModerationCharsModel;
     /**
      * @param init Initialization object
      */
     constructor(init: {
-        chars: TextModerationCharsModel[];
+        chars: TextModerationCharsModel;
         starts: boolean;
         lengths: string;
     });

@@ -23,12 +23,25 @@
 */
 
 export class TextModerationScannedDocumentModel {
-  public scanId: String;
+
+  /** The scan id given by the user. */
+  public scanId: string;
+
+  /** Total number of words found in the scanned text. */
   public totalWords: number;
+
+  /** Total excluded words from the text. */
   public totalExcluded: number;
+
+  /** The cost of credits for this scan. */
   public actualCredits: number;
+
+  /** The amount of credits that was expected to be spent on the scan. */
   public expectedCredits: number;
+
+  /** Creation time of the scan. */
   public creationTime: Date;
+  
   /**
    * @param init Initialization object
    */

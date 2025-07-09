@@ -23,8 +23,14 @@
 */
 
 export class TextModerationCharsModel {
+
+  /*Start character position of the labelled segment. */
   public labels?: number[];
+
+  /*Predicted label index for the corresponding segment. The index can be resolved to its ID using the supplied legend.*/
   public starts?: number[];
+
+  /*Labelled segment character length.*/
   public lengths?: number[];
 
   /**

@@ -12,6 +12,7 @@ const {
   CopyleaksSourceCodeSubmissionModel,
   CopyleaksNaturalLanguageSubmissionModel,
   CopyleaksWritingAssistantSubmissionModel,
+  CopyleaksTextModerationRequestModel
 } = require("../dist");
 
 const base64Img = require("./base64.img");
@@ -71,7 +72,7 @@ TEST_copyleaks = () => {
 
       // TEST_UsageHistory(loginResult);
 
-      TEST_submitUrlAsync(loginResult);
+      // TEST_submitUrlAsync(loginResult);
 
       // TEST_submitOcrFileAsync(loginResult);
 
@@ -89,7 +90,7 @@ TEST_copyleaks = () => {
 
         // TEST_getCorrectionTypes(loginResult);
         
-        //TEST_submitTextModerationText(loginResult);
+        TEST_submitTextModerationText(loginResult);
       },
       err => logError('loginAsync', err)
     )
@@ -325,7 +326,7 @@ function TEST_getCorrectionTypes(loginResult) {
 }
 function TEST_submitTextModerationText(loginResult) {
 
-  var model = new TextModerationRequestModel({
+  var model = new CopyleaksTextModerationRequestModel({
       text: "hello world",
       sandbox: true,
       language: "en",

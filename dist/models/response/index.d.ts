@@ -1,2 +1,2 @@
 export * from "./CopyleaksAuthToken";
-export * from "./TextModeration/TextModerationResponseModel";
+export * from "./TextModeration/CopyleaksTextModerationResponseModel";

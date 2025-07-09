@@ -21,9 +21,13 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
 */
+import { Text } from "./Text";
 
 export class ModerationsModel {
-  public text?: Text;
+
+  /*Moderated text segments corresponding to the submitted text. 
+  Each position in the inner arrays corresponds to a single segment in the textual version */
+  public text: Text;
 
   /**
    * @param init Initialization object

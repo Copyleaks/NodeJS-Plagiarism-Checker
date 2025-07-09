@@ -1,6 +1,7 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.TextModerationResponseModel = void 0;
+import { ModerationsModel } from "./Submodules/ModerationsModel";
+import { TextModerationsLegendModel } from "./Submodules/TextModerationsLegendModel";
+import { TextModerationScannedDocumentModel } from "./Submodules/TextModerationScannedDocumentModel";
+
 /*
  The MIT License(MIT)
 
@@ -24,11 +25,25 @@ exports.TextModerationResponseModel = void 0;
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
 */
-class TextModerationResponseModel {
-    constructor(init) {
-        this.moderations = init.moderations;
-        this.legend = init.legend;
-        this.scannedDocument = init.scannedDocument;
-    }
+export class CopyleaksTextModerationResponseModel {
+
+  /*Moderated text segments detected in the input text.*/
+  public moderations: ModerationsModel;
+
+  /*An array that provides a lookup for the labels referenced by their numerical indices in the text.chars.labels array. 
+    Each object within this legend array defines a specific label that was used in the scan.*/
+  public legend: TextModerationsLegendModel[];
+
+  /*General information about the scanned document.*/
+  public scannedDocument: TextModerationScannedDocumentModel;
+
+  constructor(init: {
+    moderations: ModerationsModel;
+    legend: TextModerationsLegendModel[];
+    scannedDocument: TextModerationScannedDocumentModel;
+  }) {
+    this.moderations = init.moderations;
+    this.legend = init.legend;
+    this.scannedDocument = init.scannedDocument;
+  }
 }
-exports.TextModerationResponseModel = TextModerationResponseModel;

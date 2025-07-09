@@ -1,5 +1,6 @@
+import { Text } from "./Text";
 export declare class ModerationsModel {
-    text?: Text;
+    text: Text;
     /**
      * @param init Initialization object
      */

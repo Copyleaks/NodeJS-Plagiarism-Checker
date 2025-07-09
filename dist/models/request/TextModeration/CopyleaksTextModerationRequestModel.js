@@ -33,9 +33,6 @@ class CopyleaksTextModerationRequestModel {
         if (!init.text || typeof init.text !== "string") {
             throw new Error("Text is required and must be a string.");
         }
-        if (!Array.isArray(init.labels) || init.labels.length < 1) {
-            throw new Error("Labels array must have at least 1 element.");
-        }
         this.text = init.text;
         this.sandbox = (_a = init.sandbox) !== null && _a !== void 0 ? _a : false;
         this.language = (_b = init.language) !== null && _b !== void 0 ? _b : null;

@@ -25,13 +25,15 @@
 import { TextModerationCharsModel } from "./TextModerationCharsModel";
 
 export class Text {
-  public chars?: TextModerationCharsModel[];
+
+  /*An object that groups together several arrays detailing the properties of labelled segments. */
+  public chars?: TextModerationCharsModel;
 
   /**
    * @param init Initialization object
    */
   constructor(init: {
-    chars: TextModerationCharsModel[];
+    chars: TextModerationCharsModel;
     starts: boolean;
     lengths: string;
   }) {

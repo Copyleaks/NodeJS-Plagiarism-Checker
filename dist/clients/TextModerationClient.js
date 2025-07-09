@@ -40,6 +40,20 @@ const response_1 = require("../models/response");
 const utils_1 = require("../utils");
 const client_utils_utils_1 = require("../utils/client-utils.utils");
 class TextModerationClient {
+    /**
+  This endpoint will receive submitted text to be checked. The response will show potentially harmful content across multiple categories
+   *
+   * * Exceptions:
+   *  * CommandExceptions: Server reject the request. See response status code,
+   *     headers and content for more info.
+   *  * UnderMaintenanceException: Copyleaks servers are unavailable for maintenance.
+   *     We recommend to implement exponential backoff algorithm as described here:
+   *     https://api.copyleaks.com/documentation/v3/exponential-backoff
+   *  * RateLimitException: Too many requests have been sent. The request has been rejected.
+   * @param authToken Copyleaks authentication token
+   * @param scanId Attach your own scan Id
+   * @param submission Submission properties
+   */
     submitTextAsync(authToken, scanId, submission) {
         return __awaiter(this, void 0, void 0, function* () {
             client_utils_utils_1.ClientUtils.verifyAuthToken(authToken);
@@ -51,7 +65,7 @@ class TextModerationClient {
             };
             const response = yield axios_1.default.post(url, submission, { headers });
             if (utils_1.isSuccessStatusCode(response.status))
-                return new response_1.TextModerationResponseModel(response.data);
+                return new response_1.CopyleaksTextModerationResponseModel(response.data);
             else if (utils_1.isUnderMaintenanceResponse(response.status)) {
                 throw new exceptions_1.UnderMaintenanceException();
             }

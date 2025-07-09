@@ -6,12 +6,11 @@ import { CopyleaksFileOcrSubmissionModel, CopyleaksFileSubmissionModel, Copyleak
 import { AIDetectionClient } from './clients/AIDetectionClient';
 import { WritingAssistantClient } from './clients/WritingAssistantClient';
 import { TextModerationClient } from './clients/TextModerationClient';
-
 export declare class Copyleaks {
     readonly aiDetectionClient: AIDetectionClient;
     readonly writingAssistantClient: WritingAssistantClient;
     readonly textModerationClient: TextModerationClient;
-
+    constructor();
     /**
      * Login to Copyleaks authentication server.
      * For more info: https://api.copyleaks.com/documentation/v3/account/login.

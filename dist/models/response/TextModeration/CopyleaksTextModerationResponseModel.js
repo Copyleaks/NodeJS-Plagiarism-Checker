@@ -1,7 +1,6 @@
-import { ModerationsModel } from "./Submodules/ModerationsModel";
-import { TextModerationsLegendModel } from "./Submodules/TextModerationsLegendModel";
-import { TextModerationScannedDocumentModel } from "./Submodules/TextModerationScannedDocumentModel";
-
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.CopyleaksTextModerationResponseModel = void 0;
 /*
  The MIT License(MIT)
 
@@ -25,18 +24,11 @@ import { TextModerationScannedDocumentModel } from "./Submodules/TextModerationS
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
 */
-export class TextModerationResponseModel {
-  public moderations: ModerationsModel;
-  public legend: TextModerationsLegendModel[];
-  public scannedDocument: TextModerationScannedDocumentModel;
-
-  constructor(init: {
-    moderations: ModerationsModel;
-    legend: TextModerationsLegendModel[];
-    scannedDocument: TextModerationScannedDocumentModel;
-  }) {
-    this.moderations = init.moderations;
-    this.legend = init.legend;
-    this.scannedDocument = init.scannedDocument;
-  }
+class CopyleaksTextModerationResponseModel {
+    constructor(init) {
+        this.moderations = init.moderations;
+        this.legend = init.legend;
+        this.scannedDocument = init.scannedDocument;
+    }
 }
+exports.CopyleaksTextModerationResponseModel = CopyleaksTextModerationResponseModel;

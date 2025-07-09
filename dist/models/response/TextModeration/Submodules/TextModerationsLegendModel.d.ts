@@ -1,11 +1,11 @@
 export declare class TextModerationsLegendModel {
-    index: string;
-    id: string;
+    index: any;
+    id: any;
     /**
      * @param init Initialization object
      */
     constructor(init: {
-        index: string;
-        id: string;
+        index: any;
+        id: any;
     });
 }

@@ -23,9 +23,18 @@
 */
 
 export class CopyleaksTextModerationRequestModel {
+  
+  /*Text to produce Text Moderation report for.*/
   public text: string;
+
+  /*Use sandbox mode to test your integration with the Copyleaks API without consuming any credits. */
   public sandbox: boolean;
+
+  /*The language code of your content. The selected language should be on the Supported Languages list above.
+    if the 'language' field is not specified, our system will automatically detect the language of the content. */
   public language?: string | null;
+
+  /*A list of label configurations to be used for the moderation process.*/
   public labels: any[];
 
   /**
@@ -39,10 +48,6 @@ export class CopyleaksTextModerationRequestModel {
   }) {
     if (!init.text || typeof init.text !== "string") {
       throw new Error("Text is required and must be a string.");
-    }
-
-    if (!Array.isArray(init.labels) || init.labels.length < 1) {
-      throw new Error("Labels array must have at least 1 element.");
     }
 
     this.text = init.text;
