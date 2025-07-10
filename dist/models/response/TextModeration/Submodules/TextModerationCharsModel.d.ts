@@ -1,7 +1,7 @@
 export declare class TextModerationCharsModel {
-    labels?: number[];
-    starts?: number[];
-    lengths?: number[];
+    labels: number[];
+    starts: number[];
+    lengths: number[];
     /**
      * @param init Initialization object
      */

@@ -27,7 +27,7 @@ import { TextModerationCharsModel } from "./TextModerationCharsModel";
 export class Text {
 
   /*An object that groups together several arrays detailing the properties of labelled segments. */
-  public chars?: TextModerationCharsModel;
+  public chars: TextModerationCharsModel;
 
   /**
    * @param init Initialization object

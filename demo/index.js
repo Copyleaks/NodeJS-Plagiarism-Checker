@@ -326,20 +326,28 @@ function TEST_getCorrectionTypes(loginResult) {
 }
 function TEST_submitTextModerationText(loginResult) {
 
-  var model = new CopyleaksTextModerationRequestModel({
-      text: "hello world",
+  const model = new CopyleaksTextModerationRequestModel({
+      text: "This is some text to scan.",
       sandbox: true,
       language: "en",
       labels: [
           { id: "other-v1" },
           { id: "adult-v1" },
           { id: "toxic-v1" },
+          { id: "violent-v1" },
+          { id: "profanity-v1" },
+          { id: "self-harm-v1" },
+          { id: "harassment-v1" },
+          { id: "hate-speech-v1" },
+          { id: "drugs-v1" },
+          { id: "firearms-v1" },
+          { id: "cybersecurity-v1" }
       ]
   });
 
     copyleaks.textModerationClient.submitTextAsync(loginResult, Date.now() + 1, model)
       .then(response => {
-        logSuccess('TEST_submitTextModerationText', response);
+        logSuccess('TEST_submitTextModerationText', JSON.stringify(response, null, 2));
       })
       .catch(error => {
         logError('TEST_submitTextModerationText', error);
