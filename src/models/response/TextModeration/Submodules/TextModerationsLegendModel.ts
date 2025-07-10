@@ -1,4 +1,3 @@
-"use strict";
 /*
  The MIT License(MIT)
 
@@ -22,17 +21,19 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
 */
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __exportStar = (this && this.__exportStar) || function(m, exports) {
-    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-__exportStar(require("./CopyleaksDeleteRequestModel"), exports);
-__exportStar(require("./CopyleaksStartRequestModel"), exports);
-__exportStar(require("./TextModeration/CopyleaksTextModerationRequestModel"), exports);
+
+export class TextModerationsLegendModel {
+  /*The numerical index of the label.*/
+  public index: number;
+
+  /*A unique string identifier for the label. This ID serves as a machine-readable way to identify the label type.*/
+  public id: string;
+
+  /**
+   * @param init Initialization object
+   */
+  constructor(init: { index: number; id: string }) {
+    this.index = init.index;
+    this.id = init.id;
+  }
+}

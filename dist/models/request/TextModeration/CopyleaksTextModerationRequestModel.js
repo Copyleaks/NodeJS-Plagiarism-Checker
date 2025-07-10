@@ -22,17 +22,24 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
 */
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __exportStar = (this && this.__exportStar) || function(m, exports) {
-    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-__exportStar(require("./CopyleaksDeleteRequestModel"), exports);
-__exportStar(require("./CopyleaksStartRequestModel"), exports);
-__exportStar(require("./TextModeration/CopyleaksTextModerationRequestModel"), exports);
+exports.CopyleaksTextModerationRequestModel = void 0;
+class CopyleaksTextModerationRequestModel {
+    /**
+     * @param init Initialization object
+     */
+    constructor(init) {
+        var _a, _b;
+        if (!init.text || typeof init.text !== "string") {
+            throw new Error("Text is required and must be a string.");
+        }
+        if (!Array.isArray(init.labels) || init.labels.length < 1 || init.labels.length > 32) {
+            throw new Error("Labels must be an array with at least 1 and no more than 32 elements.");
+        }
+        this.text = init.text;
+        this.sandbox = (_a = init.sandbox) !== null && _a !== void 0 ? _a : false;
+        this.language = (_b = init.language) !== null && _b !== void 0 ? _b : null;
+        this.labels = init.labels;
+    }
+}
+exports.CopyleaksTextModerationRequestModel = CopyleaksTextModerationRequestModel;

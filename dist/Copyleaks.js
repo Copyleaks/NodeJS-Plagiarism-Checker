@@ -39,10 +39,12 @@ const exceptions_1 = require("./models/exceptions");
 const utils_1 = require("./utils");
 const AIDetectionClient_1 = require("./clients/AIDetectionClient");
 const WritingAssistantClient_1 = require("./clients/WritingAssistantClient");
+const TextModerationClient_1 = require("./clients/TextModerationClient");
 class Copyleaks {
     constructor() {
         this.aiDetectionClient = new AIDetectionClient_1.AIDetectionClient();
         this.writingAssistantClient = new WritingAssistantClient_1.WritingAssistantClient();
+        this.textModerationClient = new TextModerationClient_1.TextModerationClient();
     }
     /**
      * Login to Copyleaks authentication server.

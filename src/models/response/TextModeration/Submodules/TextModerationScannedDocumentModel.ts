@@ -1,4 +1,3 @@
-"use strict";
 /*
  The MIT License(MIT)
 
@@ -22,17 +21,43 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
 */
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __exportStar = (this && this.__exportStar) || function(m, exports) {
-    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-__exportStar(require("./CopyleaksDeleteRequestModel"), exports);
-__exportStar(require("./CopyleaksStartRequestModel"), exports);
-__exportStar(require("./TextModeration/CopyleaksTextModerationRequestModel"), exports);
+
+export class TextModerationScannedDocumentModel {
+
+  /** The scan id given by the user. */
+  public scanId: string;
+
+  /** Total number of words found in the scanned text. */
+  public totalWords: number;
+
+  /** Total excluded words from the text. */
+  public totalExcluded: number;
+
+  /** The cost of credits for this scan. */
+  public actualCredits: number;
+
+  /** The amount of credits that was expected to be spent on the scan. */
+  public expectedCredits: number;
+
+  /** Creation time of the scan. */
+  public creationTime: Date;
+  
+  /**
+   * @param init Initialization object
+   */
+  constructor(init: {
+    scanId: string;
+    totalWords: number;
+    totalExcluded: number;
+    actualCredits: number;
+    expectedCredits: number;
+    creationTime: Date;
+  }) {
+    this.scanId = init.scanId;
+    this.totalWords = init.totalWords;
+    this.totalExcluded = init.totalExcluded;
+    this.actualCredits = init.actualCredits;
+    this.expectedCredits = init.expectedCredits;
+    this.creationTime = init.creationTime;
+  }
+}

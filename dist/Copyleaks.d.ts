@@ -5,9 +5,11 @@ import { CopyleaksAuthToken } from './models/response';
 import { CopyleaksFileOcrSubmissionModel, CopyleaksFileSubmissionModel, CopyleaksURLSubmissionModel } from './models/submissions';
 import { AIDetectionClient } from './clients/AIDetectionClient';
 import { WritingAssistantClient } from './clients/WritingAssistantClient';
+import { TextModerationClient } from './clients/TextModerationClient';
 export declare class Copyleaks {
     readonly aiDetectionClient: AIDetectionClient;
     readonly writingAssistantClient: WritingAssistantClient;
+    readonly textModerationClient: TextModerationClient;
     constructor();
     /**
      * Login to Copyleaks authentication server.
