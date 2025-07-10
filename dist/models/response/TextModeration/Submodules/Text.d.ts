@@ -6,7 +6,5 @@ export declare class Text {
      */
     constructor(init: {
         chars: TextModerationCharsModel;
-        starts: boolean;
-        lengths: string;
     });
 }
