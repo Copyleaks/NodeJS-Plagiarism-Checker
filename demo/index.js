@@ -15,6 +15,7 @@ const {
   CopyleaksTextModerationRequestModel
 } = require("../dist");
 
+const { ShowAiCodeDeperecationMessage } = require('./ShowAiCodeDeperecationMessage');
 const base64Img = require("./base64.img");
 
 const hostname = "127.0.0.1";
@@ -25,11 +26,17 @@ const DEMO_KEY = "<API_KEY>"; // change this with your own copyleaks API key.
 const WEBHOOK_URL = "<WEBHOOK_URL>"; //exe https://glacial-refuge-96501.herokuapp.com/10b0z2w1
 const copyleaks = new Copyleaks();
 
+// Show important notice only once per process
+ShowAiCodeDeperecationMessage();
+
+
 let testingInProgress = false;
 
 // Spawn webhook server on startup in order to listen to webhooks
-const webhookServerProcess = spawn("node", ["./webhook-server.js"]);
+const webhookServerPath = path.join(__dirname, 'webhook-server.js');
 
+// Spawn webhook server on startup in order to listen to webhooks
+const webhookServerProcess = spawn("node", [webhookServerPath]);
 console.log(`Server is running...`);
 console.log(`Press Ctrl+C to shutdown server`);
 

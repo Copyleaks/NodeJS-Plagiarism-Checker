@@ -1,6 +1,6 @@
 {
   "name": "plagiarism-checker",
-  "version": "4.4.0",
+  "version": "4.4.1",
   "description": "",
   "main": "dist/index.js",
   "license": "MIT",
@@ -13,7 +13,9 @@
     "lint": "tslint --project \"./tsconfig.json\"",
     "test": "echo \"Error: no test specified\" && exit 1",
     "docs": "rimraf docs && typedoc --out docs src",
-    "gh-pages": "npm run docs && gh-pages -d docs"
+    "gh-pages": "npm run docs && gh-pages -d docs",
+    "postinstall": "node scripts/deprecation-notice.js",
+    "postupdate": "node scripts/deprecation-notice.js"
   },
   "dependencies": {
     "axios": "^0.21.1",
