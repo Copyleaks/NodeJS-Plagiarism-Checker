@@ -28,6 +28,7 @@ import { CopyleaksAuthToken } from '../models/response';
 import { CopyleaksNaturalLanguageSubmissionModel, CopyleaksSourceCodeSubmissionModel, CopyleaksWritingAssistantSubmissionModel } from '../models/submissions';
 import { isSuccessStatusCode, isUnderMaintenanceResponse, isRateLimitResponse } from '../utils';
 import { ClientUtils } from '../utils/client-utils.utils';
+import { DeprecationService } from '../DeprecationService';
 
 export class AIDetectionClient {
 
@@ -84,6 +85,8 @@ export class AIDetectionClient {
   public async submitSourceCodeAsync(authToken: CopyleaksAuthToken, scanId: string, submission: CopyleaksSourceCodeSubmissionModel) {
     ClientUtils.verifyAuthToken(authToken);
 
+    DeprecationService.showDeprecationMessage();
+    
     const url = `${CopyleaksConfig.API_SERVER_URI}/v2/writer-detector/source-code/${scanId}/check`;
 
     const headers = {

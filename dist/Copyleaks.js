@@ -40,6 +40,8 @@ const utils_1 = require("./utils");
 const AIDetectionClient_1 = require("./clients/AIDetectionClient");
 const WritingAssistantClient_1 = require("./clients/WritingAssistantClient");
 const TextModerationClient_1 = require("./clients/TextModerationClient");
+const SupportedFilesTypes_1 = require("./models/constants/SupportedFilesTypes");
+const DeprecationService_1 = require("./DeprecationService");
 class Copyleaks {
     constructor() {
         this.aiDetectionClient = new AIDetectionClient_1.AIDetectionClient();
@@ -114,6 +116,10 @@ class Copyleaks {
     submitFileAsync(authToken, scanId, submission) {
         return __awaiter(this, void 0, void 0, function* () {
             this.verifyAuthToken(authToken);
+            const fileExtension = this.getFileExtension(submission.filename);
+            if (SupportedFilesTypes_1.SupportedFilesTypes.supportedCodeExtensions.includes(fileExtension)) {
+                DeprecationService_1.DeprecationService.showDeprecationMessage();
+            }
             const url = `${app_config_1.CopyleaksConfig.API_SERVER_URI}/v3/scans/submit/file/${scanId}`;
             const headers = {
                 'Content-Type': 'application/json',
@@ -130,6 +136,27 @@ class Copyleaks {
                 throw new exceptions_1.CommandException(response);
             }
         });
+    }
+    /**
+     * Extracts the file extension from a given filename.
+     *
+     * This method returns the file extension without the dot separator,
+     * converted to lowercase for consistent comparison. If no extension is found
+     * or the filename is invalid, an empty string is returned.
+     *
+     * @param filename - The name of the file from which to extract the extension.
+     *                   Can be a simple filename or a full file path.
+     * @returns The file extension in lowercase without the dot (e.g., "txt", "ts", "pdf"),
+     *          or an empty string if no extension exists or the filename is null/empty/undefined
+     * */
+    getFileExtension(filename) {
+        if (!filename)
+            return '';
+        const lastDotIndex = filename.lastIndexOf('.');
+        if (lastDotIndex > 0 && lastDotIndex < filename.length - 1) {
+            return filename.substring(lastDotIndex + 1).toLowerCase();
+        }
+        return '';
     }
     /**
      * Starting a new process by providing a OCR image file to scan.

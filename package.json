@@ -13,9 +13,7 @@
     "lint": "tslint --project \"./tsconfig.json\"",
     "test": "echo \"Error: no test specified\" && exit 1",
     "docs": "rimraf docs && typedoc --out docs src",
-    "gh-pages": "npm run docs && gh-pages -d docs",
-    "postinstall": "node scripts/deprecation-notice.js",
-    "postupdate": "node scripts/deprecation-notice.js"
+    "gh-pages": "npm run docs && gh-pages -d docs"
   },
   "dependencies": {
     "axios": "^0.21.1",

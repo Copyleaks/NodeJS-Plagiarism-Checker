@@ -89,7 +89,7 @@ TEST_copyleaks = () => {
 
       // TEST_submitAIDetectionNaturalLanguage(loginResult);
 
-      // TEST_submitAIDetectionSourceCode(loginResult);
+      TEST_submitAIDetectionSourceCode(loginResult);
 
       // TEST_submitWritingAssistText(loginResult);
 
@@ -162,7 +162,7 @@ function TEST_submitUrlAsync(loginResult) {
 
 function TEST_submitFileAsync(loginResult) {
   var submission = new CopyleaksFileSubmissionModel(
-    "aGVsbG8gd29ybGQ=",
+    "SGVsbG8gV29ybGQ=",
     "nodejs-sdk-demo.txt",
     {
       sandbox: true,
@@ -296,7 +296,7 @@ function TEST_submitAIDetectionSourceCode(loginResult) {
   submission.sandbox = true;
 
   copyleaks.aiDetectionClient
-    .submitNaturalTextAsync(loginResult, Date.now() + 1, submission)
+    .submitSourceCodeAsync(loginResult, Date.now() + 1, submission)
     .then((response) => {
       logSuccess("TEST_submitAIDetectionSourceCode", response);
     })
