@@ -122,6 +122,11 @@ export class Copyleaks {
 
     const fileExtension = this.getFileExtension(submission.filename);
 
+    if (fileExtension === '' || !fileExtension) {
+        console.error("Unable to determine file extension for:", submission.filename);
+        throw new Error("File extension could not be determined");
+    }
+
     if (SupportedFilesTypes.supportedCodeExtensions.includes(fileExtension)) {
         DeprecationService.showDeprecationMessage();
     }
