@@ -38,6 +38,7 @@ const app_config_1 = require("../app.config");
 const exceptions_1 = require("../models/exceptions");
 const utils_1 = require("../utils");
 const client_utils_utils_1 = require("../utils/client-utils.utils");
+const DeprecationService_1 = require("../DeprecationService");
 class AIDetectionClient {
     /**
       This endpoint will receive submitted text to be checked. At the end of the processing stage,
@@ -92,6 +93,7 @@ class AIDetectionClient {
     submitSourceCodeAsync(authToken, scanId, submission) {
         return __awaiter(this, void 0, void 0, function* () {
             client_utils_utils_1.ClientUtils.verifyAuthToken(authToken);
+            DeprecationService_1.DeprecationService.showDeprecationMessage();
             const url = `${app_config_1.CopyleaksConfig.API_SERVER_URI}/v2/writer-detector/source-code/${scanId}/check`;
             const headers = {
                 'Content-Type': 'application/json',

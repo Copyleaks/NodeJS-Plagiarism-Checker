@@ -1,0 +1,29 @@
+export class SupportedFilesTypes {
+    public static readonly supportedCodeExtensions: readonly string[] = [
+        "ts",
+        "py",
+        "go",
+        "cs",
+        "c",
+        "h",
+        "idc",
+        "cpp",
+        "hpp",
+        "c++",
+        "h++",
+        "cc",
+        "hh",
+        "java",
+        "js",
+        "swift",
+        "rb",
+        "pl",
+        "php",
+        "sh",
+        "m",
+        "scala",
+        "rs",
+        "vbs",
+        "css"
+    ];
+}

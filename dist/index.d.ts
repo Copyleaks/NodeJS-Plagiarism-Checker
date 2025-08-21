@@ -1,5 +1,7 @@
 export * from './Copyleaks';
+export * from './DeprecationService';
 export * from './app.config';
+export * from './models/constants';
 export * from './models/exceptions';
 export * from './models/exports';
 export * from './models/request';
