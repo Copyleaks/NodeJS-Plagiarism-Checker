@@ -117,6 +117,10 @@ class Copyleaks {
         return __awaiter(this, void 0, void 0, function* () {
             this.verifyAuthToken(authToken);
             const fileExtension = this.getFileExtension(submission.filename);
+            if (fileExtension === '' || !fileExtension) {
+                console.error("Unable to determine file extension for:", submission.filename);
+                throw new Error("File extension could not be determined");
+            }
             if (SupportedFilesTypes_1.SupportedFilesTypes.supportedCodeExtensions.includes(fileExtension)) {
                 DeprecationService_1.DeprecationService.showDeprecationMessage();
             }
