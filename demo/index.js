@@ -15,7 +15,7 @@ const {
   CopyleaksTextModerationRequestModel
 } = require("../dist");
 
-const { ShowAiCodeDeperecationMessage } = require('./ShowAiCodeDeperecationMessage');
+const path=require('path')
 const base64Img = require("./base64.img");
 
 const hostname = "127.0.0.1";
@@ -25,10 +25,6 @@ const DEMO_EMAIL = "<EMAIL>"; // change this with your own copyleaks email.
 const DEMO_KEY = "<API_KEY>"; // change this with your own copyleaks API key.
 const WEBHOOK_URL = "<WEBHOOK_URL>"; //exe https://glacial-refuge-96501.herokuapp.com/10b0z2w1
 const copyleaks = new Copyleaks();
-
-// Show important notice only once per process
-ShowAiCodeDeperecationMessage();
-
 
 let testingInProgress = false;
 
