@@ -34,8 +34,7 @@ import { isRateLimitResponse, isSuccessStatusCode, isUnderMaintenanceResponse } 
 import { AIDetectionClient } from './clients/AIDetectionClient';
 import { WritingAssistantClient } from './clients/WritingAssistantClient';
 import { TextModerationClient } from './clients/TextModerationClient';
-import { SupportedFilesTypes } from './models/constants/SupportedFilesTypes';
-import { DeprecationService } from './DeprecationService';
+
 
 export class Copyleaks {
 
@@ -120,16 +119,6 @@ export class Copyleaks {
   public async submitFileAsync(authToken: CopyleaksAuthToken, scanId: string, submission: CopyleaksFileSubmissionModel) {
     this.verifyAuthToken(authToken);
 
-    const fileExtension = this.getFileExtension(submission.filename);
-
-    if (fileExtension === '' || !fileExtension) {
-        console.error("Unable to determine file extension for:", submission.filename);
-        throw new Error("File extension could not be determined");
-    }
-
-    if (SupportedFilesTypes.supportedCodeExtensions.includes(fileExtension)) {
-        DeprecationService.showDeprecationMessage();
-    }
     const url = `${CopyleaksConfig.API_SERVER_URI}/v3/scans/submit/file/${scanId}`;
 
     const headers = {
@@ -148,28 +137,6 @@ export class Copyleaks {
     }
   }
 
-  /**
-   * Extracts the file extension from a given filename.
-   * 
-   * This method returns the file extension without the dot separator,
-   * converted to lowercase for consistent comparison. If no extension is found
-   * or the filename is invalid, an empty string is returned.
-   * 
-   * @param filename - The name of the file from which to extract the extension.
-   *                   Can be a simple filename or a full file path.
-   * @returns The file extension in lowercase without the dot (e.g., "txt", "ts", "pdf"),
-   *          or an empty string if no extension exists or the filename is null/empty/undefined
-   * */
-   private  getFileExtension(filename: string): string {
-      if (!filename) return '';
-      
-      const lastDotIndex = filename.lastIndexOf('.');
-      if (lastDotIndex > 0 && lastDotIndex < filename.length - 1) {
-          return filename.substring(lastDotIndex + 1).toLowerCase();
-      }
-      return '';
-  }
-  
   /**
    * Starting a new process by providing a OCR image file to scan.
    * For more info:

@@ -37,7 +37,6 @@ __exportStar(require("./CopyleaksFileSubmissionModel"), exports);
 __exportStar(require("./CopyleaksFileOcrSubmissionModel"), exports);
 __exportStar(require("./CopyleaksURLSubmissionModel"), exports);
 __exportStar(require("./CopyleaksSubmissionModel"), exports);
-__exportStar(require("./ai-detector/CopyleaksSourceCodeSubmissionModel"), exports);
 __exportStar(require("./ai-detector/CopyleaksNaturalLanguageSubmissionModel"), exports);
 __exportStar(require("./writing-feedback/CopyleaksWritingAssistantSubmissionModel"), exports);
 __exportStar(require("./webhooks/completedWebhookModel"), exports);

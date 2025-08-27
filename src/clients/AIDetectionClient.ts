@@ -25,10 +25,9 @@ import axios from 'axios';
 import { CopyleaksConfig } from '../app.config';
 import { UnderMaintenanceException, RateLimitException, CommandException } from '../models/exceptions';
 import { CopyleaksAuthToken } from '../models/response';
-import { CopyleaksNaturalLanguageSubmissionModel, CopyleaksSourceCodeSubmissionModel, CopyleaksWritingAssistantSubmissionModel } from '../models/submissions';
+import { CopyleaksNaturalLanguageSubmissionModel,CopyleaksWritingAssistantSubmissionModel } from '../models/submissions';
 import { isSuccessStatusCode, isUnderMaintenanceResponse, isRateLimitResponse } from '../utils';
 import { ClientUtils } from '../utils/client-utils.utils';
-import { DeprecationService } from '../DeprecationService';
 
 export class AIDetectionClient {
 
@@ -51,43 +50,6 @@ export class AIDetectionClient {
     ClientUtils.verifyAuthToken(authToken);
 
     const url = `${CopyleaksConfig.API_SERVER_URI}/v2/writer-detector/${scanId}/check`;
-
-    const headers = {
-      'Content-Type': 'application/json',
-      'User-Agent': CopyleaksConfig.USER_AGENT,
-      'Authorization': `Bearer ${authToken['access_token']}`
-    }
-
-    const response = await axios.post(url, submission, { headers });
-    if (isSuccessStatusCode(response.status))
-      return response.data;
-    else if (isUnderMaintenanceResponse(response.status)) {
-      throw new UnderMaintenanceException()
-    } else if (isRateLimitResponse(response.status)) {
-      throw new RateLimitException();
-    } else {
-      throw new CommandException(response)
-    }
-  }
-
-  /**
-    This endpoint will receive submitted source code to be checked. At the end of the processing stage, 
-    the result will be shown as classifications. Source code classification is divided into sections. Each section may have a different classification.
-   * 
-   * * Exceptions:
-   *  * CommandExceptions: Server reject the request. See response status code,
-   *     headers and content for more info.
-   *  * UnderMaintenanceException: Copyleaks servers are unavailable for maintenance.
-   *     We recommend to implement exponential backoff algorithm as described here:
-   *     https://api.copyleaks.com/documentation/v3/exponential-backoff
-   *  * RateLimitException: Too many requests have been sent. The request has been rejected.
-   */
-  public async submitSourceCodeAsync(authToken: CopyleaksAuthToken, scanId: string, submission: CopyleaksSourceCodeSubmissionModel) {
-    ClientUtils.verifyAuthToken(authToken);
-
-    DeprecationService.showDeprecationMessage();
-    
-    const url = `${CopyleaksConfig.API_SERVER_URI}/v2/writer-detector/source-code/${scanId}/check`;
 
     const headers = {
       'Content-Type': 'application/json',

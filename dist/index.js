@@ -34,9 +34,7 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./Copyleaks"), exports);
-__exportStar(require("./DeprecationService"), exports);
 __exportStar(require("./app.config"), exports);
-__exportStar(require("./models/constants"), exports);
 __exportStar(require("./models/exceptions"), exports);
 __exportStar(require("./models/exports"), exports);
 __exportStar(require("./models/request"), exports);

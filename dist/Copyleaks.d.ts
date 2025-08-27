@@ -48,19 +48,6 @@ export declare class Copyleaks {
      */
     submitFileAsync(authToken: CopyleaksAuthToken, scanId: string, submission: CopyleaksFileSubmissionModel): Promise<void>;
     /**
-     * Extracts the file extension from a given filename.
-     *
-     * This method returns the file extension without the dot separator,
-     * converted to lowercase for consistent comparison. If no extension is found
-     * or the filename is invalid, an empty string is returned.
-     *
-     * @param filename - The name of the file from which to extract the extension.
-     *                   Can be a simple filename or a full file path.
-     * @returns The file extension in lowercase without the dot (e.g., "txt", "ts", "pdf"),
-     *          or an empty string if no extension exists or the filename is null/empty/undefined
-     * */
-    private getFileExtension;
-    /**
      * Starting a new process by providing a OCR image file to scan.
      * For more info:
      * https://api.copyleaks.com/documentation/v3/scans/submit/ocr

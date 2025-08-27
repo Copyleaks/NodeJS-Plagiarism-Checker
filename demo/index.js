@@ -9,7 +9,6 @@ const {
   CopyleaksFileOcrSubmissionModel,
   CopyleaksDeleteRequestModel,
   CopyleaksExportModel,
-  CopyleaksSourceCodeSubmissionModel,
   CopyleaksNaturalLanguageSubmissionModel,
   CopyleaksWritingAssistantSubmissionModel,
   CopyleaksTextModerationRequestModel
@@ -84,8 +83,6 @@ TEST_copyleaks = () => {
       // TEST_exportAsync(loginResult);
 
       // TEST_submitAIDetectionNaturalLanguage(loginResult);
-
-      TEST_submitAIDetectionSourceCode(loginResult);
 
       // TEST_submitWritingAssistText(loginResult);
 
@@ -263,41 +260,6 @@ function TEST_submitAIDetectionNaturalLanguage(loginResult) {
     })
     .catch((error) => {
       logError("TEST_submitAIDetectionNaturalLanguage", error);
-    });
-}
-
-function TEST_submitAIDetectionSourceCode(loginResult) {
-  const sampleCode = `
-  def add(a, b):
-      return a + b
-  
-  def multiply(a, b):
-      return a * b
-  
-  def main():
-      x = 5
-      y = 10
-      sum_result = add(x, y)
-      product_result = multiply(x, y)
-      print(f'Sum: {sum_result}')
-      print(f'Product: {product_result}')
-  
-  if __name__ == '__main__':
-      main()
-  `;
-  const submission = new CopyleaksSourceCodeSubmissionModel(
-    sampleCode,
-    "example.py"
-  );
-  submission.sandbox = true;
-
-  copyleaks.aiDetectionClient
-    .submitSourceCodeAsync(loginResult, Date.now() + 1, submission)
-    .then((response) => {
-      logSuccess("TEST_submitAIDetectionSourceCode", response);
-    })
-    .catch((error) => {
-      logError("TEST_submitAIDetectionSourceCode", error);
     });
 }
 
