@@ -1,3 +1,6 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.CopyleaksTextModerationConstants = void 0;
 /*
  The MIT License(MIT)
 
@@ -21,14 +24,15 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
 */
-
-export * from './Copyleaks';
-
-export * from './app.config';
-
-export * from './models/exceptions';
-export * from './models/exports';
-export * from './models/request';
-export * from './models/response';
-export * from './models/submissions';
-export * from './models/constants';
+exports.CopyleaksTextModerationConstants = {
+    ADULT_V1: "adult-v1",
+    TOXIC_V1: "toxic-v1",
+    VIOLENT_V1: "violent-v1",
+    PROFANITY_V1: "profanity-v1",
+    SELF_HARM_V1: "self-harm-v1",
+    HARASSMENT_V1: "harassment-v1",
+    HATE_SPEECH_V1: "hate-speech-v1",
+    DRUGS_V1: "drugs-v1",
+    FIREARMS_V1: "firearms-v1",
+    CYBERSECURITY_V1: "cybersecurity-v1",
+};

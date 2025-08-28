@@ -1,3 +1,6 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.CopyleaksTextModerationLanguages = void 0;
 /*
  The MIT License(MIT)
 
@@ -21,14 +24,6 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
 */
-
-export * from './Copyleaks';
-
-export * from './app.config';
-
-export * from './models/exceptions';
-export * from './models/exports';
-export * from './models/request';
-export * from './models/response';
-export * from './models/submissions';
-export * from './models/constants';
+exports.CopyleaksTextModerationLanguages = {
+    ENGLISH: "en",
+};
