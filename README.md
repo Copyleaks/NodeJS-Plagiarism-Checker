@@ -1,64 +1,210 @@
-# Copyleaks NodeJs SDK
+# Copyleaks SDK
+The official [Copyleaks](https://copyleaks.com/) JavaScript library.
 
-Copyleaks SDK enables you to scan text for plagiarism and detect content distribution online, using the Copyleaks plagiarism checker API.
+## 🚀 Getting Started
+Before you start, ensure you have the following:
 
-Using Copyleaks SDK you can check for plagiarism in:
-* Online content and webpages
-* Local and cloud files (see [supported files](https://api.copyleaks.com/documentation/specifications#2-supported-file-types))
-* Free text
-* OCR (Optical Character Recognition) - scanning pictures with textual content (see [supported files](https://api.copyleaks.com/documentation/specifications#6-supported-image-types-ocr))
+*   An active Copyleaks account. If you don’t have one, [sign up for free](https://copyleaks.com/signup).
+*   You can find your API key on the [API Dashboard](https://api.copyleaks.com/dashboard).
 
-## Installation
+Once you have your account and API key:
 
-Install using [npm](https://www.npmjs.com/package/plagiarism-checker).
+**Install the SDK**:
 
+Install using [npm](https://www.npmjs.com/package/plagiarism-checker)  
 ```bash
 npm i plagiarism-checker
 ```
 
-## Register and Get Your API Key
-To use the Copyleaks API you need to first be a registered user. The registration to Copyleaks takes a minute and is free of charge. [Signup](https://api.copyleaks.com/?register=true) and make sure to confirm your account.
 
-As a signed user you can generate your personal API key. Do so on your [dashboard home](https://api.copyleaks.com/dashboard) under 'API Access Credentials'.
+## 📚 Documentation
+To learn more about how to use Copyleaks API please check out our [Documentation](https://docs.copyleaks.com/resources/sdks/javascript/). 
 
-For more information check out our [API guide](https://api.copyleaks.com/documentation/v3).
+## 💡 Usage Examples
+Here are some common usage examples for the Copyleaks SDK. You can also see a comprehensive code example in the `index.js` file on our GitHub repository: [index.js](https://github.com/Copyleaks/NodeJS-Plagiarism-Checker/blob/master/demo/index.js).
 
-## Usage
+### Get Authentication Token
+This example demonstrates how to log in to the Copyleaks API and obtain an authentication token.
 
-#### Javascript
-```js
-const { Copyleaks } = require('plagiarism-checker');  
-const copyleaks = new Copyleaks();
-copyleaks.loginAsync(<your email>,<your api key>).then(res=> {...} , err=> {...});
-```
-#### Typescript
-```ts
-import { Copyleaks } from 'plagiarism-checker';  
+```javascript
+const { Copyleaks } = require('plagiarism-checker');
 
-export class MyClass{
-    public copyleaks = new Copyleaks();
-    public async getCopyleaksAuthTokenAsync(){
-        try{
-           return await this.copyleaks.loginAsync(<your email>,<your api key>); 
-        }
-        catch{
-         ...   
-        }
-    }
+// --- Your Credentials ---
+const EMAIL_ADDRESS = 'YOUR_EMAIL_ADDRESS';
+const KEY = 'YOUR_API_KEY';
+const WEBHOOK_URL = 'https://your-server.com/webhook/{STATUS}';
+// --------------------
+
+async function main() {
+  console.log('Authenticating...');
+  const copyleaks = new Copyleaks();
+  const authToken = await copyleaks.loginAsync(EMAIL_ADDRESS, KEY);
+  console.log('✅ Login successful!');
 }
+
+main();
 ```
-#### Note
-* To change the Identity server URI (default:"https://id.copyleaks.com"):
-```rb
-CopyleaksConfig.IDENTITY_SERVER_URI = "<your identity server uri>";
+For a detailed understanding of the authentication process, refer to the Copyleaks Login Endpoint [Documentation](https://docs.copyleaks.com/reference/actions/account/login).
+##
+### Submit Text for Plagiarism Scan
+This example shows how to prepare and submit raw text content for a plagiarism scan.
+
+```javascript
+const { Copyleaks,CopyleaksFileSubmissionModel } = require('plagiarism-checker');
+
+// --- Your Credentials ---
+const EMAIL_ADDRESS = 'YOUR_EMAIL_ADDRESS';
+const KEY = 'YOUR_API_KEY';
+const WEBHOOK_URL = 'https://your-server.com/webhook/{STATUS}';
+// --------------------
+
+async function main() {
+  var submission = new CopyleaksFileSubmissionModel(
+    "SGVsbG8gV29ybGQ=",
+    "nodejs-sdk-demo.txt",
+    {
+      sandbox: true,
+      webhooks: {
+        status: `${WEBHOOK_URL}/submit-file-webhook/{STATUS}`,
+      },
+    }
+  );
+
+  copyleaks.submitFileAsync(authToken, Date.now() + 1, submission).then(
+    (res) => logSuccess("submitFileAsync", res),
+    (err) => {
+      logError("submitFileAsync", err);
+    }
+  );
+}
+
+main().catch(err => console.error(err));
 ```
-* To change the API server URI (default:"https://api.copyleaks.com"):
-```rb
-CopyleaksConfig.API_SERVER_URI = "<your api server uri>";
+For a full guide please refer to our step by step [Guide](https://docs.copyleaks.com/guides/authenticity/detect-plagiarism-text)
+
+For a detailed understanding of the plagiarism detection process, refer to the Copyleaks Submit Endpoint [Documentation](https://docs.copyleaks.com/reference/actions/scans/submit-file)
+##
+### AI-Generated Text Detection
+Use the AI detection client to determine if content was generated by artificial intelligence.
+
+```javascript
+const { Copyleaks,CopyleaksNaturalLanguageSubmissionModel } = require('plagiarism-checker');
+
+// --- Your Credentials ---
+const EMAIL_ADDRESS = 'YOUR_EMAIL_ADDRESS';
+const KEY = 'YOUR_API_KEY';
+const WEBHOOK_URL = 'https://your-server.com/webhook/{STATUS}';
+// --------------------
+
+async function main() {
+  const sampleText =
+    "Lions are social animals, living in groups called prides, typically consisting of several females, their offspring, and a few males. Female lions are the primary hunters, working together to catch prey. Lions are known for their strength, teamwork, and complex social structures.";
+  const submission = new CopyleaksNaturalLanguageSubmissionModel(sampleText);
+  submission.sandbox = true;
+
+  copyleaks.aiDetectionClient
+    .submitNaturalTextAsync(authToken, Date.now() + 1, submission)
+    .then((response) => {
+      logSuccess("TEST_submitAIDetectionNaturalLanguage", response);
+    })
+    .catch((error) => {
+      logError("TEST_submitAIDetectionNaturalLanguage", error);
+    });
+
+}
+
+main().catch(err => console.error(err));
 ```
-## Demo
-See [index.js](./demo/index.js) under demo folder for an example using javascript.
-## Read More
-* [API Homepage](https://api.copyleaks.com/)
-* [API Documentation](https://api.copyleaks.com/documentation)
-* [Plagiarism Report](https://github.com/Copyleaks/plagiarism-report)
+For a full guide please refer to our step by step [Guide](https://docs.copyleaks.com/guides/ai-detector/ai-text-detection/)
+
+For a detailed understanding of the Ai detection process, refer to the Copyleaks detect natural language Endpoint [Documentation](https://docs.copyleaks.com/reference/actions/writer-detector/check/)
+##
+### Writing Assistant
+Get intelligent suggestions for improving grammar, spelling, style, and overall writing quality.
+
+```javascript
+const { Copyleaks,CopyleaksWritingAssistantSubmissionModel } = require('plagiarism-checker');
+
+// --- Your Credentials ---
+const EMAIL_ADDRESS = 'YOUR_EMAIL_ADDRESS';
+const KEY = 'YOUR_API_KEY';
+const WEBHOOK_URL = 'https://your-server.com/webhook/{STATUS}';
+// --------------------
+
+async function main() {
+ const sampleText =
+    "Lions are the only cat that live in groups, called pride. A prides typically consists of a few adult males, several feales, and their offspring. This social structure is essential for hunting and raising young cubs. Female lions, or lionesses are the primary hunters of the prid. They work together in cordinated groups to take down prey usually targeting large herbiores like zbras, wildebeest and buffalo. Their teamwork and strategy during hunts highlight the intelligence and coperation that are key to their survival.";
+  const submission = new CopyleaksWritingAssistantSubmissionModel(sampleText);
+  submission.sandbox = true;
+
+  copyleaks.writingAssistantClient
+    .submitTextAsync(authToken, Date.now() + 1, submission)
+    .then((response) => {
+      logSuccess("TEST_submitWritingAssistText", response);
+    })
+    .catch((error) => {
+      logError("TEST_submitWritingAssistText", error);
+    });
+}
+
+main().catch(err => console.error(err));
+```
+For a full guide please refer to our step by step [Guide](https://docs.copyleaks.com/guides/writing/check-grammar/)
+
+For a detailed understanding of the Writing assistant process, refer to the Copyleaks writing feedback Endpoint [Documentation](https://docs.copyleaks.com/reference/actions/writing-assistant/check/)
+##
+### Text Moderation
+Scan and moderate text content for unsafe, inappropriate, or policy-violating material across various categories.
+
+```javascript
+const { Copyleaks,CopyleaksWritingAssistantSubmissionModel } = require('plagiarism-checker');
+
+// --- Your Credentials ---
+const EMAIL_ADDRESS = 'YOUR_EMAIL_ADDRESS';
+const KEY = 'YOUR_API_KEY';
+const WEBHOOK_URL = 'https://your-server.com/webhook/{STATUS}';
+// --------------------
+
+async function main() {
+const model = new CopyleaksTextModerationRequestModel({
+      text: "This is some text to scan.",
+      sandbox: true,
+      language: "en",
+      labels: [
+          { id: "adult-v1" },
+          { id: "toxic-v1" },
+          { id: "violent-v1" },
+          { id: "profanity-v1" },
+          { id: "self-harm-v1" },
+          { id: "harassment-v1" },
+          { id: "hate-speech-v1" },
+          { id: "drugs-v1" },
+          { id: "firearms-v1" },
+          { id: "cybersecurity-v1" }
+      ]
+  });
+
+    copyleaks.textModerationClient.submitTextAsync(authToken, Date.now() + 1, model)
+      .then(response => {
+        logSuccess('TEST_submitTextModerationText', JSON.stringify(response, null, 2));
+      })
+      .catch(error => {
+        logError('TEST_submitTextModerationText', error);
+      });
+}
+
+main().catch(err => console.error(err));
+```
+For a full guide please refer to our step by step [Guide](https://docs.copyleaks.com/guides/moderation/moderate-text/)
+
+For a detailed understanding of the Text moderation process, refer to the Copyleaks text moderation Endpoint [Documentation](https://docs.copyleaks.com/reference/actions/text-moderation/check/)
+##
+## Further Resources
+
+*   **Copyleaks API Dashboard:** Manage your API keys, monitor usage, and view analytics from your personalized dashboard. [Access Dashboard](https://api.copyleaks.com/dashboard)
+*   **Copyleaks SDK Documentation:** Explore comprehensive guides, API references, and code examples for seamless integration. [Read Documentation](https://docs.copyleaks.com/resources/sdks/overview/)
+
+
+## Support
+* If you need assistance, please contact Copyleaks Support via our support portal: Contact Copyleaks [Support](https://help.copyleaks.com/s/contactsupport).
+* To arrange a product demonstration, book a demo here: [Booking Link](https://copyleaks.com/book-a-demo).
