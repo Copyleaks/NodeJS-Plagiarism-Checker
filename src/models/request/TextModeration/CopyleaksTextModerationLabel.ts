@@ -21,8 +21,14 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
 */
-export * from "./CopyleaksDeleteRequestModel";
-export * from "./CopyleaksStartRequestModel";
-export * from "./TextModeration/CopyleaksTextModerationRequestModel";
-export * from "./TextModeration/CopyleaksTextModerationLabel";
 
+export class CopyleaksTextModerationLabel {
+    /**
+     * Id of the label
+     */
+    public readonly id: string; 
+
+    constructor(id: string) {
+        this.id = id;
+    }
+}

@@ -21,8 +21,19 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
 */
-export * from "./CopyleaksDeleteRequestModel";
-export * from "./CopyleaksStartRequestModel";
-export * from "./TextModeration/CopyleaksTextModerationRequestModel";
-export * from "./TextModeration/CopyleaksTextModerationLabel";
 
+/*
+* Provides a collection of constants representing different text moderation categories supported by the Copyleaks Text Moderation API.
+*/
+export const CopyleaksTextModerationConstants = {
+  ADULT_V1: "adult-v1",
+  TOXIC_V1: "toxic-v1",
+  VIOLENT_V1: "violent-v1",
+  PROFANITY_V1: "profanity-v1",
+  SELF_HARM_V1: "self-harm-v1",
+  HARASSMENT_V1: "harassment-v1",
+  HATE_SPEECH_V1: "hate-speech-v1",
+  DRUGS_V1: "drugs-v1",
+  FIREARMS_V1: "firearms-v1",
+  CYBERSECURITY_V1: "cybersecurity-v1",
+} as const;

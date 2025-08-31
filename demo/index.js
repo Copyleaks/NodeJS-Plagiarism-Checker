@@ -1,6 +1,5 @@
 const http = require("http");
 const { spawn } = require("child_process");
-
 const {
   Copyleaks,
   CopyleaksConfig,
@@ -9,10 +8,12 @@ const {
   CopyleaksFileOcrSubmissionModel,
   CopyleaksDeleteRequestModel,
   CopyleaksExportModel,
-  CopyleaksSourceCodeSubmissionModel,
   CopyleaksNaturalLanguageSubmissionModel,
   CopyleaksWritingAssistantSubmissionModel,
-  CopyleaksTextModerationRequestModel
+  CopyleaksTextModerationRequestModel,
+  CopyleaksTextModerationLabel,
+  CopyleaksTextModerationConstants,
+  CopyleaksTextModerationLanguages
 } = require("../dist");
 
 const path=require('path')
@@ -84,8 +85,6 @@ TEST_copyleaks = () => {
       // TEST_exportAsync(loginResult);
 
       // TEST_submitAIDetectionNaturalLanguage(loginResult);
-
-      TEST_submitAIDetectionSourceCode(loginResult);
 
       // TEST_submitWritingAssistText(loginResult);
 
@@ -266,41 +265,6 @@ function TEST_submitAIDetectionNaturalLanguage(loginResult) {
     });
 }
 
-function TEST_submitAIDetectionSourceCode(loginResult) {
-  const sampleCode = `
-  def add(a, b):
-      return a + b
-  
-  def multiply(a, b):
-      return a * b
-  
-  def main():
-      x = 5
-      y = 10
-      sum_result = add(x, y)
-      product_result = multiply(x, y)
-      print(f'Sum: {sum_result}')
-      print(f'Product: {product_result}')
-  
-  if __name__ == '__main__':
-      main()
-  `;
-  const submission = new CopyleaksSourceCodeSubmissionModel(
-    sampleCode,
-    "example.py"
-  );
-  submission.sandbox = true;
-
-  copyleaks.aiDetectionClient
-    .submitSourceCodeAsync(loginResult, Date.now() + 1, submission)
-    .then((response) => {
-      logSuccess("TEST_submitAIDetectionSourceCode", response);
-    })
-    .catch((error) => {
-      logError("TEST_submitAIDetectionSourceCode", error);
-    });
-}
-
 function TEST_submitWritingAssistText(loginResult) {
   const sampleText =
     "Lions are the only cat that live in groups, called pride. A prides typically consists of a few adult males, several feales, and their offspring. This social structure is essential for hunting and raising young cubs. Female lions, or lionesses are the primary hunters of the prid. They work together in cordinated groups to take down prey usually targeting large herbiores like zbras, wildebeest and buffalo. Their teamwork and strategy during hunts highlight the intelligence and coperation that are key to their survival.";
@@ -328,25 +292,26 @@ function TEST_getCorrectionTypes(loginResult) {
     });
 }
 function TEST_submitTextModerationText(loginResult) {
+  
+    var labelsArray=[
+            new CopyleaksTextModerationLabel(CopyleaksTextModerationConstants.ADULT_V1),
+            new CopyleaksTextModerationLabel(CopyleaksTextModerationConstants.TOXIC_V1),
+            new CopyleaksTextModerationLabel(CopyleaksTextModerationConstants.VIOLENT_V1),
+            new CopyleaksTextModerationLabel(CopyleaksTextModerationConstants.PROFANITY_V1),
+            new CopyleaksTextModerationLabel(CopyleaksTextModerationConstants.SELF_HARM_V1),
+            new CopyleaksTextModerationLabel(CopyleaksTextModerationConstants.HARASSMENT_V1),
+            new CopyleaksTextModerationLabel(CopyleaksTextModerationConstants.HATE_SPEECH_V1),
+            new CopyleaksTextModerationLabel(CopyleaksTextModerationConstants.DRUGS_V1),
+            new CopyleaksTextModerationLabel(CopyleaksTextModerationConstants.FIREARMS_V1),
+            new CopyleaksTextModerationLabel(CopyleaksTextModerationConstants.CYBERSECURITY_V1)
+        ];
 
-  const model = new CopyleaksTextModerationRequestModel({
-      text: "This is some text to scan.",
-      sandbox: true,
-      language: "en",
-      labels: [
-          { id: "other-v1" },
-          { id: "adult-v1" },
-          { id: "toxic-v1" },
-          { id: "violent-v1" },
-          { id: "profanity-v1" },
-          { id: "self-harm-v1" },
-          { id: "harassment-v1" },
-          { id: "hate-speech-v1" },
-          { id: "drugs-v1" },
-          { id: "firearms-v1" },
-          { id: "cybersecurity-v1" }
-      ]
-  });
+    const model = new CopyleaksTextModerationRequestModel({
+        text: "This is some text to scan.",
+        sandbox: true,
+        language: CopyleaksTextModerationLanguages.ENGLISH,
+        labels:labelsArray
+    });
 
     copyleaks.textModerationClient.submitTextAsync(loginResult, Date.now() + 1, model)
       .then(response => {

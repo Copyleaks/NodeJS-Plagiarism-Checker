@@ -21,8 +21,9 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
 */
-export * from "./CopyleaksDeleteRequestModel";
-export * from "./CopyleaksStartRequestModel";
-export * from "./TextModeration/CopyleaksTextModerationRequestModel";
-export * from "./TextModeration/CopyleaksTextModerationLabel";
-
+/**
+ * Supported languages for text moderation.
+ */
+export const CopyleaksTextModerationLanguages = {
+  ENGLISH: "en",
+} as const;

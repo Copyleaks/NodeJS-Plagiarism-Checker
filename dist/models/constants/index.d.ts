@@ -1,1 +1,2 @@
-export * from './SupportedFilesTypes';
+export * from './CopyleaksTextModerationConstants';
+export * from './CopyleaksTextModerationLanguages';
