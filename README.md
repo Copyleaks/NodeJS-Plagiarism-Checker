@@ -166,23 +166,26 @@ const WEBHOOK_URL = 'https://your-server.com/webhook/{STATUS}';
 // --------------------
 
 async function main() {
-const model = new CopyleaksTextModerationRequestModel({
-      text: "This is some text to scan.",
-      sandbox: true,
-      language: "en",
-      labels: [
-          { id: "adult-v1" },
-          { id: "toxic-v1" },
-          { id: "violent-v1" },
-          { id: "profanity-v1" },
-          { id: "self-harm-v1" },
-          { id: "harassment-v1" },
-          { id: "hate-speech-v1" },
-          { id: "drugs-v1" },
-          { id: "firearms-v1" },
-          { id: "cybersecurity-v1" }
-      ]
-  });
+  
+    var labelsArray=[
+            new CopyleaksTextModerationLabel(CopyleaksTextModerationConstants.ADULT_V1),
+            new CopyleaksTextModerationLabel(CopyleaksTextModerationConstants.TOXIC_V1),
+            new CopyleaksTextModerationLabel(CopyleaksTextModerationConstants.VIOLENT_V1),
+            new CopyleaksTextModerationLabel(CopyleaksTextModerationConstants.PROFANITY_V1),
+            new CopyleaksTextModerationLabel(CopyleaksTextModerationConstants.SELF_HARM_V1),
+            new CopyleaksTextModerationLabel(CopyleaksTextModerationConstants.HARASSMENT_V1),
+            new CopyleaksTextModerationLabel(CopyleaksTextModerationConstants.HATE_SPEECH_V1),
+            new CopyleaksTextModerationLabel(CopyleaksTextModerationConstants.DRUGS_V1),
+            new CopyleaksTextModerationLabel(CopyleaksTextModerationConstants.FIREARMS_V1),
+            new CopyleaksTextModerationLabel(CopyleaksTextModerationConstants.CYBERSECURITY_V1)
+        ];
+
+    const model = new CopyleaksTextModerationRequestModel({
+        text: "This is some text to scan.",
+        sandbox: true,
+        language: CopyleaksTextModerationLanguages.ENGLISH,
+        labels:labelsArray
+    });
 
     copyleaks.textModerationClient.submitTextAsync(authToken, Date.now() + 1, model)
       .then(response => {
