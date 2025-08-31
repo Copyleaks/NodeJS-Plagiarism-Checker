@@ -292,12 +292,8 @@ function TEST_getCorrectionTypes(loginResult) {
     });
 }
 function TEST_submitTextModerationText(loginResult) {
-
-  const model = new CopyleaksTextModerationRequestModel({
-      text: "This is some text to scan.",
-      sandbox: true,
-      language: CopyleaksTextModerationLanguages.ENGLISH,
-       labels:[
+  
+  var labelsArray=[
           new CopyleaksTextModerationLabel(CopyleaksTextModerationConstants.ADULT_V1),
           new CopyleaksTextModerationLabel(CopyleaksTextModerationConstants.TOXIC_V1),
           new CopyleaksTextModerationLabel(CopyleaksTextModerationConstants.VIOLENT_V1),
@@ -308,7 +304,13 @@ function TEST_submitTextModerationText(loginResult) {
           new CopyleaksTextModerationLabel(CopyleaksTextModerationConstants.DRUGS_V1),
           new CopyleaksTextModerationLabel(CopyleaksTextModerationConstants.FIREARMS_V1),
           new CopyleaksTextModerationLabel(CopyleaksTextModerationConstants.CYBERSECURITY_V1)
-      ]
+      ];
+
+  const model = new CopyleaksTextModerationRequestModel({
+      text: "This is some text to scan.",
+      sandbox: true,
+      language: CopyleaksTextModerationLanguages.ENGLISH,
+      labels:labelsArray
   });
 
     copyleaks.textModerationClient.submitTextAsync(loginResult, Date.now() + 1, model)
