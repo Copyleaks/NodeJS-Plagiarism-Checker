@@ -24,6 +24,9 @@ exports.CopyleaksTextModerationLanguages = void 0;
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
 */
+/**
+ * Supported languages for text moderation.
+ */
 exports.CopyleaksTextModerationLanguages = {
     ENGLISH: "en",
 };

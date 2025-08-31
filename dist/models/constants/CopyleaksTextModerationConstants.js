@@ -1,6 +1,4 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.CopyleaksTextModerationConstants = void 0;
 /*
  The MIT License(MIT)
 
@@ -23,6 +21,11 @@ exports.CopyleaksTextModerationConstants = void 0;
  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
+*/
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.CopyleaksTextModerationConstants = void 0;
+/*
+* Provides a collection of constants representing different text moderation categories supported by the Copyleaks Text Moderation API.
 */
 exports.CopyleaksTextModerationConstants = {
     ADULT_V1: "adult-v1",

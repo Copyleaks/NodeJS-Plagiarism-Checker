@@ -1,3 +1,4 @@
+"use strict";
 /*
  The MIT License(MIT)
 
@@ -21,8 +22,11 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
 */
-export * from "./CopyleaksDeleteRequestModel";
-export * from "./CopyleaksStartRequestModel";
-export * from "./TextModeration/CopyleaksTextModerationRequestModel";
-export * from "./TextModeration/CopyleaksTextModerationLabel";
-
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.CopyleaksTextModerationLabel = void 0;
+class CopyleaksTextModerationLabel {
+    constructor(id) {
+        this.id = id;
+    }
+}
+exports.CopyleaksTextModerationLabel = CopyleaksTextModerationLabel;
