@@ -40,11 +40,13 @@ const utils_1 = require("./utils");
 const AIDetectionClient_1 = require("./clients/AIDetectionClient");
 const WritingAssistantClient_1 = require("./clients/WritingAssistantClient");
 const TextModerationClient_1 = require("./clients/TextModerationClient");
+const AiImageDetectionClient_1 = require("./clients/AiImageDetectionClient");
 class Copyleaks {
     constructor() {
         this.aiDetectionClient = new AIDetectionClient_1.AIDetectionClient();
         this.writingAssistantClient = new WritingAssistantClient_1.WritingAssistantClient();
         this.textModerationClient = new TextModerationClient_1.TextModerationClient();
+        this.aiImageDetectionClient = new AiImageDetectionClient_1.AiImageDetectionClient();
     }
     /**
      * Login to Copyleaks authentication server.
