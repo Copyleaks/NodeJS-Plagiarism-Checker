@@ -25,7 +25,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CopyleaksAiImageDetectionModels = void 0;
 /*
-* Provides a collection of constants representing different text moderation categories supported by the Copyleaks Text Moderation API.
+* Provides a collection of constants for Copyleaks AI Image Detection models.
+* This class contains the available AI detection model to use for analysis.
 */
 exports.CopyleaksAiImageDetectionModels = {
     AI_IMAGE_1_ULTRA: "ai-image-1-ultra"
