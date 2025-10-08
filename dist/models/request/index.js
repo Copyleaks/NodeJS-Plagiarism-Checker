@@ -37,3 +37,4 @@ __exportStar(require("./CopyleaksDeleteRequestModel"), exports);
 __exportStar(require("./CopyleaksStartRequestModel"), exports);
 __exportStar(require("./TextModeration/CopyleaksTextModerationRequestModel"), exports);
 __exportStar(require("./TextModeration/CopyleaksTextModerationLabel"), exports);
+__exportStar(require("./AiImageDetection/CopyleaksAiImageDetectionRequestModel"), exports);

@@ -35,3 +35,11 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./CopyleaksAuthToken"), exports);
 __exportStar(require("./TextModeration/CopyleaksTextModerationResponseModel"), exports);
+__exportStar(require("./TextModeration/CopyleaksTextModerationResponseModel"), exports);
+__exportStar(require("./AiImageDetection/CopyleaksImageShapeModel"), exports);
+__exportStar(require("./AiImageDetection/CopyleaksImageMetadataModel"), exports);
+__exportStar(require("./AiImageDetection/CopyleaksAiImageDetectionSummaryModel"), exports);
+__exportStar(require("./AiImageDetection/CopyleaksAiImageDetectionScannedDocumentModel"), exports);
+__exportStar(require("./AiImageDetection/CopyleaksAiImageDetectionResultModel"), exports);
+__exportStar(require("./AiImageDetection/CopyleaksAiImageDetectionResponseModel"), exports);
+__exportStar(require("./AiImageDetection/CopyleaksAiImageDetectionImageInfoModel"), exports);

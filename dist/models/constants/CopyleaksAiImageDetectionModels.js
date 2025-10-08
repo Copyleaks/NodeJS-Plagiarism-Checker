@@ -1,3 +1,4 @@
+"use strict";
 /*
  The MIT License(MIT)
 
@@ -21,14 +22,11 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
 */
-
-export * from "./CopyleaksAuthToken";
-export * from "./TextModeration/CopyleaksTextModerationResponseModel";
-export * from "./TextModeration/CopyleaksTextModerationResponseModel";
-export * from "./AiImageDetection/CopyleaksImageShapeModel";
-export * from "./AiImageDetection/CopyleaksImageMetadataModel";
-export * from "./AiImageDetection/CopyleaksAiImageDetectionSummaryModel";
-export * from "./AiImageDetection/CopyleaksAiImageDetectionScannedDocumentModel";
-export * from "./AiImageDetection/CopyleaksAiImageDetectionResultModel";
-export * from "./AiImageDetection/CopyleaksAiImageDetectionResponseModel";
-export * from "./AiImageDetection/CopyleaksAiImageDetectionImageInfoModel";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.CopyleaksAiImageDetectionModels = void 0;
+/*
+* Provides a collection of constants representing different text moderation categories supported by the Copyleaks Text Moderation API.
+*/
+exports.CopyleaksAiImageDetectionModels = {
+    AI_IMAGE_1_ULTRA: "ai-image-1-ultra"
+};

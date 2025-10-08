@@ -22,13 +22,10 @@
  SOFTWARE.
 */
 
-export * from "./CopyleaksAuthToken";
-export * from "./TextModeration/CopyleaksTextModerationResponseModel";
-export * from "./TextModeration/CopyleaksTextModerationResponseModel";
-export * from "./AiImageDetection/CopyleaksImageShapeModel";
-export * from "./AiImageDetection/CopyleaksImageMetadataModel";
-export * from "./AiImageDetection/CopyleaksAiImageDetectionSummaryModel";
-export * from "./AiImageDetection/CopyleaksAiImageDetectionScannedDocumentModel";
-export * from "./AiImageDetection/CopyleaksAiImageDetectionResultModel";
-export * from "./AiImageDetection/CopyleaksAiImageDetectionResponseModel";
-export * from "./AiImageDetection/CopyleaksAiImageDetectionImageInfoModel";
+/*
+* Provides a collection of constants for Copyleaks AI Image Detection models.
+* This class contains the available AI detection model to use for analysis.
+*/
+export const CopyleaksAiImageDetectionModels = {
+  AI_IMAGE_1_ULTRA: "ai-image-1-ultra"
+} as const;

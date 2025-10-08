@@ -1,23 +1,18 @@
 const http = require("http");
 const { spawn } = require("child_process");
-const {
-  Copyleaks,
-  CopyleaksConfig,
-  CopyleaksURLSubmissionModel,
-  CopyleaksFileSubmissionModel,
-  CopyleaksFileOcrSubmissionModel,
-  CopyleaksDeleteRequestModel,
-  CopyleaksExportModel,
-  CopyleaksNaturalLanguageSubmissionModel,
-  CopyleaksWritingAssistantSubmissionModel,
-  CopyleaksTextModerationRequestModel,
-  CopyleaksTextModerationLabel,
-  CopyleaksTextModerationConstants,
-  CopyleaksTextModerationLanguages
-} = require("../dist");
-
-const path=require('path')
+const { Copyleaks } = require("../dist");
+const path = require('path');
 const base64Img = require("./base64.img");
+
+// Import example functions
+const { TEST_MISC } = require('./examples/misc');
+const { TEST_CreditsBalance, TEST_UsageHistory } = require('./examples/credits-usage');
+const { TEST_submitUrlAsync } = require('./examples/url-submission');
+const { TEST_submitFileAsync, TEST_submitOcrFileAsync } = require('./examples/file-submission');
+const { TEST_deleteScanAsync, TEST_exportAsync } = require('./examples/delete-export');
+const { TEST_submitAIDetectionNaturalLanguage, TEST_submitAiImageDetection } = require('./examples/ai-detection');
+const { TEST_submitWritingAssistText, TEST_getCorrectionTypes } = require('./examples/writing-assistant');
+const { TEST_submitTextModerationText } = require('./examples/text-moderation');
 
 const hostname = "127.0.0.1";
 const port = 3000;
@@ -67,277 +62,77 @@ TEST_copyleaks = () => {
   // Login
   copyleaks.loginAsync(DEMO_EMAIL, DEMO_KEY).then(
     (loginResult) => {
-      logSuccess("loginAsync", loginResult);
-
-      // TEST_MISC();
-      // TEST_submitFileAsync(loginResult);
-
-      // TEST_CreditsBalance(loginResult);
-
-      // TEST_UsageHistory(loginResult);
-
-      // TEST_submitUrlAsync(loginResult);
-
-      // TEST_submitOcrFileAsync(loginResult);
-
-      // TEST_deleteScanAsync(["1653575562405", "1653575774429"],loginResult);
-
-      // TEST_exportAsync(loginResult);
-
-      // TEST_submitAIDetectionNaturalLanguage(loginResult);
-
-      // TEST_submitWritingAssistText(loginResult);
-
-        // TEST_submitWritingAssistText(loginResult);
-
-        // TEST_getCorrectionTypes(loginResult);
-        
-        TEST_submitTextModerationText(loginResult);
-      },
-      err => logError('loginAsync', err)
-    )
-}
-
-function TEST_MISC() {
-  // OCR Supported Languages
-  copyleaks.getOCRSupportedLanguagesAsync().then(
-    (loginResult) => {
-      logSuccess("getOCRSupportedLanguagesAsync", loginResult);
-    },
-    (err) => logError("getOCRSupportedLanguagesAsync", err)
-  );
-  // Supported File Types
-  copyleaks.getSupportedFileTypesAsync().then(
-    (loginResult) => {
-      logSuccess("getSupportedFileTypesAsync", loginResult);
-    },
-    (err) => logError("getSupportedFileTypesAsync", err)
-  );
-  // Release Notes
-  copyleaks.getReleaseNotesAsync().then(
-    (loginResult) => {
-      logSuccess("getReleaseNotesAsync", loginResult);
-    },
-    (err) => logError("getReleaseNotesAsync", err)
-  );
-}
-
-function TEST_CreditsBalance(loginResult) {
-  copyleaks.getCreditsBalanceAsync(loginResult).then(
-    (res) => logSuccess("getCreditsBalanceAsync", res),
-    (err) => logError("getCreditsBalanceAsync", err)
-  );
-}
-
-function TEST_UsageHistory(loginResult) {
-  copyleaks
-    .getUsagesHistoryCsvAsync(loginResult, "01-01-2020", "02-02-2020")
-    .then(
-      (res) => logSuccess("getUsagesHistoryCsvAsync", res),
-      (err) => logError("getUsagesHistoryCsvAsync", err)
-    );
-}
-
-function TEST_submitUrlAsync(loginResult) {
-  var submission = new CopyleaksURLSubmissionModel("https://copyleaks.com", {
-    sandbox: true,
-    webhooks: {
-      status: `${WEBHOOK_URL}/submit-url-webhook/{STATUS}`,
-      newResult: `${WEBHOOK_URL}/submit-url-webhook/new-results`,
-    },
-  });
-
-  copyleaks.submitUrlAsync(loginResult, Date.now() + 1, submission).then(
-    (res) => logSuccess("submitUrlAsync", res),
-    (err) => {
-      logError("submitUrlAsync", err);
-    }
-  );
-}
-
-function TEST_submitFileAsync(loginResult) {
-  var submission = new CopyleaksFileSubmissionModel(
-    "SGVsbG8gV29ybGQ=",
-    "nodejs-sdk-demo.txt",
-    {
-      sandbox: true,
-      webhooks: {
-        status: `${WEBHOOK_URL}/submit-file-webhook/{STATUS}`,
-      },
-    }
-  );
-
-  copyleaks.submitFileAsync(loginResult, Date.now() + 1, submission).then(
-    (res) => logSuccess("submitFileAsync", res),
-    (err) => {
-      logError("submitFileAsync", err);
-    }
-  );
-}
-
-function TEST_submitOcrFileAsync(loginResult) {
-  var submission = new CopyleaksFileOcrSubmissionModel(
-    "en",
-    base64Img,
-    "nodejs-sdk-demo.txt",
-    {
-      sandbox: true,
-      webhooks: {
-        status: `${WEBHOOK_URL}/submit-file-ocr-webhook/{STATUS}`,
-      },
-    }
-  );
-
-  copyleaks.submitFileOcrAsync(loginResult, Date.now() + 1, submission).then(
-    (res) => logSuccess("submitFileOcrAsync", res),
-    (err) => {
-      logError("submitFileOcrAsync", err);
-    }
-  );
-}
-
-function TEST_deleteScanAsync(scansId, loginResult) {
-  if (scansId.length) {
-    const model = new CopyleaksDeleteRequestModel(
-      // add your own scan ids to remove
-      scansId.map((id) => ({ id })),
-      false,
-      `${WEBHOOK_URL}/delete`
-    );
-    copyleaks.deleteAsync(loginResult, model).then(
-      (res) => logSuccess("deleteAsync", res),
-      (err) => {
-        logError("deleteAsync", err);
+      console.log("----------SUCCESS----------");
+      console.log("loginAsync");
+      if (loginResult) {
+        console.log("result:");
+        console.log(loginResult);
       }
-    );
-  }
-}
+      console.log("-------------------------");
 
-function TEST_exportAsync(loginResult) {
-  var scanId = "1610625417127"; // change this with your own scanId
-
-  const model = new CopyleaksExportModel(
-    `${WEBHOOK_URL}/export/scanId/${scanId}/completion`,
-    [
-      // results
-      {
-        id: "2a1b402420", // change this with your own result Id
-        endpoint: `${WEBHOOK_URL}/export/${scanId}/result/2a1b402420`,
-        verb: "POST",
-        headers: [
-          ["key", "value"],
-          ["key2", "value2"],
-        ],
-      },
-    ],
-    {
-      // crawled version
-      endpoint: `${WEBHOOK_URL}/export/${scanId}/crawled-version`,
-      verb: "POST",
-      headers: [
-        ["key", "value"],
-        ["key2", "value2"],
-      ],
+      // Uncomment the functions you want to test:
+      
+      // TEST_MISC(copyleaks);
+      // TEST_CreditsBalance(copyleaks, loginResult);
+      // TEST_UsageHistory(copyleaks, loginResult);
+      // TEST_submitUrlAsync(copyleaks, loginResult, WEBHOOK_URL);
+      // TEST_submitFileAsync(copyleaks, loginResult, WEBHOOK_URL);
+      // TEST_submitOcrFileAsync(copyleaks, loginResult, WEBHOOK_URL, base64Img);
+      // TEST_deleteScanAsync(copyleaks, ["1653575562405", "1653575774429"], loginResult, WEBHOOK_URL);
+      // TEST_exportAsync(copyleaks, loginResult, WEBHOOK_URL);
+      // TEST_submitAIDetectionNaturalLanguage(copyleaks, loginResult);
+      // TEST_submitWritingAssistText(copyleaks, loginResult);
+      // TEST_getCorrectionTypes(copyleaks, loginResult);
+      // TEST_submitTextModerationText(copyleaks, loginResult);
+      
+      TEST_submitAiImageDetection(copyleaks, loginResult, base64Img);
+      
+    },
+    err => {
+      console.error("----------ERROR----------");
+      console.error("loginAsync:");
+      console.error("Error Message:", err.message || err);
+      
+      // Enhanced error details
+      if (err.response) {
+        console.error("Response Status:", err.response.status);
+        console.error("Response Status Text:", err.response.statusText);
+        console.error("Response Data:", JSON.stringify(err.response.data, null, 2));
+        console.error("Response Headers:", JSON.stringify(err.response.headers, null, 2));
+      } else if (err.request) {
+        console.error("Request made but no response received:");
+        console.error("Request:", err.request);
+      } else {
+        console.error("Error setting up request:");
+        console.error("Full Error Object:", JSON.stringify(err, Object.getOwnPropertyNames(err), 2));
+      }
+      
+      if (err.code) {
+        console.error("Error Code:", err.code);
+      }
+      if (err.config) {
+        console.error("Request Config URL:", err.config.url);
+        console.error("Request Config Method:", err.config.method);
+        console.error("Request Config Headers:", JSON.stringify(err.config.headers, null, 2));
+      }
+      console.error("-------------------------");
     }
   );
-
-  copyleaks.exportAsync(loginResult, scanId, scanId, model).then(
-    (res) => logSuccess("exportAsync", res),
-    (err) => {
-      logError("exportAsync", err);
-    }
-  );
-}
-
-function TEST_submitAIDetectionNaturalLanguage(loginResult) {
-  const sampleText =
-    "Lions are social animals, living in groups called prides, typically consisting of several females, their offspring, and a few males. Female lions are the primary hunters, working together to catch prey. Lions are known for their strength, teamwork, and complex social structures.";
-  const submission = new CopyleaksNaturalLanguageSubmissionModel(sampleText);
-  submission.sandbox = true;
-
-  copyleaks.aiDetectionClient
-    .submitNaturalTextAsync(loginResult, Date.now() + 1, submission)
-    .then((response) => {
-      logSuccess("TEST_submitAIDetectionNaturalLanguage", response);
-    })
-    .catch((error) => {
-      logError("TEST_submitAIDetectionNaturalLanguage", error);
-    });
-}
-
-function TEST_submitWritingAssistText(loginResult) {
-  const sampleText =
-    "Lions are the only cat that live in groups, called pride. A prides typically consists of a few adult males, several feales, and their offspring. This social structure is essential for hunting and raising young cubs. Female lions, or lionesses are the primary hunters of the prid. They work together in cordinated groups to take down prey usually targeting large herbiores like zbras, wildebeest and buffalo. Their teamwork and strategy during hunts highlight the intelligence and coperation that are key to their survival.";
-  const submission = new CopyleaksWritingAssistantSubmissionModel(sampleText);
-  submission.sandbox = true;
-
-  copyleaks.writingAssistantClient
-    .submitTextAsync(loginResult, Date.now() + 1, submission)
-    .then((response) => {
-      logSuccess("TEST_submitWritingAssistText", response);
-    })
-    .catch((error) => {
-      logError("TEST_submitWritingAssistText", error);
-    });
-}
-
-function TEST_getCorrectionTypes(loginResult) {
-  copyleaks.writingAssistantClient
-    .getCorrectionTypesAsync(loginResult, "en")
-    .then((response) => {
-      logSuccess("TEST_submitAIDetectionNaturalLanguage", response);
-    })
-    .catch((error) => {
-      logError("TEST_submitAIDetectionNaturalLanguage", error);
-    });
-}
-function TEST_submitTextModerationText(loginResult) {
-  
-    var labelsArray=[
-            new CopyleaksTextModerationLabel(CopyleaksTextModerationConstants.ADULT_V1),
-            new CopyleaksTextModerationLabel(CopyleaksTextModerationConstants.TOXIC_V1),
-            new CopyleaksTextModerationLabel(CopyleaksTextModerationConstants.VIOLENT_V1),
-            new CopyleaksTextModerationLabel(CopyleaksTextModerationConstants.PROFANITY_V1),
-            new CopyleaksTextModerationLabel(CopyleaksTextModerationConstants.SELF_HARM_V1),
-            new CopyleaksTextModerationLabel(CopyleaksTextModerationConstants.HARASSMENT_V1),
-            new CopyleaksTextModerationLabel(CopyleaksTextModerationConstants.HATE_SPEECH_V1),
-            new CopyleaksTextModerationLabel(CopyleaksTextModerationConstants.DRUGS_V1),
-            new CopyleaksTextModerationLabel(CopyleaksTextModerationConstants.FIREARMS_V1),
-            new CopyleaksTextModerationLabel(CopyleaksTextModerationConstants.CYBERSECURITY_V1)
-        ];
-
-    const model = new CopyleaksTextModerationRequestModel({
-        text: "This is some text to scan.",
-        sandbox: true,
-        language: CopyleaksTextModerationLanguages.ENGLISH,
-        labels:labelsArray
-    });
-
-    copyleaks.textModerationClient.submitTextAsync(loginResult, Date.now() + 1, model)
-      .then(response => {
-        logSuccess('TEST_submitTextModerationText', JSON.stringify(response, null, 2));
-      })
-      .catch(error => {
-        logError('TEST_submitTextModerationText', error);
-      });
-}
-function logError(title, err) {
-  console.error("----------ERROR----------");
-  console.error(`${title}:`);
-  console.error(err);
-  console.error("-------------------------");
-}
-
-function logSuccess(title, result) {
-  console.log("----------SUCCESS----------");
-  console.log(`${title}`);
-  if (result) {
-    console.log(`result:`);
-    console.log(result);
-  }
-  console.log("-------------------------");
-}
+};
 
 server.listen(port, hostname, () => {
   console.log(`please visit http://${hostname}:${port}/ to start the test`);
+});
+
+// Handle process termination
+process.on('SIGINT', () => {
+  console.log('Received SIGINT. Graceful shutdown...');
+  webhookServerProcess.kill();
+  process.exit(0);
+});
+
+process.on('SIGTERM', () => {
+  console.log('Received SIGTERM. Graceful shutdown...');
+  webhookServerProcess.kill();
+  process.exit(0);
 });
