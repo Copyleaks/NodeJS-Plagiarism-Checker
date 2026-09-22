@@ -23,6 +23,8 @@ export interface SubmissionPDF {
      * Version 2 is our latest iteration of our PDF report and is currently in beta.
      */
     version: PdfReportVersion;
+    /** Which version of the PDF report to generate. Supported values: v1, v2, v3, latest. Overrides version when both are supplied. */
+    reportVersion?: string;
     /**
      * Customizable colors
      */
