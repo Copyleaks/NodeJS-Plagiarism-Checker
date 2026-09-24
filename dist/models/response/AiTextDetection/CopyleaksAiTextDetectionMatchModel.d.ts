@@ -1,4 +1,4 @@
-/*
+/********************************************************************************
  The MIT License(MIT)
 
  Copyright(c) 2016 Copyleaks LTD (https://copyleaks.com)
@@ -20,22 +20,23 @@
  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
-*/
-import { AlertsModel } from "../notificationsModels/alertsModel";
-
-export class NotificationsModel {
-  
-  /*An array of scan alerts that were detected in the scan. */
-  alerts?: AlertsModel[];
-
-  /**
-   * @param init Wire data. Each alert can be a plain object; it is mapped to an AlertsModel instance.
-   */
-  constructor(init?: Omit<Partial<NotificationsModel>, 'alerts'> & { alerts?: Partial<AlertsModel>[] }) {
-    Object.assign(this, init);
-
-    if (init?.alerts) {
-      this.alerts = init.alerts.map((a) => new AlertsModel(a));
-    }
-  }
+********************************************************************************/
+import { CopyleaksAiTextDetectionMatchTextModel } from './CopyleaksAiTextDetectionMatchTextModel';
+/**
+ * Location of the text segments that received a classification.
+ */
+export declare class CopyleaksAiTextDetectionMatchModel {
+    /**
+     * Positions in the text of the document.
+     */
+    text: CopyleaksAiTextDetectionMatchTextModel;
+    /**
+     * Positions in the HTML version of the document.
+     * Returned only for HTML sources.
+     */
+    html?: CopyleaksAiTextDetectionMatchTextModel;
+    /**
+     * @param init Parsed JSON object. Unknown fields are ignored.
+     */
+    constructor(init?: Partial<CopyleaksAiTextDetectionMatchModel>);
 }

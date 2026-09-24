@@ -1,3 +1,4 @@
+"use strict";
 /*
  The MIT License(MIT)
 
@@ -21,21 +22,16 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
 */
-import { AlertsModel } from "../notificationsModels/alertsModel";
-
-export class NotificationsModel {
-  
-  /*An array of scan alerts that were detected in the scan. */
-  alerts?: AlertsModel[];
-
-  /**
-   * @param init Wire data. Each alert can be a plain object; it is mapped to an AlertsModel instance.
-   */
-  constructor(init?: Omit<Partial<NotificationsModel>, 'alerts'> & { alerts?: Partial<AlertsModel>[] }) {
-    Object.assign(this, init);
-
-    if (init?.alerts) {
-      this.alerts = init.alerts.map((a) => new AlertsModel(a));
-    }
-  }
-}
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.CopyleaksAlertCodes = void 0;
+/**
+ * Provides a collection of constants representing Copyleaks scan alert codes.
+ * Scan alerts are listed in notifications.alerts of the completed webhook.
+ */
+exports.CopyleaksAlertCodes = {
+    /**
+     * AI-generated text was detected (category 2, AI content detection; severity 4).
+     * The alert's additionalData holds the AI text detection result as a JSON string.
+     */
+    SUSPECTED_AI_TEXT: 'suspected-ai-text',
+};

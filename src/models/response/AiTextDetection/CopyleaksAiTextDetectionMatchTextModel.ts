@@ -1,4 +1,4 @@
-/*
+/********************************************************************************
  The MIT License(MIT)
 
  Copyright(c) 2016 Copyleaks LTD (https://copyleaks.com)
@@ -20,22 +20,34 @@
  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
-*/
-import { AlertsModel } from "../notificationsModels/alertsModel";
+********************************************************************************/
 
-export class NotificationsModel {
-  
-  /*An array of scan alerts that were detected in the scan. */
-  alerts?: AlertsModel[];
+import { CopyleaksAiTextDetectionPositionsModel } from './CopyleaksAiTextDetectionPositionsModel';
 
-  /**
-   * @param init Wire data. Each alert can be a plain object; it is mapped to an AlertsModel instance.
-   */
-  constructor(init?: Omit<Partial<NotificationsModel>, 'alerts'> & { alerts?: Partial<AlertsModel>[] }) {
-    Object.assign(this, init);
+/**
+ * Character and word positions of the matched text segments.
+ */
+export class CopyleaksAiTextDetectionMatchTextModel {
+    /**
+     * Positions measured in characters.
+     */
+    public chars!: CopyleaksAiTextDetectionPositionsModel;
 
-    if (init?.alerts) {
-      this.alerts = init.alerts.map((a) => new AlertsModel(a));
+    /**
+     * Positions measured in words.
+     */
+    public words!: CopyleaksAiTextDetectionPositionsModel;
+
+    /**
+     * @param init Parsed JSON object. Unknown fields are ignored.
+     */
+    constructor(init?: Partial<CopyleaksAiTextDetectionMatchTextModel>) {
+        const raw: any = init || {};
+        if (raw.chars != null) {
+            this.chars = new CopyleaksAiTextDetectionPositionsModel(raw.chars);
+        }
+        if (raw.words != null) {
+            this.words = new CopyleaksAiTextDetectionPositionsModel(raw.words);
+        }
     }
-  }
 }

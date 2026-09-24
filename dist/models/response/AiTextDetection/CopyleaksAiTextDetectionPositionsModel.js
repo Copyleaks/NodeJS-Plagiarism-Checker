@@ -1,7 +1,5 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.NotificationsModel = void 0;
-/*
+/********************************************************************************
  The MIT License(MIT)
 
  Copyright(c) 2016 Copyleaks LTD (https://copyleaks.com)
@@ -23,17 +21,32 @@ exports.NotificationsModel = void 0;
  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
-*/
-const alertsModel_1 = require("../notificationsModels/alertsModel");
-class NotificationsModel {
+********************************************************************************/
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.CopyleaksAiTextDetectionPositionsModel = void 0;
+/**
+ * Positions of text segments.
+ * Segment i starts at starts[i] and spans lengths[i] characters or words.
+ */
+class CopyleaksAiTextDetectionPositionsModel {
     /**
-     * @param init Wire data. Each alert can be a plain object; it is mapped to an AlertsModel instance.
+     * @param init Parsed JSON object. Accepts both camelCase keys (starts, lengths) and
+     * the PascalCase keys (Starts, Lengths) that sandbox scans send. Unknown fields are ignored.
      */
     constructor(init) {
-        Object.assign(this, init);
-        if (init === null || init === void 0 ? void 0 : init.alerts) {
-            this.alerts = init.alerts.map((a) => new alertsModel_1.AlertsModel(a));
+        var _a, _b;
+        const raw = init || {};
+        const starts = (_a = raw.starts) !== null && _a !== void 0 ? _a : raw.Starts;
+        const lengths = (_b = raw.lengths) !== null && _b !== void 0 ? _b : raw.Lengths;
+        if (starts != null) {
+            this.starts = starts;
+        }
+        if (lengths != null) {
+            this.lengths = lengths;
+        }
+        if (raw.groupIds != null) {
+            this.groupIds = raw.groupIds;
         }
     }
 }
-exports.NotificationsModel = NotificationsModel;
+exports.CopyleaksAiTextDetectionPositionsModel = CopyleaksAiTextDetectionPositionsModel;

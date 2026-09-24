@@ -1,4 +1,5 @@
-/*
+"use strict";
+/********************************************************************************
  The MIT License(MIT)
 
  Copyright(c) 2016 Copyleaks LTD (https://copyleaks.com)
@@ -20,22 +21,28 @@
  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
-*/
-import { AlertsModel } from "../notificationsModels/alertsModel";
-
-export class NotificationsModel {
-  
-  /*An array of scan alerts that were detected in the scan. */
-  alerts?: AlertsModel[];
-
-  /**
-   * @param init Wire data. Each alert can be a plain object; it is mapped to an AlertsModel instance.
-   */
-  constructor(init?: Omit<Partial<NotificationsModel>, 'alerts'> & { alerts?: Partial<AlertsModel>[] }) {
-    Object.assign(this, init);
-
-    if (init?.alerts) {
-      this.alerts = init.alerts.map((a) => new AlertsModel(a));
+********************************************************************************/
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.CopyleaksAiTextDetectionSummaryModel = void 0;
+/**
+ * Summary of the AI text detection result.
+ */
+class CopyleaksAiTextDetectionSummaryModel {
+    /**
+     * @param init Parsed JSON object. Accepts both camelCase keys (human, ai) and
+     * the PascalCase keys (Human, Ai) that sandbox scans send. Unknown fields are ignored.
+     */
+    constructor(init) {
+        var _a, _b;
+        const raw = init || {};
+        const human = (_a = raw.human) !== null && _a !== void 0 ? _a : raw.Human;
+        const ai = (_b = raw.ai) !== null && _b !== void 0 ? _b : raw.Ai;
+        if (human != null) {
+            this.human = human;
+        }
+        if (ai != null) {
+            this.ai = ai;
+        }
     }
-  }
 }
+exports.CopyleaksAiTextDetectionSummaryModel = CopyleaksAiTextDetectionSummaryModel;

@@ -1,4 +1,4 @@
-/*
+/********************************************************************************
  The MIT License(MIT)
 
  Copyright(c) 2016 Copyleaks LTD (https://copyleaks.com)
@@ -20,22 +20,28 @@
  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
-*/
-import { AlertsModel } from "../notificationsModels/alertsModel";
-
-export class NotificationsModel {
-  
-  /*An array of scan alerts that were detected in the scan. */
-  alerts?: AlertsModel[];
-
-  /**
-   * @param init Wire data. Each alert can be a plain object; it is mapped to an AlertsModel instance.
-   */
-  constructor(init?: Omit<Partial<NotificationsModel>, 'alerts'> & { alerts?: Partial<AlertsModel>[] }) {
-    Object.assign(this, init);
-
-    if (init?.alerts) {
-      this.alerts = init.alerts.map((a) => new AlertsModel(a));
-    }
-  }
+********************************************************************************/
+/**
+ * Positions of text segments.
+ * Segment i starts at starts[i] and spans lengths[i] characters or words.
+ */
+export declare class CopyleaksAiTextDetectionPositionsModel {
+    /**
+     * Start positions of the segments.
+     */
+    starts: number[];
+    /**
+     * Lengths of the segments, one for each start position.
+     */
+    lengths: number[];
+    /**
+     * Group id of each segment.
+     * Returned only for positions in the HTML version of the document.
+     */
+    groupIds?: number[];
+    /**
+     * @param init Parsed JSON object. Accepts both camelCase keys (starts, lengths) and
+     * the PascalCase keys (Starts, Lengths) that sandbox scans send. Unknown fields are ignored.
+     */
+    constructor(init?: Partial<CopyleaksAiTextDetectionPositionsModel>);
 }

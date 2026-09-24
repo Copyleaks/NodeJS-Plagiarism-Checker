@@ -1,4 +1,4 @@
-/*
+/********************************************************************************
  The MIT License(MIT)
 
  Copyright(c) 2016 Copyleaks LTD (https://copyleaks.com)
@@ -20,22 +20,26 @@
  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
-*/
-import { AlertsModel } from "../notificationsModels/alertsModel";
+********************************************************************************/
 
-export class NotificationsModel {
-  
-  /*An array of scan alerts that were detected in the scan. */
-  alerts?: AlertsModel[];
+import { CopyleaksAiTextDetectionPatternsModel } from './CopyleaksAiTextDetectionPatternsModel';
 
-  /**
-   * @param init Wire data. Each alert can be a plain object; it is mapped to an AlertsModel instance.
-   */
-  constructor(init?: Omit<Partial<NotificationsModel>, 'alerts'> & { alerts?: Partial<AlertsModel>[] }) {
-    Object.assign(this, init);
+/**
+ * AI Logic explanation of the AI text detection result.
+ */
+export class CopyleaksAiTextDetectionExplainModel {
+    /**
+     * The AI Logic patterns found in the text.
+     */
+    public patterns!: CopyleaksAiTextDetectionPatternsModel;
 
-    if (init?.alerts) {
-      this.alerts = init.alerts.map((a) => new AlertsModel(a));
+    /**
+     * @param init Parsed JSON object. Unknown fields are ignored.
+     */
+    constructor(init?: Partial<CopyleaksAiTextDetectionExplainModel>) {
+        const raw: any = init || {};
+        if (raw.patterns != null) {
+            this.patterns = new CopyleaksAiTextDetectionPatternsModel(raw.patterns);
+        }
     }
-  }
 }
