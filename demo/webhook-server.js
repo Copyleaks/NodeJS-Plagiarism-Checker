@@ -36,9 +36,14 @@ app.post("/submit-url-webhook/completed", (req, res) => {
 
     // AI text detection: the "suspected-ai-text" alert carries the AI detection result as a JSON string.
     // getAIDetectionResult() decodes it. It returns null when the alert has no data, and throws on malformed JSON.
+    // The decode has its own try/catch so that a bad alert still gets the webhook acknowledged below.
     if (completed.getAIDetectionAlert()) {
-      const aiResult = completed.getAIDetectionResult();
-      console.log("AI text detection result:", JSON.stringify(aiResult, null, 2));
+      try {
+        const aiResult = completed.getAIDetectionResult();
+        console.log("AI text detection result:", JSON.stringify(aiResult, null, 2));
+      } catch (err) {
+        console.error("[Webhook Server] could not decode the AI alert:", err.message);
+      }
     }
 
     res.status(200).send(`Completed webhook received ${JSON.stringify(completed, null, 2)}`);

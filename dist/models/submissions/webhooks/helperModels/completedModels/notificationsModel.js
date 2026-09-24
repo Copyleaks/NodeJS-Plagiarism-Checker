@@ -26,6 +26,9 @@ exports.NotificationsModel = void 0;
 */
 const alertsModel_1 = require("../notificationsModels/alertsModel");
 class NotificationsModel {
+    /**
+     * @param init Wire data. Each alert can be a plain object; it is mapped to an AlertsModel instance.
+     */
     constructor(init) {
         Object.assign(this, init);
         if (init === null || init === void 0 ? void 0 : init.alerts) {

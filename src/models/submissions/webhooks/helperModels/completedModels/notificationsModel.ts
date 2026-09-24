@@ -28,7 +28,10 @@ export class NotificationsModel {
   /*An array of scan alerts that were detected in the scan. */
   alerts?: AlertsModel[];
 
-  constructor(init?: Partial<NotificationsModel>) {
+  /**
+   * @param init Wire data. Each alert can be a plain object; it is mapped to an AlertsModel instance.
+   */
+  constructor(init?: Omit<Partial<NotificationsModel>, 'alerts'> & { alerts?: Partial<AlertsModel>[] }) {
     Object.assign(this, init);
 
     if (init?.alerts) {

@@ -8,7 +8,12 @@ export declare class CompletedWebhookModel extends StatusWebhookModel {
     results?: ResultsModel;
     notifications?: NotificationsModel;
     scannedDocument?: ScannedDocumentModel;
-    constructor(init?: Partial<CompletedWebhookModel>);
+    /**
+     * @param init Wire data. notifications.alerts items can be plain objects; they are mapped to AlertsModel instances.
+     */
+    constructor(init?: Omit<Partial<CompletedWebhookModel>, 'notifications'> & {
+        notifications?: ConstructorParameters<typeof NotificationsModel>[0];
+    });
     /**
      * Returns the first "suspected-ai-text" alert (CopyleaksAlertCodes.SUSPECTED_AI_TEXT) of the scan, or null.
      *

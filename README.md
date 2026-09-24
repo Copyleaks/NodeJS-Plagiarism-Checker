@@ -100,16 +100,21 @@ app.post('/webhook/completed', (req, res) => {
   // null when the scan produced no AI alert
   const aiAlert = completed.getAIDetectionAlert();
   if (aiAlert) {
-    // null when the alert has no data; throws a SyntaxError when additionalData is not valid JSON
-    const aiResult = completed.getAIDetectionResult();
-    if (aiResult) {
-      console.log('AI:', aiResult.summary.ai, 'Human:', aiResult.summary.human, 'Model:', aiResult.modelVersion);
-      for (const result of aiResult.results) {
-        // classification: 1 = human, 2 = AI
-        console.log(result.classification, result.matches.map(m => m.text.chars));
+    try {
+      // null when the alert has no data; throws a SyntaxError when additionalData is not valid JSON
+      const aiResult = completed.getAIDetectionResult();
+      if (aiResult) {
+        console.log('AI:', aiResult.summary.ai, 'Human:', aiResult.summary.human, 'Model:', aiResult.modelVersion);
+        for (const result of aiResult.results) {
+          // classification: 1 = human, 2 = AI
+          console.log(result.classification, result.matches.map(m => m.text.chars));
+        }
       }
+    } catch (err) {
+      console.error('Could not decode the AI alert:', err.message);
     }
   }
+  // Acknowledge the webhook even when the AI alert could not be decoded.
   res.sendStatus(200);
 });
 ```

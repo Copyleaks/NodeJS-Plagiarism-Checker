@@ -30,6 +30,9 @@ const resultsModel_1 = require("./helperModels/completedModels/resultsModel");
 const scannedDocumentModel_1 = require("./helperModels/completedModels/scannedDocumentModel");
 const CopyleaksAlertCodes_1 = require("../../constants/CopyleaksAlertCodes");
 class CompletedWebhookModel extends statusWebhookModel_1.StatusWebhookModel {
+    /**
+     * @param init Wire data. notifications.alerts items can be plain objects; they are mapped to AlertsModel instances.
+     */
     constructor(init) {
         super(init);
         if (init) {

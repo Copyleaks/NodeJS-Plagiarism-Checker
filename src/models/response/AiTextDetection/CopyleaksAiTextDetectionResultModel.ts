@@ -35,10 +35,10 @@ export class CopyleaksAiTextDetectionResultModel {
     public classification!: number;
 
     /**
-     * The probability of the classification.
+     * The probability of the classification. Can be missing, because the server plans to remove it.
      * @deprecated The server plans to remove this value. Use classification and summary instead.
      */
-    public probability!: number;
+    public probability?: number;
 
     /**
      * The text segments that received this classification.

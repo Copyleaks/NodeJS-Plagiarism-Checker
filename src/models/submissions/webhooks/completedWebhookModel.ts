@@ -34,7 +34,10 @@ export class CompletedWebhookModel extends StatusWebhookModel {
   notifications?: NotificationsModel;
   scannedDocument?: ScannedDocumentModel;
 
-  constructor(init?: Partial<CompletedWebhookModel>) {
+  /**
+   * @param init Wire data. notifications.alerts items can be plain objects; they are mapped to AlertsModel instances.
+   */
+  constructor(init?: Omit<Partial<CompletedWebhookModel>, 'notifications'> & { notifications?: ConstructorParameters<typeof NotificationsModel>[0] }) {
     super(init);
     if (init) {
       if (init.results) {
