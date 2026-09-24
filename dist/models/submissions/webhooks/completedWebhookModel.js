@@ -69,7 +69,8 @@ class CompletedWebhookModel extends statusWebhookModel_1.StatusWebhookModel {
      * Same as getAIDetectionAlert()?.getAIDetectionResult().
      *
      * Null is returned when there is no AI alert (see getAIDetectionAlert),
-     * and also when the AI alert is present but its additionalData is missing or empty.
+     * and also when the AI alert is present but its additionalData is missing, empty,
+     * or valid JSON that is not a JSON object.
      * In that case AI text was detected, but the details are not available.
      *
      * @returns The decoded AI text detection result, or null.

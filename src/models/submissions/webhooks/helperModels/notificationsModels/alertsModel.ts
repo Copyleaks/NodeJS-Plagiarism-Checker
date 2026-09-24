@@ -55,8 +55,10 @@ export class AlertsModel {
    * Decodes the additionalData of a "suspected-ai-text" alert into a typed AI text detection result.
    *
    * Returns null when the alert code is not CopyleaksAlertCodes.SUSPECTED_AI_TEXT,
-   * or when additionalData is missing or empty.
-   * Trailing NUL characters and whitespace are removed before parsing.
+   * when additionalData is missing or empty,
+   * or when additionalData is valid JSON but not a JSON object (an array, number, string, true/false or null).
+   * Trailing NUL characters (U+0000) and ASCII whitespace (tab, line feed, vertical tab, form feed,
+   * carriage return and space) are removed before parsing. Other characters are not trimmed.
    * The raw additionalData string is not changed.
    *
    * @returns The decoded AI text detection result, or null.
@@ -71,22 +73,35 @@ export class AlertsModel {
       return null;
     }
     const parsed = JSON.parse(json);
-    return parsed == null ? null : new CopyleaksAiTextDetectionResponseModel(parsed);
+    if (typeof parsed !== 'object' || parsed === null || Array.isArray(parsed)) {
+      return null;
+    }
+    return new CopyleaksAiTextDetectionResponseModel(parsed);
   }
 }
 
 /**
- * Removes trailing NUL characters and whitespace with a single backward scan.
+ * Removes trailing NUL characters and ASCII whitespace with a single backward scan.
  * The server can send additionalData padded with NUL characters.
  */
 function trimTrailingNulAndWhitespace(value: string): string {
   let end = value.length;
-  while (end > 0) {
-    const ch = value.charAt(end - 1);
-    if (ch !== '\u0000' && ch.trim() !== '') {
-      break;
-    }
+  while (end > 0 && isNulOrAsciiWhitespace(value.charCodeAt(end - 1))) {
     end--;
   }
   return value.substring(0, end);
+}
+
+/**
+ * True for NUL (U+0000) and the ASCII whitespace characters tab, line feed, vertical tab,
+ * form feed, carriage return and space. Unicode whitespace such as U+00A0 is not included.
+ */
+function isNulOrAsciiWhitespace(code: number): boolean {
+  return code === 0x00 // NUL
+    || code === 0x09 // \t
+    || code === 0x0a // \n
+    || code === 0x0b // \v
+    || code === 0x0c // \f
+    || code === 0x0d // \r
+    || code === 0x20; // space
 }
