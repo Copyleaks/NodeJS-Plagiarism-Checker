@@ -26,7 +26,7 @@ import { CopyleaksAiTextDetectionResponseModel } from '../../../../response/AiTe
 
 export class AlertsModel {
   
-  /*Scan alert category (1-10). 2 = AI content detection. */
+  /*Scan alert category. */
   category!: number;
   
   /*Scan alert code. The code is unique for each scan alert. */
@@ -41,7 +41,7 @@ export class AlertsModel {
   /*Url to a resource describing the specific scan alert. Not sent for every alert (for example, not for suspected-ai-text). */
   helpLink?: string;
 
-  /*Specifies the importance of the scan alert, from 0 (lowest) to 4 (highest). */
+  /*Specifies the importance of the scan alert. */
   severity!: number;
 
   /*Additional data about the scan alert. Supplied as a json string. Can be missing or empty. */
