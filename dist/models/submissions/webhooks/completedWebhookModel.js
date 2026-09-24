@@ -50,9 +50,7 @@ class CompletedWebhookModel extends statusWebhookModel_1.StatusWebhookModel {
     /**
      * Returns the first "suspected-ai-text" alert (CopyleaksAlertCodes.SUSPECTED_AI_TEXT) of the scan, or null.
      *
-     * A null alert means the scan produced no AI alert.
-     * It does not by itself prove that AI detection ran: check the scan's aiGeneratedText.detect setting
-     * and the category-2 failure codes in CopyleaksAlertCodes (for example AI_DETECTION_FAILED).
+     * Returns null when the completed webhook contains no suspected-ai-text alert.
      *
      * @returns The AI alert, or null.
      */
