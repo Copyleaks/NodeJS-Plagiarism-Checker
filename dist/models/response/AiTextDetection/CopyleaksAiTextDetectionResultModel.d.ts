@@ -1,4 +1,4 @@
-/*
+/********************************************************************************
  The MIT License(MIT)
 
  Copyright(c) 2016 Copyleaks LTD (https://copyleaks.com)
@@ -20,19 +20,28 @@
  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
-*/
-import { AlertsModel } from "../notificationsModels/alertsModel";
-
-export class NotificationsModel {
-  
-  /*An array of scan alerts that were detected in the scan. */
-  alerts?: AlertsModel[];
-
-  constructor(init?: Partial<NotificationsModel>) {
-    Object.assign(this, init);
-
-    if (init?.alerts) {
-      this.alerts = init.alerts.map((a) => new AlertsModel(a));
-    }
-  }
+********************************************************************************/
+import { CopyleaksAiTextDetectionMatchModel } from './CopyleaksAiTextDetectionMatchModel';
+/**
+ * A classification of parts of the scanned text.
+ */
+export declare class CopyleaksAiTextDetectionResultModel {
+    /**
+     * The classification of the matched text segments.
+     * 1 = human-written, 2 = AI-generated.
+     */
+    classification: number;
+    /**
+     * The probability of the classification.
+     * @deprecated The server plans to remove this value. Use classification and summary instead.
+     */
+    probability: number;
+    /**
+     * The text segments that received this classification.
+     */
+    matches: CopyleaksAiTextDetectionMatchModel[];
+    /**
+     * @param init Parsed JSON object. Unknown fields are ignored.
+     */
+    constructor(init?: Partial<CopyleaksAiTextDetectionResultModel>);
 }

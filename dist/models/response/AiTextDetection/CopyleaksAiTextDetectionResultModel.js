@@ -1,4 +1,5 @@
-/*
+"use strict";
+/********************************************************************************
  The MIT License(MIT)
 
  Copyright(c) 2016 Copyleaks LTD (https://copyleaks.com)
@@ -20,19 +21,28 @@
  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
-*/
-import { AlertsModel } from "../notificationsModels/alertsModel";
-
-export class NotificationsModel {
-  
-  /*An array of scan alerts that were detected in the scan. */
-  alerts?: AlertsModel[];
-
-  constructor(init?: Partial<NotificationsModel>) {
-    Object.assign(this, init);
-
-    if (init?.alerts) {
-      this.alerts = init.alerts.map((a) => new AlertsModel(a));
+********************************************************************************/
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.CopyleaksAiTextDetectionResultModel = void 0;
+const CopyleaksAiTextDetectionMatchModel_1 = require("./CopyleaksAiTextDetectionMatchModel");
+/**
+ * A classification of parts of the scanned text.
+ */
+class CopyleaksAiTextDetectionResultModel {
+    /**
+     * @param init Parsed JSON object. Unknown fields are ignored.
+     */
+    constructor(init) {
+        const raw = init || {};
+        if (raw.classification != null) {
+            this.classification = raw.classification;
+        }
+        if (raw.probability != null) {
+            this.probability = raw.probability;
+        }
+        if (Array.isArray(raw.matches)) {
+            this.matches = raw.matches.map((m) => new CopyleaksAiTextDetectionMatchModel_1.CopyleaksAiTextDetectionMatchModel(m));
+        }
     }
-  }
 }
+exports.CopyleaksAiTextDetectionResultModel = CopyleaksAiTextDetectionResultModel;

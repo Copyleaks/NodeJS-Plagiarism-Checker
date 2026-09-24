@@ -21,9 +21,12 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
 */
+import { CopyleaksAlertCodes } from '../../../../constants/CopyleaksAlertCodes';
+import { CopyleaksAiTextDetectionResponseModel } from '../../../../response/AiTextDetection/CopyleaksAiTextDetectionResponseModel';
+
 export class AlertsModel {
   
-  /*Scan alert category. */
+  /*Scan alert category (1-10). 2 = AI content detection. */
   category!: number;
   
   /*Scan alert code. The code is unique for each scan alert. */
@@ -35,16 +38,55 @@ export class AlertsModel {
   /*Provides human-readable information about the scan alert. */
   message!: string;
 
-  /*Url to a resource describing the specific scan alert. */
-  helpLink!: string;
+  /*Url to a resource describing the specific scan alert. Not sent for every alert (for example, not for suspected-ai-text). */
+  helpLink?: string;
 
-  /*Specifies the importance of the scan alert. */
+  /*Specifies the importance of the scan alert, from 0 (lowest) to 4 (highest). */
   severity!: number;
 
-  /*Additional data about the scan alert. Supplied as a json string. */
-  additionalData!: string;
+  /*Additional data about the scan alert. Supplied as a json string. Can be missing or empty. */
+  additionalData?: string;
 
   constructor(init?: Partial<AlertsModel>) {
     Object.assign(this, init);
   }
+
+  /**
+   * Decodes the additionalData of a "suspected-ai-text" alert into a typed AI text detection result.
+   *
+   * Returns null when the alert code is not CopyleaksAlertCodes.SUSPECTED_AI_TEXT,
+   * or when additionalData is missing or empty.
+   * Trailing NUL characters and whitespace are removed before parsing.
+   * The raw additionalData string is not changed.
+   *
+   * @returns The decoded AI text detection result, or null.
+   * @throws {SyntaxError} When additionalData is not valid JSON. The JSON.parse error is not caught.
+   */
+  public getAIDetectionResult(): CopyleaksAiTextDetectionResponseModel | null {
+    if (this.code !== CopyleaksAlertCodes.SUSPECTED_AI_TEXT || !this.additionalData) {
+      return null;
+    }
+    const json = trimTrailingNulAndWhitespace(this.additionalData);
+    if (json.length === 0) {
+      return null;
+    }
+    const parsed = JSON.parse(json);
+    return parsed == null ? null : new CopyleaksAiTextDetectionResponseModel(parsed);
+  }
+}
+
+/**
+ * Removes trailing NUL characters and whitespace with a single backward scan.
+ * The server can send additionalData padded with NUL characters.
+ */
+function trimTrailingNulAndWhitespace(value: string): string {
+  let end = value.length;
+  while (end > 0) {
+    const ch = value.charAt(end - 1);
+    if (ch !== '\u0000' && ch.trim() !== '') {
+      break;
+    }
+    end--;
+  }
+  return value.substring(0, end);
 }

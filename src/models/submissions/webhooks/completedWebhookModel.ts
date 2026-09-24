@@ -25,6 +25,9 @@ import { NotificationsModel } from "./helperModels/completedModels/notifications
 import { StatusWebhookModel } from "./helperModels/baseModels/statusWebhookModel";
 import { ResultsModel } from "./helperModels/completedModels/resultsModel";
 import { ScannedDocumentModel } from "./helperModels/completedModels/scannedDocumentModel";
+import { AlertsModel } from "./helperModels/notificationsModels/alertsModel";
+import { CopyleaksAlertCodes } from "../../constants/CopyleaksAlertCodes";
+import { CopyleaksAiTextDetectionResponseModel } from "../../response/AiTextDetection/CopyleaksAiTextDetectionResponseModel";
 
 export class CompletedWebhookModel extends StatusWebhookModel {
   results?: ResultsModel;
@@ -44,5 +47,37 @@ export class CompletedWebhookModel extends StatusWebhookModel {
         this.scannedDocument = new ScannedDocumentModel(init.scannedDocument);
       }
     }
+  }
+
+  /**
+   * Returns the first "suspected-ai-text" alert (CopyleaksAlertCodes.SUSPECTED_AI_TEXT) of the scan, or null.
+   *
+   * A null alert means the scan produced no AI alert.
+   * It does not by itself prove that AI detection ran: check the scan's aiGeneratedText.detect setting
+   * and the category-2 failure codes in CopyleaksAlertCodes (for example AI_DETECTION_FAILED).
+   *
+   * @returns The AI alert, or null.
+   */
+  public getAIDetectionAlert(): AlertsModel | null {
+    const alerts = this.notifications?.alerts;
+    if (!alerts) {
+      return null;
+    }
+    return alerts.find((alert) => alert.code === CopyleaksAlertCodes.SUSPECTED_AI_TEXT) ?? null;
+  }
+
+  /**
+   * Returns the decoded AI text detection result of the "suspected-ai-text" alert, or null.
+   * Same as getAIDetectionAlert()?.getAIDetectionResult().
+   *
+   * Null is returned when there is no AI alert (see getAIDetectionAlert),
+   * and also when the AI alert is present but its additionalData is missing or empty.
+   * In that case AI text was detected, but the details are not available.
+   *
+   * @returns The decoded AI text detection result, or null.
+   * @throws {SyntaxError} When the alert's additionalData is not valid JSON.
+   */
+  public getAIDetectionResult(): CopyleaksAiTextDetectionResponseModel | null {
+    return this.getAIDetectionAlert()?.getAIDetectionResult() ?? null;
   }
 }

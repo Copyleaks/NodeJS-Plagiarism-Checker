@@ -21,18 +21,35 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
 */
-import { AlertsModel } from "../notificationsModels/alertsModel";
 
-export class NotificationsModel {
-  
-  /*An array of scan alerts that were detected in the scan. */
-  alerts?: AlertsModel[];
+/**
+ * Provides a collection of constants representing Copyleaks scan alert codes.
+ * Scan alerts are listed in notifications.alerts of the completed webhook.
+ */
+export const CopyleaksAlertCodes = {
+  /**
+   * AI-generated text was detected (category 2, AI content detection; severity 4).
+   * The alert's additionalData holds the AI text detection result as a JSON string.
+   */
+  SUSPECTED_AI_TEXT: 'suspected-ai-text',
 
-  constructor(init?: Partial<NotificationsModel>) {
-    Object.assign(this, init);
+  /**
+   * AI text detection failed (category 2).
+   */
+  AI_DETECTION_FAILED: 'ai-detection-failed',
 
-    if (init?.alerts) {
-      this.alerts = init.alerts.map((a) => new AlertsModel(a));
-    }
-  }
-}
+  /**
+   * AI text detection did not run because the language is not supported (category 2).
+   */
+  AI_DETECTION_LANG_NOT_SUPPORTED: 'ai-detection-lang-not-supported',
+
+  /**
+   * AI text detection did not run because the text is too short (category 2).
+   */
+  AI_DETECTION_TEXT_TOO_SHORT: 'ai-detection-text-too-short',
+
+  /**
+   * AI text detection did not run because the file type is not supported (category 2).
+   */
+  FILE_TYPE_NOT_SUPPORTED: 'file-type-not-supported',
+} as const;

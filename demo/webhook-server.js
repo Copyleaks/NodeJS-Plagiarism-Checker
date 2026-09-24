@@ -34,6 +34,13 @@ app.post("/submit-url-webhook/completed", (req, res) => {
     const completed = new CompletedWebhookModel(req.body);
     console.log("Deserialized into CompletedWebhook:", completed);
 
+    // AI text detection: the "suspected-ai-text" alert carries the AI detection result as a JSON string.
+    // getAIDetectionResult() decodes it. It returns null when the alert has no data, and throws on malformed JSON.
+    if (completed.getAIDetectionAlert()) {
+      const aiResult = completed.getAIDetectionResult();
+      console.log("AI text detection result:", JSON.stringify(aiResult, null, 2));
+    }
+
     res.status(200).send(`Completed webhook received ${JSON.stringify(completed, null, 2)}`);
   } catch (err) {
     console.error(`[Webhook Server ERROR - completed]:`, err.message);

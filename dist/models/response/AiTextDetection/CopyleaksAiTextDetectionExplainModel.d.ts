@@ -1,4 +1,4 @@
-/*
+/********************************************************************************
  The MIT License(MIT)
 
  Copyright(c) 2016 Copyleaks LTD (https://copyleaks.com)
@@ -20,19 +20,18 @@
  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
-*/
-import { AlertsModel } from "../notificationsModels/alertsModel";
-
-export class NotificationsModel {
-  
-  /*An array of scan alerts that were detected in the scan. */
-  alerts?: AlertsModel[];
-
-  constructor(init?: Partial<NotificationsModel>) {
-    Object.assign(this, init);
-
-    if (init?.alerts) {
-      this.alerts = init.alerts.map((a) => new AlertsModel(a));
-    }
-  }
+********************************************************************************/
+import { CopyleaksAiTextDetectionPatternsModel } from './CopyleaksAiTextDetectionPatternsModel';
+/**
+ * AI Logic explanation of the AI text detection result.
+ */
+export declare class CopyleaksAiTextDetectionExplainModel {
+    /**
+     * The AI Logic patterns found in the text.
+     */
+    patterns: CopyleaksAiTextDetectionPatternsModel;
+    /**
+     * @param init Parsed JSON object. Unknown fields are ignored.
+     */
+    constructor(init?: Partial<CopyleaksAiTextDetectionExplainModel>);
 }

@@ -1,4 +1,4 @@
-/*
+/********************************************************************************
  The MIT License(MIT)
 
  Copyright(c) 2016 Copyleaks LTD (https://copyleaks.com)
@@ -20,19 +20,34 @@
  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
-*/
-import { AlertsModel } from "../notificationsModels/alertsModel";
-
-export class NotificationsModel {
-  
-  /*An array of scan alerts that were detected in the scan. */
-  alerts?: AlertsModel[];
-
-  constructor(init?: Partial<NotificationsModel>) {
-    Object.assign(this, init);
-
-    if (init?.alerts) {
-      this.alerts = init.alerts.map((a) => new AlertsModel(a));
-    }
-  }
+********************************************************************************/
+/**
+ * Statistics of the AI Logic patterns.
+ * Index i of every array describes pattern i.
+ */
+export declare class CopyleaksAiTextDetectionPatternStatisticsModel {
+    /**
+     * Frequency of each pattern in AI-generated text.
+     * An infinite value is sent as 0.
+     */
+    aiCount: number[];
+    /**
+     * Frequency of each pattern in human-written text.
+     * An infinite value is sent as 0.
+     */
+    humanCount: number[];
+    /**
+     * Ratio between the AI and human frequencies of each pattern.
+     * An infinite value is sent as -1.
+     */
+    proportion: number[];
+    /**
+     * Source of each pattern.
+     * 1 = AI, 2 = humanizer.
+     */
+    source: number[];
+    /**
+     * @param init Parsed JSON object. Unknown fields are ignored.
+     */
+    constructor(init?: Partial<CopyleaksAiTextDetectionPatternStatisticsModel>);
 }
