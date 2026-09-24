@@ -1,3 +1,4 @@
+"use strict";
 /*
  The MIT License(MIT)
 
@@ -21,22 +22,4 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
 */
-
-export * from './SubmissionProperties';
-
-export * from './Actions';
-export * from './AISourceMatch';
-export * from './Author';
-export * from './CopyleaksDB';
-export * from './DomainsMode';
-export * from './Exclude';
-export * from './Filter';
-export * from './Indexing';
-export * from './PdfProperties';
-export * from './Repository';
-export * from './Scanning';
-export * from './ScanningExclude';
-export * from './ScanningRepository';
-export * from './SensitiveDataProtection';
-export * from './SubmissionProperties';
-export * from './Webhooks';
+Object.defineProperty(exports, "__esModule", { value: true });
