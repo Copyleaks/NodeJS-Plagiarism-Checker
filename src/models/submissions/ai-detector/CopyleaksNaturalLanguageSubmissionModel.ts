@@ -22,7 +22,7 @@
  SOFTWARE.
 */
 
-import { CopyleaksAIDetectionSubmissionModel } from "./CopyleaksAIDetectionSubmissionModel";
+import { CopyleaksAIDetectionSubmissionModel } from "./CopyleaksAIDetectionSubmissionModel.js";
 
 export class CopyleaksNaturalLanguageSubmissionModel extends CopyleaksAIDetectionSubmissionModel {
   /**

@@ -1,4 +1,4 @@
-import { CopyleaksAIDetectionSubmissionModel } from "./CopyleaksAIDetectionSubmissionModel";
+import { CopyleaksAIDetectionSubmissionModel } from "./CopyleaksAIDetectionSubmissionModel.js";
 export declare class CopyleaksNaturalLanguageSubmissionModel extends CopyleaksAIDetectionSubmissionModel {
     language?: string | undefined;
     /**

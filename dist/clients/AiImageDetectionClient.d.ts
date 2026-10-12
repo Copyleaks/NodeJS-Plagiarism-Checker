@@ -1,5 +1,5 @@
-import { CopyleaksAiImageDetectionResponseModel, CopyleaksAuthToken } from "../models/response";
-import { CopyleaksAiImageDetectionRequestModel } from "../models/request";
+import { CopyleaksAiImageDetectionResponseModel, CopyleaksAuthToken } from "../models/response/index.js";
+import { CopyleaksAiImageDetectionRequestModel } from "../models/request/index.js";
 export declare class AiImageDetectionClient {
     /**
   This endpoint will receive submitted image to be checked.

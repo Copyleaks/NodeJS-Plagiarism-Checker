@@ -22,8 +22,8 @@
  SOFTWARE.
 */
 
-import { PdfReportColors } from "./PdfReportColors";
-import { PdfReportVersion } from "./PdfReportVersion";
+import { PdfReportColors } from "./PdfReportColors.js";
+import { PdfReportVersion } from "./PdfReportVersion.js";
 
 export interface SubmissionPDF {
   /**

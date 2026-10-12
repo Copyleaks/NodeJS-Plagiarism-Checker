@@ -24,13 +24,13 @@ exports.ScannedDocumentModel = void 0;
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
 */
-const metadataModel_1 = require("../baseModels/metadataModel");
+const metadataModel_js_1 = require("../baseModels/metadataModel.js");
 class ScannedDocumentModel {
     constructor(init) {
         if (init) {
             Object.assign(this, init);
             if (init.metadata) {
-                this.metadata = new metadataModel_1.MetadataModel(init.metadata);
+                this.metadata = new metadataModel_js_1.MetadataModel(init.metadata);
             }
         }
     }

@@ -38,4 +38,4 @@ var MaskingPolicy;
      * Mask all results from this document.
      */
     MaskingPolicy[MaskingPolicy["MaskAll"] = 2] = "MaskAll";
-})(MaskingPolicy = exports.MaskingPolicy || (exports.MaskingPolicy = {}));
+})(MaskingPolicy || (exports.MaskingPolicy = MaskingPolicy = {}));

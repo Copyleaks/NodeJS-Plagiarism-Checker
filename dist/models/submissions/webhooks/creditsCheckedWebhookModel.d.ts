@@ -1,5 +1,5 @@
-import { ScannedDocumentModel } from "./helperModels/completedModels/scannedDocumentModel";
-import { StatusWebhookModel } from "./helperModels/baseModels/statusWebhookModel";
+import { ScannedDocumentModel } from "./helperModels/completedModels/scannedDocumentModel.js";
+import { StatusWebhookModel } from "./helperModels/baseModels/statusWebhookModel.js";
 export declare class CreditsCheckedWebhookModel extends StatusWebhookModel {
     credits?: number;
     scannedDocument?: ScannedDocumentModel;

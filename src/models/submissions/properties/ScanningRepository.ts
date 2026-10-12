@@ -22,7 +22,7 @@
  SOFTWARE.
 */
 
-import { SubmissionRepository } from './Repository';
+import { SubmissionRepository } from './Repository.js';
 
 export interface SubmissionScanningRepository extends SubmissionRepository {
   /**

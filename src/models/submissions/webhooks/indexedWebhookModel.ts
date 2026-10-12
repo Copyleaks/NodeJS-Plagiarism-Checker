@@ -21,7 +21,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
 */
-import { StatusWebhookModel } from "./helperModels/baseModels/statusWebhookModel";
+import { StatusWebhookModel } from "./helperModels/baseModels/statusWebhookModel.js";
 
 export class IndexedWebhookModel extends StatusWebhookModel {
   constructor(init?: Partial<IndexedWebhookModel>) {

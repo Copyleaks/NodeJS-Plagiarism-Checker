@@ -23,18 +23,24 @@
 */
 import axios from 'axios';
 
-import { CopyleaksConfig } from './app.config';
-import { UnderMaintenanceException, CommandException, AuthExipredException, RateLimitException } from './models/exceptions';
-import { CopyleaksExportModel } from './models/exports';
-import { CopyleaksDeleteRequestModel } from './models/request';
-import { CopyleaksStartRequestModel } from './models/request/CopyleaksStartRequestModel';
-import { CopyleaksAuthToken } from './models/response';
-import { CopyleaksFileOcrSubmissionModel, CopyleaksFileSubmissionModel, CopyleaksURLSubmissionModel } from './models/submissions';
-import { isRateLimitResponse, isSuccessStatusCode, isUnderMaintenanceResponse } from './utils';
-import { AIDetectionClient } from './clients/AIDetectionClient';
-import { WritingAssistantClient } from './clients/WritingAssistantClient';
-import { TextModerationClient } from './clients/TextModerationClient';
-import { AiImageDetectionClient } from './clients/AiImageDetectionClient';
+import { CopyleaksConfig } from './app.config.js';
+import { UnderMaintenanceException, CommandException, AuthExipredException, RateLimitException } from './models/exceptions/index.js';
+import { CopyleaksExportModel } from './models/exports/index.js';
+import { CopyleaksDeleteRequestModel } from './models/request/index.js';
+import { CopyleaksStartRequestModel } from './models/request/CopyleaksStartRequestModel.js';
+import {
+  CopyleaksAuthToken,
+  CopyleaksCreditsBalanceResponseModel,
+  CopyleaksReleaseNotesResponseModel,
+  CopyleaksStartResponseModel,
+  CopyleaksSupportedFileTypesResponseModel
+} from './models/response/index.js';
+import { CopyleaksFileOcrSubmissionModel, CopyleaksFileSubmissionModel, CopyleaksURLSubmissionModel } from './models/submissions/index.js';
+import { isRateLimitResponse, isSuccessStatusCode, isUnderMaintenanceResponse } from './utils/index.js';
+import { AIDetectionClient } from './clients/AIDetectionClient.js';
+import { WritingAssistantClient } from './clients/WritingAssistantClient.js';
+import { TextModerationClient } from './clients/TextModerationClient.js';
+import { AiImageDetectionClient } from './clients/AiImageDetectionClient.js';
 
 
 export class Copyleaks {
@@ -270,7 +276,7 @@ export class Copyleaks {
       'Authorization': `Bearer ${authToken['access_token']}`
     }
 
-    const response = await axios.patch(url, model, { headers });
+    const response = await axios.patch<CopyleaksStartResponseModel>(url, model, { headers });
 
     if (isSuccessStatusCode(response.status)) {
       return response.data; // Completed successfully
@@ -377,7 +383,7 @@ export class Copyleaks {
       'Authorization': `Bearer ${authToken['access_token']}`
     }
 
-    const response = await axios.get(url, { headers });
+    const response = await axios.get<CopyleaksCreditsBalanceResponseModel>(url, { headers });
 
     if (isSuccessStatusCode(response.status))
       return response.data;
@@ -417,7 +423,7 @@ export class Copyleaks {
       'Authorization': `Bearer ${authToken['access_token']}`
     }
 
-    const response = await axios.get(url, { headers });
+    const response = await axios.get<string>(url, { headers });
 
     if (isSuccessStatusCode(response.status))
       return response.data;
@@ -450,7 +456,7 @@ export class Copyleaks {
       'User-Agent': CopyleaksConfig.USER_AGENT,
     }
 
-    const response = await axios.get(url, { headers });
+    const response = await axios.get<CopyleaksReleaseNotesResponseModel>(url, { headers });
 
     if (isSuccessStatusCode(response.status))
       return response.data;
@@ -483,7 +489,7 @@ export class Copyleaks {
       'User-Agent': CopyleaksConfig.USER_AGENT,
     }
 
-    const response = await axios.get(url, { headers });
+    const response = await axios.get<CopyleaksSupportedFileTypesResponseModel>(url, { headers });
 
     if (isSuccessStatusCode(response.status))
       return response.data;
@@ -516,7 +522,7 @@ export class Copyleaks {
       'User-Agent': CopyleaksConfig.USER_AGENT,
     }
 
-    const response = await axios.get(url, { headers });
+    const response = await axios.get<string[]>(url, { headers });
 
     if (isSuccessStatusCode(response.status))
       return response.data;

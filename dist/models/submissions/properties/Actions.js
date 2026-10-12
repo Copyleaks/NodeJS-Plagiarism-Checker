@@ -38,4 +38,4 @@ var SubmissionActions;
      * Only index the file in the Copyleaks internal database. No credits will be used.
      */
     SubmissionActions[SubmissionActions["IndexOnly"] = 2] = "IndexOnly";
-})(SubmissionActions = exports.SubmissionActions || (exports.SubmissionActions = {}));
+})(SubmissionActions || (exports.SubmissionActions = SubmissionActions = {}));

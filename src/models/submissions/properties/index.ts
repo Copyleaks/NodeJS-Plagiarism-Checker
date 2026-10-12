@@ -22,20 +22,20 @@
  SOFTWARE.
 */
 
-export * from './SubmissionProperties';
+export * from './SubmissionProperties.js';
 
-export * from './Actions';
-export * from './Author';
-export * from './CopyleaksDB';
-export * from './DomainsMode';
-export * from './Exclude';
-export * from './Filter';
-export * from './Indexing';
-export * from './PdfProperties';
-export * from './Repository';
-export * from './Scanning';
-export * from './ScanningExclude';
-export * from './ScanningRepository';
-export * from './SensitiveDataProtection';
-export * from './SubmissionProperties';
-export * from './Webhooks';
+export * from './Actions.js';
+export * from './Author.js';
+export * from './CopyleaksDB.js';
+export * from './DomainsMode.js';
+export * from './Exclude.js';
+export * from './Filter.js';
+export * from './Indexing.js';
+export * from './PdfProperties.js';
+export * from './Repository.js';
+export * from './Scanning.js';
+export * from './ScanningExclude.js';
+export * from './ScanningRepository.js';
+export * from './SensitiveDataProtection.js';
+export * from './SubmissionProperties.js';
+export * from './Webhooks.js';

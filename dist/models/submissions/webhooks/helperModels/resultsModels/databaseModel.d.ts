@@ -1,5 +1,5 @@
-import { SharedResultsModel } from "./sharedResultsModel";
-import { TagsModel } from "./tagsModel";
+import { SharedResultsModel } from "./sharedResultsModel.js";
+import { TagsModel } from "./tagsModel.js";
 export declare class DatabaseModel extends SharedResultsModel {
     tags?: TagsModel[];
     constructor(init?: Partial<DatabaseModel>);

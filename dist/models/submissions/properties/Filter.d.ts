@@ -1,4 +1,4 @@
-import { SubmissionFilterDomainsMode } from './DomainsMode';
+import { SubmissionFilterDomainsMode } from './DomainsMode.js';
 export interface SubmissionFilter {
     /**
      * Enable matching of exact words in the text.

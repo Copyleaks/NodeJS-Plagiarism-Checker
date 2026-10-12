@@ -1,4 +1,4 @@
-import { ScoreWeights } from "./ScoreWeights";
+import { ScoreWeights } from "./ScoreWeights.js";
 export declare class CopyleaksWritingAssistantSubmissionModel {
     text: string;
     sandbox?: boolean | undefined;

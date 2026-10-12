@@ -1,4 +1,4 @@
-export * from './CopyleaksTextModerationConstants';
-export * from './CopyleaksTextModerationLanguages';
-export * from './CopyleaksAiImageDetectionModels';
+export * from './CopyleaksTextModerationConstants.js';
+export * from './CopyleaksTextModerationLanguages.js';
+export * from './CopyleaksAiImageDetectionModels.js';
 

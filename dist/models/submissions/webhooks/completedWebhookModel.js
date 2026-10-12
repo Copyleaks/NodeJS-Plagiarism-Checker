@@ -24,22 +24,22 @@ exports.CompletedWebhookModel = void 0;
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
 */
-const notificationsModel_1 = require("./helperModels/completedModels/notificationsModel");
-const statusWebhookModel_1 = require("./helperModels/baseModels/statusWebhookModel");
-const resultsModel_1 = require("./helperModels/completedModels/resultsModel");
-const scannedDocumentModel_1 = require("./helperModels/completedModels/scannedDocumentModel");
-class CompletedWebhookModel extends statusWebhookModel_1.StatusWebhookModel {
+const notificationsModel_js_1 = require("./helperModels/completedModels/notificationsModel.js");
+const statusWebhookModel_js_1 = require("./helperModels/baseModels/statusWebhookModel.js");
+const resultsModel_js_1 = require("./helperModels/completedModels/resultsModel.js");
+const scannedDocumentModel_js_1 = require("./helperModels/completedModels/scannedDocumentModel.js");
+class CompletedWebhookModel extends statusWebhookModel_js_1.StatusWebhookModel {
     constructor(init) {
         super(init);
         if (init) {
             if (init.results) {
-                this.results = new resultsModel_1.ResultsModel(init.results);
+                this.results = new resultsModel_js_1.ResultsModel(init.results);
             }
             if (init.notifications) {
-                this.notifications = new notificationsModel_1.NotificationsModel(init.notifications);
+                this.notifications = new notificationsModel_js_1.NotificationsModel(init.notifications);
             }
             if (init.scannedDocument) {
-                this.scannedDocument = new scannedDocumentModel_1.ScannedDocumentModel(init.scannedDocument);
+                this.scannedDocument = new scannedDocumentModel_js_1.ScannedDocumentModel(init.scannedDocument);
             }
         }
     }

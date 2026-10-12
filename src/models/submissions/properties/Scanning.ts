@@ -22,9 +22,9 @@
  SOFTWARE.
 */
 
-import { SubmissionScanningCopyleaksDB } from './CopyleaksDB';
-import { SubmissionScanningExclude } from './ScanningExclude';
-import { SubmissionScanningRepository } from './ScanningRepository';
+import { SubmissionScanningCopyleaksDB } from './CopyleaksDB.js';
+import { SubmissionScanningExclude } from './ScanningExclude.js';
+import { SubmissionScanningRepository } from './ScanningRepository.js';
 
 export interface SubmissionScanning {
   /**

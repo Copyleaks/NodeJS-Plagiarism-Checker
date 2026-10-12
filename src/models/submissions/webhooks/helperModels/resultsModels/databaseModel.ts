@@ -21,8 +21,8 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
 */
-import { SharedResultsModel } from "./sharedResultsModel";
-import { TagsModel } from "./tagsModel";
+import { SharedResultsModel } from "./sharedResultsModel.js";
+import { TagsModel } from "./tagsModel.js";
 
 export class DatabaseModel extends SharedResultsModel {
   /*Tags object array */

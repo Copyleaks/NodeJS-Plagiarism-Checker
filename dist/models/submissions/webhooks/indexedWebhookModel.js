@@ -24,8 +24,8 @@ exports.IndexedWebhookModel = void 0;
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
 */
-const statusWebhookModel_1 = require("./helperModels/baseModels/statusWebhookModel");
-class IndexedWebhookModel extends statusWebhookModel_1.StatusWebhookModel {
+const statusWebhookModel_js_1 = require("./helperModels/baseModels/statusWebhookModel.js");
+class IndexedWebhookModel extends statusWebhookModel_js_1.StatusWebhookModel {
     constructor(init) {
         super(init);
     }

@@ -34,10 +34,10 @@ exports.WritingAssistantClient = void 0;
  SOFTWARE.
 */
 const axios_1 = require("axios");
-const app_config_1 = require("../app.config");
-const exceptions_1 = require("../models/exceptions");
-const utils_1 = require("../utils");
-const client_utils_utils_1 = require("../utils/client-utils.utils");
+const app_config_js_1 = require("../app.config.js");
+const index_js_1 = require("../models/exceptions/index.js");
+const index_js_2 = require("../utils/index.js");
+const client_utils_utils_js_1 = require("../utils/client-utils.utils.js");
 class WritingAssistantClient {
     /**
     This endpoint will receive submitted text to be checked. The response will show the suggested corrections to the input text.
@@ -52,24 +52,24 @@ class WritingAssistantClient {
      */
     submitTextAsync(authToken, scanId, submission) {
         return __awaiter(this, void 0, void 0, function* () {
-            client_utils_utils_1.ClientUtils.verifyAuthToken(authToken);
-            const url = `${app_config_1.CopyleaksConfig.API_SERVER_URI}/v1/writing-feedback/${scanId}/check`;
+            client_utils_utils_js_1.ClientUtils.verifyAuthToken(authToken);
+            const url = `${app_config_js_1.CopyleaksConfig.API_SERVER_URI}/v1/writing-feedback/${scanId}/check`;
             const headers = {
                 'Content-Type': 'application/json',
-                'User-Agent': app_config_1.CopyleaksConfig.USER_AGENT,
+                'User-Agent': app_config_js_1.CopyleaksConfig.USER_AGENT,
                 'Authorization': `Bearer ${authToken['access_token']}`
             };
             const response = yield axios_1.default.post(url, submission, { headers });
-            if (utils_1.isSuccessStatusCode(response.status))
+            if ((0, index_js_2.isSuccessStatusCode)(response.status))
                 return response.data;
-            else if (utils_1.isUnderMaintenanceResponse(response.status)) {
-                throw new exceptions_1.UnderMaintenanceException();
+            else if ((0, index_js_2.isUnderMaintenanceResponse)(response.status)) {
+                throw new index_js_1.UnderMaintenanceException();
             }
-            else if (utils_1.isRateLimitResponse(response.status)) {
-                throw new exceptions_1.RateLimitException();
+            else if ((0, index_js_2.isRateLimitResponse)(response.status)) {
+                throw new index_js_1.RateLimitException();
             }
             else {
-                throw new exceptions_1.CommandException(response);
+                throw new index_js_1.CommandException(response);
             }
         });
     }
@@ -85,21 +85,21 @@ class WritingAssistantClient {
      */
     getCorrectionTypesAsync(authToken, languageCode) {
         return __awaiter(this, void 0, void 0, function* () {
-            client_utils_utils_1.ClientUtils.verifyAuthToken(authToken);
-            const url = `${app_config_1.CopyleaksConfig.API_SERVER_URI}/v1/writing-feedback/correction-types/${languageCode}`;
+            client_utils_utils_js_1.ClientUtils.verifyAuthToken(authToken);
+            const url = `${app_config_js_1.CopyleaksConfig.API_SERVER_URI}/v1/writing-feedback/correction-types/${languageCode}`;
             const headers = {
                 'Content-Type': 'application/json',
-                'User-Agent': app_config_1.CopyleaksConfig.USER_AGENT,
+                'User-Agent': app_config_js_1.CopyleaksConfig.USER_AGENT,
                 'Authorization': `Bearer ${authToken['access_token']}`
             };
             const response = yield axios_1.default.get(url, { headers });
-            if (utils_1.isSuccessStatusCode(response.status))
+            if ((0, index_js_2.isSuccessStatusCode)(response.status))
                 return response.data;
-            else if (utils_1.isUnderMaintenanceResponse(response.status)) {
-                throw new exceptions_1.UnderMaintenanceException();
+            else if ((0, index_js_2.isUnderMaintenanceResponse)(response.status)) {
+                throw new index_js_1.UnderMaintenanceException();
             }
             else {
-                throw new exceptions_1.CommandException(response);
+                throw new index_js_1.CommandException(response);
             }
         });
     }

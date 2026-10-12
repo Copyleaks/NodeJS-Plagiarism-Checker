@@ -22,8 +22,8 @@
  SOFTWARE.
 */
 
-import { MaskingPolicy } from './Policies';
-import { SubmissionRepository } from './Repository';
+import { MaskingPolicy } from './Policies.js';
+import { SubmissionRepository } from './Repository.js';
 
 export interface SubmissionIndexingRepository extends SubmissionRepository {
   /**

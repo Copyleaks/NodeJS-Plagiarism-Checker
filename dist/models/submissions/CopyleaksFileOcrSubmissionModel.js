@@ -24,8 +24,8 @@
 */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CopyleaksFileOcrSubmissionModel = void 0;
-const CopyleaksFileSubmissionModel_1 = require("./CopyleaksFileSubmissionModel");
-class CopyleaksFileOcrSubmissionModel extends CopyleaksFileSubmissionModel_1.CopyleaksFileSubmissionModel {
+const CopyleaksFileSubmissionModel_js_1 = require("./CopyleaksFileSubmissionModel.js");
+class CopyleaksFileOcrSubmissionModel extends CopyleaksFileSubmissionModel_js_1.CopyleaksFileSubmissionModel {
     /**
      * @param langCode The language code of your content. The selected language should be on the OCR supported languages list. https://api.copyleaks.com/documentation/v3/specifications/ocr-languages
      * @param base64 A base64 data string of a file. If you would like to scan plain text, encode it as base64 and submit it.

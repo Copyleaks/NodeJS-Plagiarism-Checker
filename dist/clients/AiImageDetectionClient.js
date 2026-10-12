@@ -34,11 +34,11 @@ exports.AiImageDetectionClient = void 0;
  SOFTWARE.
 */
 const axios_1 = require("axios");
-const app_config_1 = require("../app.config");
-const exceptions_1 = require("../models/exceptions");
-const response_1 = require("../models/response");
-const utils_1 = require("../utils");
-const client_utils_utils_1 = require("../utils/client-utils.utils");
+const app_config_js_1 = require("../app.config.js");
+const index_js_1 = require("../models/exceptions/index.js");
+const index_js_2 = require("../models/response/index.js");
+const index_js_3 = require("../utils/index.js");
+const client_utils_utils_js_1 = require("../utils/client-utils.utils.js");
 class AiImageDetectionClient {
     /**
   This endpoint will receive submitted image to be checked.
@@ -56,24 +56,24 @@ class AiImageDetectionClient {
    */
     submitAsync(authToken, scanId, submission) {
         return __awaiter(this, void 0, void 0, function* () {
-            client_utils_utils_1.ClientUtils.verifyAuthToken(authToken);
-            const url = `${app_config_1.CopyleaksConfig.API_SERVER_URI}/v1/ai-image-detector/${scanId}/check`;
+            client_utils_utils_js_1.ClientUtils.verifyAuthToken(authToken);
+            const url = `${app_config_js_1.CopyleaksConfig.API_SERVER_URI}/v1/ai-image-detector/${scanId}/check`;
             const headers = {
                 "Content-Type": "application/json",
-                "User-Agent": app_config_1.CopyleaksConfig.USER_AGENT,
+                "User-Agent": app_config_js_1.CopyleaksConfig.USER_AGENT,
                 Authorization: `Bearer ${authToken["access_token"]}`,
             };
             const response = yield axios_1.default.post(url, submission, { headers });
-            if (utils_1.isSuccessStatusCode(response.status))
-                return new response_1.CopyleaksAiImageDetectionResponseModel(response.data);
-            else if (utils_1.isUnderMaintenanceResponse(response.status)) {
-                throw new exceptions_1.UnderMaintenanceException();
+            if ((0, index_js_3.isSuccessStatusCode)(response.status))
+                return new index_js_2.CopyleaksAiImageDetectionResponseModel(response.data);
+            else if ((0, index_js_3.isUnderMaintenanceResponse)(response.status)) {
+                throw new index_js_1.UnderMaintenanceException();
             }
-            else if (utils_1.isRateLimitResponse(response.status)) {
-                throw new exceptions_1.RateLimitException();
+            else if ((0, index_js_3.isRateLimitResponse)(response.status)) {
+                throw new index_js_1.RateLimitException();
             }
             else {
-                throw new exceptions_1.CommandException(response);
+                throw new index_js_1.CommandException(response);
             }
         });
     }

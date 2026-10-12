@@ -1,5 +1,5 @@
-import { CopyleaksSubmissionModel } from './CopyleaksSubmissionModel';
-import { SubmissionProperties } from './properties';
+import { CopyleaksSubmissionModel } from './CopyleaksSubmissionModel.js';
+import { SubmissionProperties } from './properties/index.js';
 export declare class CopyleaksFileSubmissionModel extends CopyleaksSubmissionModel {
     base64: string;
     filename: string;

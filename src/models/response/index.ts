@@ -22,13 +22,20 @@
  SOFTWARE.
 */
 
-export * from "./CopyleaksAuthToken";
-export * from "./TextModeration/CopyleaksTextModerationResponseModel";
-export * from "./TextModeration/CopyleaksTextModerationResponseModel";
-export * from "./AiImageDetection/CopyleaksImageShapeModel";
-export * from "./AiImageDetection/CopyleaksImageMetadataModel";
-export * from "./AiImageDetection/CopyleaksAiImageDetectionSummaryModel";
-export * from "./AiImageDetection/CopyleaksAiImageDetectionScannedDocumentModel";
-export * from "./AiImageDetection/CopyleaksAiImageDetectionResultModel";
-export * from "./AiImageDetection/CopyleaksAiImageDetectionResponseModel";
-export * from "./AiImageDetection/CopyleaksAiImageDetectionImageInfoModel";
+export * from "./CopyleaksAuthToken.js";
+export * from "./TextModeration/CopyleaksTextModerationResponseModel.js";
+export * from "./TextModeration/CopyleaksTextModerationResponseModel.js";
+export * from "./AiImageDetection/CopyleaksImageShapeModel.js";
+export * from "./AiImageDetection/CopyleaksImageMetadataModel.js";
+export * from "./AiImageDetection/CopyleaksAiImageDetectionSummaryModel.js";
+export * from "./AiImageDetection/CopyleaksAiImageDetectionScannedDocumentModel.js";
+export * from "./AiImageDetection/CopyleaksAiImageDetectionResultModel.js";
+export * from "./AiImageDetection/CopyleaksAiImageDetectionResponseModel.js";
+export * from "./AiImageDetection/CopyleaksAiImageDetectionImageInfoModel.js";
+export * from "./AiTextDetection/CopyleaksAiTextDetectionResponseModel.js";
+export * from "./WritingAssistant/CopyleaksWritingAssistantResponseModel.js";
+export * from "./WritingAssistant/CopyleaksCorrectionTypesResponseModel.js";
+export * from "./CopyleaksStartResponseModel.js";
+export * from "./CopyleaksCreditsBalanceResponseModel.js";
+export * from "./CopyleaksReleaseNotesResponseModel.js";
+export * from "./CopyleaksSupportedFileTypesResponseModel.js";

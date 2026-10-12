@@ -1,4 +1,4 @@
-import { SubmissionRepository } from './Repository';
+import { SubmissionRepository } from './Repository.js';
 export interface SubmissionScanningRepository extends SubmissionRepository {
     /**
      * Compare the scanned document against MY submittions in the repository.

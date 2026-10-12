@@ -22,7 +22,7 @@
  SOFTWARE.
 */
 
-import { Language } from "./Language";
+import { Language } from "./Language.js";
 
 export interface CrossLanguages {
 /**

@@ -1,4 +1,4 @@
-import { Text } from "./Text";
+import { Text } from "./Text.js";
 export declare class ModerationsModel {
     text: Text;
     /**

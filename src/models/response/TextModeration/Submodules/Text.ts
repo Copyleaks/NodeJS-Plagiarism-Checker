@@ -22,7 +22,7 @@
  SOFTWARE.
 */
 
-import { TextModerationCharsModel } from "./TextModerationCharsModel";
+import { TextModerationCharsModel } from "./TextModerationCharsModel.js";
 
 export class Text {
 

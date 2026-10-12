@@ -1,12 +1,12 @@
-import { CopyleaksExportModel } from './models/exports';
-import { CopyleaksDeleteRequestModel } from './models/request';
-import { CopyleaksStartRequestModel } from './models/request/CopyleaksStartRequestModel';
-import { CopyleaksAuthToken } from './models/response';
-import { CopyleaksFileOcrSubmissionModel, CopyleaksFileSubmissionModel, CopyleaksURLSubmissionModel } from './models/submissions';
-import { AIDetectionClient } from './clients/AIDetectionClient';
-import { WritingAssistantClient } from './clients/WritingAssistantClient';
-import { TextModerationClient } from './clients/TextModerationClient';
-import { AiImageDetectionClient } from './clients/AiImageDetectionClient';
+import { CopyleaksExportModel } from './models/exports/index.js';
+import { CopyleaksDeleteRequestModel } from './models/request/index.js';
+import { CopyleaksStartRequestModel } from './models/request/CopyleaksStartRequestModel.js';
+import { CopyleaksAuthToken, CopyleaksCreditsBalanceResponseModel, CopyleaksReleaseNotesResponseModel, CopyleaksStartResponseModel, CopyleaksSupportedFileTypesResponseModel } from './models/response/index.js';
+import { CopyleaksFileOcrSubmissionModel, CopyleaksFileSubmissionModel, CopyleaksURLSubmissionModel } from './models/submissions/index.js';
+import { AIDetectionClient } from './clients/AIDetectionClient.js';
+import { WritingAssistantClient } from './clients/WritingAssistantClient.js';
+import { TextModerationClient } from './clients/TextModerationClient.js';
+import { AiImageDetectionClient } from './clients/AiImageDetectionClient.js';
 export declare class Copyleaks {
     readonly aiDetectionClient: AIDetectionClient;
     readonly writingAssistantClient: WritingAssistantClient;
@@ -108,7 +108,7 @@ export declare class Copyleaks {
      * @param authToken Your login token to Copyleaks server.
      * @param model Include information about which scans should be started.
      */
-    startAsync(authToken: CopyleaksAuthToken, model: CopyleaksStartRequestModel): Promise<any>;
+    startAsync(authToken: CopyleaksAuthToken, model: CopyleaksStartRequestModel): Promise<CopyleaksStartResponseModel>;
     /**
      * Delete the specific process from the server.
      * For more info:
@@ -150,7 +150,7 @@ export declare class Copyleaks {
      *  * RateLimitException: Too many requests. Please wait before calling again.
      * @param authToken Copyleaks authentication token
      */
-    getCreditsBalanceAsync(authToken: CopyleaksAuthToken): Promise<any>;
+    getCreditsBalanceAsync(authToken: CopyleaksAuthToken): Promise<CopyleaksCreditsBalanceResponseModel>;
     /**
      * This endpoint allows you to export your usage history between two dates.
      * The output results will be exported to a csv file and it will be attached to the response.
@@ -167,7 +167,7 @@ export declare class Copyleaks {
      * @param startDate The start date to collect usage history from. Date Format: `dd-MM-yyyy`.
      * @param endDate The end date to collect usage history from. Date Format: `dd-MM-yyyy`.
      */
-    getUsagesHistoryCsvAsync(authToken: CopyleaksAuthToken, startDate: string, endDate: string): Promise<any>;
+    getUsagesHistoryCsvAsync(authToken: CopyleaksAuthToken, startDate: string, endDate: string): Promise<string>;
     /**
      * Get updates about copyleaks api release notes.
      * For more info: https://api.copyleaks.com/documentation/v3/release-notes
@@ -180,7 +180,7 @@ export declare class Copyleaks {
      *  * RateLimitException: Too many requests. Please wait before calling again.
      * @returns List of release notes.
      */
-    getReleaseNotesAsync(): Promise<any>;
+    getReleaseNotesAsync(): Promise<CopyleaksReleaseNotesResponseModel>;
     /**
      * Get a list of the supported file types.
      * For more info: https://api.copyleaks.com/documentation/v3/specifications/supported-file-types
@@ -193,7 +193,7 @@ export declare class Copyleaks {
      *  * RateLimitException: Too many requests. Please wait before calling again.
      * @returns List of supported file types.
      */
-    getSupportedFileTypesAsync(): Promise<any>;
+    getSupportedFileTypesAsync(): Promise<CopyleaksSupportedFileTypesResponseModel>;
     /**
      * Get a list of the supported languages for OCR (this is not a list of supported languages for the api, but only for the OCR files scan).
      * For more info: https://api.copyleaks.com/documentation/v3/specifications/ocr-languages/list
@@ -206,5 +206,5 @@ export declare class Copyleaks {
      *  * RateLimitException: Too many requests. Please wait before calling again.
      * @returns List of supported OCR languages.
      */
-    getOCRSupportedLanguagesAsync(): Promise<any>;
+    getOCRSupportedLanguagesAsync(): Promise<string[]>;
 }

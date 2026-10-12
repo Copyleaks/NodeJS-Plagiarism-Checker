@@ -22,8 +22,8 @@
  SOFTWARE.
 ********************************************************************************/
 
-import { CopyleaksImageShapeModel } from './CopyleaksImageShapeModel';
-import { CopyleaksImageMetadataModel } from './CopyleaksImageMetadataModel';
+import { CopyleaksImageShapeModel } from './CopyleaksImageShapeModel.js';
+import { CopyleaksImageMetadataModel } from './CopyleaksImageMetadataModel.js';
 
 /**
  * Information about the analyzed image.

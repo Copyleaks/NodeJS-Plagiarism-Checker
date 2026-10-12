@@ -24,8 +24,8 @@
 */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CopyleaksFileSubmissionModel = void 0;
-const CopyleaksSubmissionModel_1 = require("./CopyleaksSubmissionModel");
-class CopyleaksFileSubmissionModel extends CopyleaksSubmissionModel_1.CopyleaksSubmissionModel {
+const CopyleaksSubmissionModel_js_1 = require("./CopyleaksSubmissionModel.js");
+class CopyleaksFileSubmissionModel extends CopyleaksSubmissionModel_js_1.CopyleaksSubmissionModel {
     /**
      * @param base64 A base64 data string of a file. If you would like to scan plain text, encode it as base64 and submit it.
      * @param filename The name of the file as it will appear in the Copyleaks scan report Make sure to include the right extension for your filetype.

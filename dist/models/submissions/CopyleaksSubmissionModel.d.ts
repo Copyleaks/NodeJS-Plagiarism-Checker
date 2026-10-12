@@ -1,4 +1,4 @@
-import { SubmissionProperties } from './properties';
+import { SubmissionProperties } from './properties/index.js';
 export declare class CopyleaksSubmissionModel {
     properties: SubmissionProperties;
     /**

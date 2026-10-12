@@ -1,6 +1,6 @@
-import { ExportCrawledVersion } from './ExportCrawledVersion';
-import { ExportPdfReport } from './ExportPdfReport';
-import { ExportResults } from './ExportResults';
+import { ExportCrawledVersion } from './ExportCrawledVersion.js';
+import { ExportPdfReport } from './ExportPdfReport.js';
+import { ExportResults } from './ExportResults.js';
 export declare class CopyleaksExportModel {
     completionWebhook: string;
     results: ExportResults[];

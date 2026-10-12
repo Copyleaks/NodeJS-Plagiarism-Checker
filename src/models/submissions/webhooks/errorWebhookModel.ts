@@ -21,8 +21,8 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
 */
-import { StatusWebhookModel } from "./helperModels/baseModels/statusWebhookModel";
-import { ErrorModel } from "./helperModels/errorModels/errorModel";
+import { StatusWebhookModel } from "./helperModels/baseModels/statusWebhookModel.js";
+import { ErrorModel } from "./helperModels/errorModels/errorModel.js";
 export class ErrorWebhookModel extends StatusWebhookModel {
   error?: ErrorModel;
 

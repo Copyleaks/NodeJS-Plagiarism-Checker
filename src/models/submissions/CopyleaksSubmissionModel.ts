@@ -22,7 +22,7 @@
  SOFTWARE.
 */
 
-import { SubmissionProperties } from './properties';
+import { SubmissionProperties } from './properties/index.js';
 
 export class CopyleaksSubmissionModel {
   /**

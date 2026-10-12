@@ -1,5 +1,5 @@
-import { PdfReportColors } from "./PdfReportColors";
-import { PdfReportVersion } from "./PdfReportVersion";
+import { PdfReportColors } from "./PdfReportColors.js";
+import { PdfReportVersion } from "./PdfReportVersion.js";
 export interface SubmissionPDF {
     /**
      * Add a request to generate a customizable export of the scan report, in a pdf format.

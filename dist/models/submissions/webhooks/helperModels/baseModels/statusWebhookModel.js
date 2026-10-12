@@ -24,8 +24,8 @@ exports.StatusWebhookModel = void 0;
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
 */
-const webhookModel_1 = require("./webhookModel");
-class StatusWebhookModel extends webhookModel_1.WebhookModel {
+const webhookModel_js_1 = require("./webhookModel.js");
+class StatusWebhookModel extends webhookModel_js_1.WebhookModel {
     constructor(init) {
         super(init); // Pass init to parent constructor
         Object.assign(this, init);

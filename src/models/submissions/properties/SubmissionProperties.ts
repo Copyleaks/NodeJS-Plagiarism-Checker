@@ -22,18 +22,18 @@
  SOFTWARE.
 */
 
-import { AIGeneratedText } from './AIGeneratedText';
-import { SubmissionActions } from './Actions';
-import { SubmissionAuthor } from './Author';
-import { CustomMetadata } from './CustomMetadata';
-import { SubmissionExclude } from './Exclude';
-import { SubmissionFilter } from './Filter';
-import { SubmissionIndexing } from './Indexing';
-import { SubmissionPDF } from './PdfProperties';
-import { ScanMethodAlgorithm } from './ScanMethods';
-import { SubmissionScanning } from './Scanning';
-import { SubmissionSensitiveData } from './SensitiveDataProtection';
-import { SubmissionWebhooks } from './Webhooks';
+import { AIGeneratedText } from './AIGeneratedText.js';
+import { SubmissionActions } from './Actions.js';
+import { SubmissionAuthor } from './Author.js';
+import { CustomMetadata } from './CustomMetadata.js';
+import { SubmissionExclude } from './Exclude.js';
+import { SubmissionFilter } from './Filter.js';
+import { SubmissionIndexing } from './Indexing.js';
+import { SubmissionPDF } from './PdfProperties.js';
+import { ScanMethodAlgorithm } from './ScanMethods.js';
+import { SubmissionScanning } from './Scanning.js';
+import { SubmissionSensitiveData } from './SensitiveDataProtection.js';
+import { SubmissionWebhooks } from './Webhooks.js';
 
 export interface SubmissionProperties {
   webhooks: SubmissionWebhooks;

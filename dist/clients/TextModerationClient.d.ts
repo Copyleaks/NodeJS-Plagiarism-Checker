@@ -1,5 +1,5 @@
-import { CopyleaksAuthToken, CopyleaksTextModerationResponseModel } from "../models/response";
-import { CopyleaksTextModerationRequestModel } from "../models/request/TextModeration/CopyleaksTextModerationRequestModel";
+import { CopyleaksAuthToken, CopyleaksTextModerationResponseModel } from "../models/response/index.js";
+import { CopyleaksTextModerationRequestModel } from "../models/request/TextModeration/CopyleaksTextModerationRequestModel.js";
 export declare class TextModerationClient {
     /**
   This endpoint will receive submitted text to be checked. The response will show potentially harmful content across multiple categories

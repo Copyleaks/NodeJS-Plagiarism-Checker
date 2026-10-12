@@ -22,7 +22,7 @@
  SOFTWARE.
 */
 
-import { ExcludeCode } from "./ExcludeCode";
+import { ExcludeCode } from "./ExcludeCode.js";
 
 export interface SubmissionExclude {
   /**

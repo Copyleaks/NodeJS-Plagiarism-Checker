@@ -21,7 +21,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
 */
-import { AlertsModel } from "../notificationsModels/alertsModel";
+import { AlertsModel } from "../notificationsModels/alertsModel.js";
 
 export class NotificationsModel {
   

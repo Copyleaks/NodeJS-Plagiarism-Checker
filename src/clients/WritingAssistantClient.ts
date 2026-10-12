@@ -22,12 +22,12 @@
  SOFTWARE.
 */
 import axios from 'axios';
-import { CopyleaksConfig } from '../app.config';
-import { UnderMaintenanceException, RateLimitException, CommandException } from '../models/exceptions';
-import { CopyleaksAuthToken } from '../models/response';
-import { CopyleaksWritingAssistantSubmissionModel } from '../models/submissions';
-import { isSuccessStatusCode, isUnderMaintenanceResponse, isRateLimitResponse } from '../utils';
-import { ClientUtils } from '../utils/client-utils.utils';
+import { CopyleaksConfig } from '../app.config.js';
+import { UnderMaintenanceException, RateLimitException, CommandException } from '../models/exceptions/index.js';
+import { CopyleaksAuthToken, CopyleaksCorrectionTypesResponseModel, CopyleaksWritingAssistantResponseModel } from '../models/response/index.js';
+import { CopyleaksWritingAssistantSubmissionModel } from '../models/submissions/index.js';
+import { isSuccessStatusCode, isUnderMaintenanceResponse, isRateLimitResponse } from '../utils/index.js';
+import { ClientUtils } from '../utils/client-utils.utils.js';
 
 export class WritingAssistantClient {
     /**
@@ -51,7 +51,7 @@ export class WritingAssistantClient {
             'Authorization': `Bearer ${authToken['access_token']}`
         }
 
-        const response = await axios.post(url, submission, { headers });
+        const response = await axios.post<CopyleaksWritingAssistantResponseModel>(url, submission, { headers });
         if (isSuccessStatusCode(response.status))
             return response.data;
         else if (isUnderMaintenanceResponse(response.status)) {
@@ -83,7 +83,7 @@ export class WritingAssistantClient {
             'Authorization': `Bearer ${authToken['access_token']}`
         }
 
-        const response = await axios.get(url, { headers });
+        const response = await axios.get<CopyleaksCorrectionTypesResponseModel>(url, { headers });
         if (isSuccessStatusCode(response.status))
             return response.data;
         else if (isUnderMaintenanceResponse(response.status)) {

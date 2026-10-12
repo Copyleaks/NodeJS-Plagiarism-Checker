@@ -34,4 +34,4 @@ var ScanMethodAlgorithm;
      * prioritize finding more sources.
      */
     ScanMethodAlgorithm[ScanMethodAlgorithm["MaximumResults"] = 1] = "MaximumResults";
-})(ScanMethodAlgorithm = exports.ScanMethodAlgorithm || (exports.ScanMethodAlgorithm = {}));
+})(ScanMethodAlgorithm || (exports.ScanMethodAlgorithm = ScanMethodAlgorithm = {}));

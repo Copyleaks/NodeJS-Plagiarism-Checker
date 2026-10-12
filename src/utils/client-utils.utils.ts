@@ -22,8 +22,8 @@
  SOFTWARE.
 */
 
-import { AuthExipredException } from "../models/exceptions";
-import { CopyleaksAuthToken } from "../models/response";
+import { AuthExipredException } from "../models/exceptions/index.js";
+import { CopyleaksAuthToken } from "../models/response/index.js";
 
 export class ClientUtils {
     public static verifyAuthToken(authToken: CopyleaksAuthToken) {
