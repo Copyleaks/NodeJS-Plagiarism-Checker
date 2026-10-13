@@ -43,3 +43,13 @@ __exportStar(require("./AiImageDetection/CopyleaksAiImageDetectionScannedDocumen
 __exportStar(require("./AiImageDetection/CopyleaksAiImageDetectionResultModel"), exports);
 __exportStar(require("./AiImageDetection/CopyleaksAiImageDetectionResponseModel"), exports);
 __exportStar(require("./AiImageDetection/CopyleaksAiImageDetectionImageInfoModel"), exports);
+__exportStar(require("./AiTextDetection/CopyleaksAiTextDetectionPositionsModel"), exports);
+__exportStar(require("./AiTextDetection/CopyleaksAiTextDetectionMatchTextModel"), exports);
+__exportStar(require("./AiTextDetection/CopyleaksAiTextDetectionMatchModel"), exports);
+__exportStar(require("./AiTextDetection/CopyleaksAiTextDetectionResultModel"), exports);
+__exportStar(require("./AiTextDetection/CopyleaksAiTextDetectionSummaryModel"), exports);
+__exportStar(require("./AiTextDetection/CopyleaksAiTextDetectionPatternMatchModel"), exports);
+__exportStar(require("./AiTextDetection/CopyleaksAiTextDetectionPatternStatisticsModel"), exports);
+__exportStar(require("./AiTextDetection/CopyleaksAiTextDetectionPatternsModel"), exports);
+__exportStar(require("./AiTextDetection/CopyleaksAiTextDetectionExplainModel"), exports);
+__exportStar(require("./AiTextDetection/CopyleaksAiTextDetectionResponseModel"), exports);
