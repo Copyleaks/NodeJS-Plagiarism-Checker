@@ -24,13 +24,13 @@ exports.ErrorWebhookModel = void 0;
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
 */
-const statusWebhookModel_1 = require("./helperModels/baseModels/statusWebhookModel");
-const errorModel_1 = require("./helperModels/errorModels/errorModel");
-class ErrorWebhookModel extends statusWebhookModel_1.StatusWebhookModel {
+const statusWebhookModel_js_1 = require("./helperModels/baseModels/statusWebhookModel.js");
+const errorModel_js_1 = require("./helperModels/errorModels/errorModel.js");
+class ErrorWebhookModel extends statusWebhookModel_js_1.StatusWebhookModel {
     constructor(init) {
         super(init);
         if (init === null || init === void 0 ? void 0 : init.error) {
-            this.error = new errorModel_1.ErrorModel(init.error);
+            this.error = new errorModel_js_1.ErrorModel(init.error);
         }
     }
 }

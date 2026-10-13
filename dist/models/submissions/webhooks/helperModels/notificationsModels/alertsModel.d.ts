@@ -1,4 +1,4 @@
-import { CopyleaksAiTextDetectionResponseModel } from '../../../../response/AiTextDetection/CopyleaksAiTextDetectionResponseModel';
+import { CopyleaksAiTextDetectionResponseModel } from '../../../../response/AiTextDetection/CopyleaksAiTextDetectionResponseModel.js';
 export declare class AlertsModel {
     category: number;
     code: string;

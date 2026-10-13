@@ -1,4 +1,4 @@
-import { MetadataModel } from "../baseModels/metadataModel";
+import { MetadataModel } from "../baseModels/metadataModel.js";
 export declare class ScannedDocumentModel {
     scanId?: string;
     totalWords?: number;

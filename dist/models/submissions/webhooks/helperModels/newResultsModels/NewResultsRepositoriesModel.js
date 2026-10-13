@@ -24,13 +24,13 @@ exports.NewResultsRepositoriesModel = void 0;
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
 */
-const repositoriesMetadataModel_1 = require("../resultsModels/repositoriesMetadataModel");
-const sharedResultsModel_1 = require("../resultsModels/sharedResultsModel");
-class NewResultsRepositoriesModel extends sharedResultsModel_1.SharedResultsModel {
+const repositoriesMetadataModel_js_1 = require("../resultsModels/repositoriesMetadataModel.js");
+const sharedResultsModel_js_1 = require("../resultsModels/sharedResultsModel.js");
+class NewResultsRepositoriesModel extends sharedResultsModel_js_1.SharedResultsModel {
     constructor(init) {
         super(init);
         if (init === null || init === void 0 ? void 0 : init.metadata) {
-            this.metadata = new repositoriesMetadataModel_1.RepositoriesMetadataModel(init.metadata);
+            this.metadata = new repositoriesMetadataModel_js_1.RepositoriesMetadataModel(init.metadata);
         }
     }
 }

@@ -21,7 +21,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
 ********************************************************************************/
-import { CopyleaksAiTextDetectionMatchModel } from './CopyleaksAiTextDetectionMatchModel';
+import { CopyleaksAiTextDetectionMatchModel } from './CopyleaksAiTextDetectionMatchModel.js';
 /**
  * A classification of parts of the scanned text.
  */

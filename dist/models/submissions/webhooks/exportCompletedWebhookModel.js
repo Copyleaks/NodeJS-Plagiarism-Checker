@@ -24,13 +24,13 @@ exports.ExportCompletedWebhookModel = void 0;
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
 */
-const webhookModel_1 = require("./helperModels/baseModels/webhookModel");
-const taskModel_1 = require("./helperModels/exportModels/taskModel");
-class ExportCompletedWebhookModel extends webhookModel_1.WebhookModel {
+const webhookModel_js_1 = require("./helperModels/baseModels/webhookModel.js");
+const taskModel_js_1 = require("./helperModels/exportModels/taskModel.js");
+class ExportCompletedWebhookModel extends webhookModel_js_1.WebhookModel {
     constructor(init) {
         super(init);
         if (init === null || init === void 0 ? void 0 : init.tasks) {
-            this.tasks = new taskModel_1.TaskModel(init.tasks);
+            this.tasks = new taskModel_js_1.TaskModel(init.tasks);
         }
     }
 }

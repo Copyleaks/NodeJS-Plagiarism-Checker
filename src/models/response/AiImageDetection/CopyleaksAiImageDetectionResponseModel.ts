@@ -22,10 +22,10 @@
  SOFTWARE.
 ********************************************************************************/
 
-import { CopyleaksAiImageDetectionResultModel } from './CopyleaksAiImageDetectionResultModel';
-import { CopyleaksAiImageDetectionSummaryModel } from './CopyleaksAiImageDetectionSummaryModel';
-import { CopyleaksAiImageDetectionImageInfoModel } from './CopyleaksAiImageDetectionImageInfoModel';
-import { CopyleaksAiImageDetectionScannedDocumentModel } from './CopyleaksAiImageDetectionScannedDocumentModel';
+import { CopyleaksAiImageDetectionResultModel } from './CopyleaksAiImageDetectionResultModel.js';
+import { CopyleaksAiImageDetectionSummaryModel } from './CopyleaksAiImageDetectionSummaryModel.js';
+import { CopyleaksAiImageDetectionImageInfoModel } from './CopyleaksAiImageDetectionImageInfoModel.js';
+import { CopyleaksAiImageDetectionScannedDocumentModel } from './CopyleaksAiImageDetectionScannedDocumentModel.js';
 
 /**
  * Response model for Copyleaks AI image detection analysis.

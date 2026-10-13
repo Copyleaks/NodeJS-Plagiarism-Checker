@@ -21,8 +21,8 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
 ********************************************************************************/
-import { CopyleaksAiTextDetectionPatternMatchModel } from './CopyleaksAiTextDetectionPatternMatchModel';
-import { CopyleaksAiTextDetectionPatternStatisticsModel } from './CopyleaksAiTextDetectionPatternStatisticsModel';
+import { CopyleaksAiTextDetectionPatternMatchModel } from './CopyleaksAiTextDetectionPatternMatchModel.js';
+import { CopyleaksAiTextDetectionPatternStatisticsModel } from './CopyleaksAiTextDetectionPatternStatisticsModel.js';
 /**
  * AI Logic patterns found in the text.
  */
@@ -39,7 +39,7 @@ export declare class CopyleaksAiTextDetectionPatternsModel {
      * Pattern positions in the HTML version of the document.
      * Returned only for HTML sources.
      */
-    html?: CopyleaksAiTextDetectionPatternMatchModel;
+    html?: CopyleaksAiTextDetectionPatternMatchModel | null;
     /**
      * @param init Parsed JSON object. Unknown fields are ignored.
      */

@@ -22,8 +22,8 @@
  SOFTWARE.
 */
 
-import { CopyleaksSubmissionModel } from './CopyleaksSubmissionModel';
-import { SubmissionProperties } from './properties';
+import { CopyleaksSubmissionModel } from './CopyleaksSubmissionModel.js';
+import { SubmissionProperties } from './properties/index.js';
 
 export class CopyleaksURLSubmissionModel extends CopyleaksSubmissionModel {
   /**

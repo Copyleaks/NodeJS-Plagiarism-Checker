@@ -1,5 +1,5 @@
-import { CopyleaksAuthToken } from '../models/response';
-import { CopyleaksNaturalLanguageSubmissionModel } from '../models/submissions';
+import { CopyleaksAiTextDetectionResponseModel, CopyleaksAuthToken } from '../models/response/index.js';
+import { CopyleaksNaturalLanguageSubmissionModel } from '../models/submissions/index.js';
 export declare class AIDetectionClient {
     /**
       This endpoint will receive submitted text to be checked. At the end of the processing stage,
@@ -16,5 +16,5 @@ export declare class AIDetectionClient {
     * @param scanId Attach your own scan Id
     * @param submission Submission properties
     */
-    submitNaturalTextAsync(authToken: CopyleaksAuthToken, scanId: string, submission: CopyleaksNaturalLanguageSubmissionModel): Promise<any>;
+    submitNaturalTextAsync(authToken: CopyleaksAuthToken, scanId: string, submission: CopyleaksNaturalLanguageSubmissionModel): Promise<CopyleaksAiTextDetectionResponseModel>;
 }

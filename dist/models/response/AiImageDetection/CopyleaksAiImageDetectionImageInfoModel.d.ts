@@ -21,8 +21,8 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
 ********************************************************************************/
-import { CopyleaksImageShapeModel } from './CopyleaksImageShapeModel';
-import { CopyleaksImageMetadataModel } from './CopyleaksImageMetadataModel';
+import { CopyleaksImageShapeModel } from './CopyleaksImageShapeModel.js';
+import { CopyleaksImageMetadataModel } from './CopyleaksImageMetadataModel.js';
 /**
  * Information about the analyzed image.
  */

@@ -24,8 +24,8 @@ exports.RepositoriesMetadataModel = void 0;
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
 */
-const metadataModel_1 = require("../baseModels/metadataModel");
-class RepositoriesMetadataModel extends metadataModel_1.MetadataModel {
+const metadataModel_js_1 = require("../baseModels/metadataModel.js");
+class RepositoriesMetadataModel extends metadataModel_js_1.MetadataModel {
     constructor(init) {
         super(init);
         Object.assign(this, init);

@@ -22,23 +22,23 @@
  SOFTWARE.
 */
 import axios from "axios";
-import { CopyleaksConfig } from "../app.config";
+import { CopyleaksConfig } from "../app.config.js";
 import {
   UnderMaintenanceException,
   RateLimitException,
   CommandException,
-} from "../models/exceptions";
+} from "../models/exceptions/index.js";
 import {
     CopyleaksAiImageDetectionResponseModel,
   CopyleaksAuthToken,
-} from "../models/response";
+} from "../models/response/index.js";
 import {
   isSuccessStatusCode,
   isUnderMaintenanceResponse,
   isRateLimitResponse,
-} from "../utils";
-import { ClientUtils } from "../utils/client-utils.utils";
-import { CopyleaksAiImageDetectionRequestModel } from "../models/request";
+} from "../utils/index.js";
+import { ClientUtils } from "../utils/client-utils.utils.js";
+import { CopyleaksAiImageDetectionRequestModel } from "../models/request/index.js";
 
 export class AiImageDetectionClient {
 

@@ -22,13 +22,13 @@
  SOFTWARE.
 */
 
-export * from './Copyleaks';
+export * from './Copyleaks.js';
 
-export * from './app.config';
+export * from './app.config.js';
 
-export * from './models/exceptions';
-export * from './models/exports';
-export * from './models/request';
-export * from './models/response';
-export * from './models/submissions';
-export * from './models/constants';
+export * from './models/exceptions/index.js';
+export * from './models/exports/index.js';
+export * from './models/request/index.js';
+export * from './models/response/index.js';
+export * from './models/submissions/index.js';
+export * from './models/constants/index.js';

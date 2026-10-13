@@ -24,7 +24,7 @@
 ********************************************************************************/
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CopyleaksAiTextDetectionMatchTextModel = void 0;
-const CopyleaksAiTextDetectionPositionsModel_1 = require("./CopyleaksAiTextDetectionPositionsModel");
+const CopyleaksAiTextDetectionPositionsModel_js_1 = require("./CopyleaksAiTextDetectionPositionsModel.js");
 /**
  * Character and word positions of the matched text segments.
  */
@@ -35,10 +35,10 @@ class CopyleaksAiTextDetectionMatchTextModel {
     constructor(init) {
         const raw = init || {};
         if (raw.chars != null) {
-            this.chars = new CopyleaksAiTextDetectionPositionsModel_1.CopyleaksAiTextDetectionPositionsModel(raw.chars);
+            this.chars = new CopyleaksAiTextDetectionPositionsModel_js_1.CopyleaksAiTextDetectionPositionsModel(raw.chars);
         }
         if (raw.words != null) {
-            this.words = new CopyleaksAiTextDetectionPositionsModel_1.CopyleaksAiTextDetectionPositionsModel(raw.words);
+            this.words = new CopyleaksAiTextDetectionPositionsModel_js_1.CopyleaksAiTextDetectionPositionsModel(raw.words);
         }
     }
 }

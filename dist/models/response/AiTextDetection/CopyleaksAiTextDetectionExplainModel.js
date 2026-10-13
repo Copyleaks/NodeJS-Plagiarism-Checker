@@ -24,7 +24,7 @@
 ********************************************************************************/
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CopyleaksAiTextDetectionExplainModel = void 0;
-const CopyleaksAiTextDetectionPatternsModel_1 = require("./CopyleaksAiTextDetectionPatternsModel");
+const CopyleaksAiTextDetectionPatternsModel_js_1 = require("./CopyleaksAiTextDetectionPatternsModel.js");
 /**
  * AI Logic explanation of the AI text detection result.
  */
@@ -35,7 +35,7 @@ class CopyleaksAiTextDetectionExplainModel {
     constructor(init) {
         const raw = init || {};
         if (raw.patterns != null) {
-            this.patterns = new CopyleaksAiTextDetectionPatternsModel_1.CopyleaksAiTextDetectionPatternsModel(raw.patterns);
+            this.patterns = new CopyleaksAiTextDetectionPatternsModel_js_1.CopyleaksAiTextDetectionPatternsModel(raw.patterns);
         }
     }
 }

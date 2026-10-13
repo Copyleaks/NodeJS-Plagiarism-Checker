@@ -1,4 +1,4 @@
-import { TextModerationCharsModel } from "./TextModerationCharsModel";
+import { TextModerationCharsModel } from "./TextModerationCharsModel.js";
 export declare class Text {
     chars: TextModerationCharsModel;
     /**

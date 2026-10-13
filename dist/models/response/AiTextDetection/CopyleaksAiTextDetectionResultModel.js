@@ -24,7 +24,7 @@
 ********************************************************************************/
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CopyleaksAiTextDetectionResultModel = void 0;
-const CopyleaksAiTextDetectionMatchModel_1 = require("./CopyleaksAiTextDetectionMatchModel");
+const CopyleaksAiTextDetectionMatchModel_js_1 = require("./CopyleaksAiTextDetectionMatchModel.js");
 /**
  * A classification of parts of the scanned text.
  */
@@ -41,7 +41,7 @@ class CopyleaksAiTextDetectionResultModel {
             this.probability = raw.probability;
         }
         if (Array.isArray(raw.matches)) {
-            this.matches = raw.matches.map((m) => new CopyleaksAiTextDetectionMatchModel_1.CopyleaksAiTextDetectionMatchModel(m));
+            this.matches = raw.matches.map((m) => new CopyleaksAiTextDetectionMatchModel_js_1.CopyleaksAiTextDetectionMatchModel(m));
         }
     }
 }

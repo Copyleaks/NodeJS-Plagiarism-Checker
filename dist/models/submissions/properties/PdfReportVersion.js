@@ -34,4 +34,4 @@ var PdfReportVersion;
      * pdf version 2.
      */
     PdfReportVersion[PdfReportVersion["V2"] = 2] = "V2";
-})(PdfReportVersion = exports.PdfReportVersion || (exports.PdfReportVersion = {}));
+})(PdfReportVersion || (exports.PdfReportVersion = PdfReportVersion = {}));

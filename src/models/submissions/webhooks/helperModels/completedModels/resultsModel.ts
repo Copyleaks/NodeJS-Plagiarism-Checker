@@ -21,11 +21,11 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
 */
-import { BatchModel } from "../resultsModels/batchModel";
-import { DatabaseModel } from "../resultsModels/databaseModel";
-import { RepositoriesModel } from "../resultsModels/repositoriesModel";
-import { ScoreModel } from "../resultsModels/scoreModel";
-import { InternetModel } from "../resultsModels/internetModel";
+import { BatchModel } from "../resultsModels/batchModel.js";
+import { DatabaseModel } from "../resultsModels/databaseModel.js";
+import { RepositoriesModel } from "../resultsModels/repositoriesModel.js";
+import { ScoreModel } from "../resultsModels/scoreModel.js";
+import { InternetModel } from "../resultsModels/internetModel.js";
 
 export class ResultsModel {
   database?: DatabaseModel[];

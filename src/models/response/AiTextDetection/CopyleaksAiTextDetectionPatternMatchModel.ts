@@ -22,7 +22,7 @@
  SOFTWARE.
 ********************************************************************************/
 
-import { CopyleaksAiTextDetectionPositionsModel } from './CopyleaksAiTextDetectionPositionsModel';
+import { CopyleaksAiTextDetectionPositionsModel } from './CopyleaksAiTextDetectionPositionsModel.js';
 
 /**
  * Positions of the AI Logic patterns found in the text.

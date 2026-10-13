@@ -24,14 +24,14 @@
 */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ClientUtils = void 0;
-const exceptions_1 = require("../models/exceptions");
+const index_js_1 = require("../models/exceptions/index.js");
 class ClientUtils {
     static verifyAuthToken(authToken) {
         const date = new Date(Date.now());
         date.setMinutes(date.getMinutes() + 5); // adds 5 minutes ahead for a safety shield.
         const expiresDate = new Date(authToken['.expires']);
         if (expiresDate.getTime() <= date.getTime()) {
-            throw new exceptions_1.AuthExipredException(); // expired
+            throw new index_js_1.AuthExipredException(); // expired
         }
     }
 }

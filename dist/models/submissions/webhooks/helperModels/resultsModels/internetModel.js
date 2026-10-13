@@ -24,13 +24,13 @@ exports.InternetModel = void 0;
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
 */
-const sharedResultsModel_1 = require("./sharedResultsModel");
-const tagsModel_1 = require("./tagsModel");
-class InternetModel extends sharedResultsModel_1.SharedResultsModel {
+const sharedResultsModel_js_1 = require("./sharedResultsModel.js");
+const tagsModel_js_1 = require("./tagsModel.js");
+class InternetModel extends sharedResultsModel_js_1.SharedResultsModel {
     constructor(init) {
         super(init);
         if (init === null || init === void 0 ? void 0 : init.tags) {
-            this.tags = init.tags.map((tag) => new tagsModel_1.TagsModel(tag));
+            this.tags = init.tags.map((tag) => new tagsModel_js_1.TagsModel(tag));
         }
     }
 }

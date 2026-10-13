@@ -21,11 +21,13 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
 ********************************************************************************/
-import { CopyleaksAiTextDetectionResultModel } from './CopyleaksAiTextDetectionResultModel';
-import { CopyleaksAiTextDetectionSummaryModel } from './CopyleaksAiTextDetectionSummaryModel';
-import { CopyleaksAiTextDetectionExplainModel } from './CopyleaksAiTextDetectionExplainModel';
+import { CopyleaksAiTextDetectionResultModel } from './CopyleaksAiTextDetectionResultModel.js';
+import { CopyleaksAiTextDetectionSummaryModel } from './CopyleaksAiTextDetectionSummaryModel.js';
+import { CopyleaksAiTextDetectionExplainModel } from './CopyleaksAiTextDetectionExplainModel.js';
 /**
  * Result of Copyleaks AI text detection.
+ * Response of `AIDetectionClient.submitNaturalTextAsync`.
+ * For more info: https://docs.copyleaks.com/reference/data-types/ai-detector/ai-text-detector-response
  * The "suspected-ai-text" alert of the completed webhook carries this result as a JSON string in additionalData.
  * Use CompletedWebhookModel.getAIDetectionResult() or AlertsModel.getAIDetectionResult() to decode it.
  */
@@ -44,6 +46,10 @@ export declare class CopyleaksAiTextDetectionResponseModel {
      */
     summary: CopyleaksAiTextDetectionSummaryModel;
     /**
+     * General information about the scanned document.
+     */
+    scannedDocument: CopyleaksAiTextDetectionScannedDocumentModel;
+    /**
      * The machine translation provider used before detection.
      * 0 = none, 1 = Google Translate, 2 = Helsinki, 3 = Azure.
      */
@@ -59,7 +65,28 @@ export declare class CopyleaksAiTextDetectionResponseModel {
      */
     explain?: CopyleaksAiTextDetectionExplainModel;
     /**
+     * `"sandbox"` for sandbox scans. Not sent for regular scans.
+     */
+    scanType?: string;
+    /**
      * @param init Parsed JSON object. Unknown fields are ignored.
      */
     constructor(init?: Partial<CopyleaksAiTextDetectionResponseModel>);
+}
+/**
+ * General information about the scanned document.
+ */
+export interface CopyleaksAiTextDetectionScannedDocumentModel {
+    /** The scan id given by the user. */
+    scanId: string;
+    /** Total number of words found in the scanned text. */
+    totalWords: number;
+    /** Number of excluded words in the scanned text. */
+    totalExcluded: number;
+    /** The number of credits spent on the scan. */
+    actualCredits: number;
+    /** The number of credits that was expected to be spent on the scan. */
+    expectedCredits: number;
+    /** ISO 8601 creation time of the scan (UTC). */
+    creationTime: string;
 }

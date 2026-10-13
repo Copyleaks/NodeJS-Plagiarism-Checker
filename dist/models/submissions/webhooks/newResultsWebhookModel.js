@@ -24,28 +24,28 @@ exports.NewResultWebhookModel = void 0;
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
 */
-const webhookModel_1 = require("./helperModels/baseModels/webhookModel");
-const newResultInternetModel_1 = require("./helperModels/newResultsModels/newResultInternetModel");
-const newResultScoreModel_1 = require("./helperModels/newResultsModels/newResultScoreModel");
-const NewResultsRepositoriesModel_1 = require("./helperModels/newResultsModels/NewResultsRepositoriesModel");
-const sharedResultsModel_1 = require("./helperModels/resultsModels/sharedResultsModel");
-class NewResultWebhookModel extends webhookModel_1.WebhookModel {
+const webhookModel_js_1 = require("./helperModels/baseModels/webhookModel.js");
+const newResultInternetModel_js_1 = require("./helperModels/newResultsModels/newResultInternetModel.js");
+const newResultScoreModel_js_1 = require("./helperModels/newResultsModels/newResultScoreModel.js");
+const NewResultsRepositoriesModel_js_1 = require("./helperModels/newResultsModels/NewResultsRepositoriesModel.js");
+const sharedResultsModel_js_1 = require("./helperModels/resultsModels/sharedResultsModel.js");
+class NewResultWebhookModel extends webhookModel_js_1.WebhookModel {
     constructor(init) {
         super(init);
         if (init === null || init === void 0 ? void 0 : init.score) {
-            this.score = new newResultScoreModel_1.NewResultScoreModel(init.score);
+            this.score = new newResultScoreModel_js_1.NewResultScoreModel(init.score);
         }
         if (init === null || init === void 0 ? void 0 : init.internet) {
-            this.internet = init.internet.map((i) => new newResultInternetModel_1.NewResultInternetModel(i));
+            this.internet = init.internet.map((i) => new newResultInternetModel_js_1.NewResultInternetModel(i));
         }
         if (init === null || init === void 0 ? void 0 : init.database) {
-            this.database = init.database.map((d) => new sharedResultsModel_1.SharedResultsModel(d));
+            this.database = init.database.map((d) => new sharedResultsModel_js_1.SharedResultsModel(d));
         }
         if (init === null || init === void 0 ? void 0 : init.batch) {
-            this.batch = init.batch.map((b) => new sharedResultsModel_1.SharedResultsModel(b));
+            this.batch = init.batch.map((b) => new sharedResultsModel_js_1.SharedResultsModel(b));
         }
         if (init === null || init === void 0 ? void 0 : init.repositories) {
-            this.repositories = init.repositories.map((r) => new NewResultsRepositoriesModel_1.NewResultsRepositoriesModel(r));
+            this.repositories = init.repositories.map((r) => new NewResultsRepositoriesModel_js_1.NewResultsRepositoriesModel(r));
         }
     }
 }

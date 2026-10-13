@@ -39,4 +39,4 @@ var CopyleaksStartErrorHandlings;
 (function (CopyleaksStartErrorHandlings) {
     CopyleaksStartErrorHandlings[CopyleaksStartErrorHandlings["Cancel"] = 0] = "Cancel";
     CopyleaksStartErrorHandlings[CopyleaksStartErrorHandlings["Ignore"] = 1] = "Ignore";
-})(CopyleaksStartErrorHandlings = exports.CopyleaksStartErrorHandlings || (exports.CopyleaksStartErrorHandlings = {}));
+})(CopyleaksStartErrorHandlings || (exports.CopyleaksStartErrorHandlings = CopyleaksStartErrorHandlings = {}));

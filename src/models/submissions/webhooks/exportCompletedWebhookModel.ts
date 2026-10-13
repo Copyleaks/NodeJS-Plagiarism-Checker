@@ -21,8 +21,8 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
 */
-import { WebhookModel } from "./helperModels/baseModels/webhookModel";
-import { TaskModel } from "./helperModels/exportModels/taskModel";
+import { WebhookModel } from "./helperModels/baseModels/webhookModel.js";
+import { TaskModel } from "./helperModels/exportModels/taskModel.js";
 
 export class ExportCompletedWebhookModel extends WebhookModel {
   completed?: boolean;

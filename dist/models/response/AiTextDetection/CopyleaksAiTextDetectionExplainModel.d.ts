@@ -21,7 +21,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
 ********************************************************************************/
-import { CopyleaksAiTextDetectionPatternsModel } from './CopyleaksAiTextDetectionPatternsModel';
+import { CopyleaksAiTextDetectionPatternsModel } from './CopyleaksAiTextDetectionPatternsModel.js';
 /**
  * AI Logic explanation of the AI text detection result.
  */

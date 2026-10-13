@@ -1,6 +1,6 @@
-import { ModerationsModel } from "./Submodules/ModerationsModel";
-import { TextModerationsLegendModel } from "./Submodules/TextModerationsLegendModel";
-import { TextModerationScannedDocumentModel } from "./Submodules/TextModerationScannedDocumentModel";
+import { ModerationsModel } from "./Submodules/ModerationsModel.js";
+import { TextModerationsLegendModel } from "./Submodules/TextModerationsLegendModel.js";
+import { TextModerationScannedDocumentModel } from "./Submodules/TextModerationScannedDocumentModel.js";
 export declare class CopyleaksTextModerationResponseModel {
     moderations: ModerationsModel;
     legend: TextModerationsLegendModel[];

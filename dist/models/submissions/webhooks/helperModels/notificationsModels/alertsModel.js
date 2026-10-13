@@ -24,8 +24,8 @@ exports.AlertsModel = void 0;
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
 */
-const CopyleaksAlertCodes_1 = require("../../../../constants/CopyleaksAlertCodes");
-const CopyleaksAiTextDetectionResponseModel_1 = require("../../../../response/AiTextDetection/CopyleaksAiTextDetectionResponseModel");
+const CopyleaksAlertCodes_js_1 = require("../../../../constants/CopyleaksAlertCodes.js");
+const CopyleaksAiTextDetectionResponseModel_js_1 = require("../../../../response/AiTextDetection/CopyleaksAiTextDetectionResponseModel.js");
 class AlertsModel {
     constructor(init) {
         Object.assign(this, init);
@@ -44,7 +44,7 @@ class AlertsModel {
      * @throws {SyntaxError} When additionalData is not valid JSON. The JSON.parse error is not caught.
      */
     getAIDetectionResult() {
-        if (this.code !== CopyleaksAlertCodes_1.CopyleaksAlertCodes.SUSPECTED_AI_TEXT || !this.additionalData) {
+        if (this.code !== CopyleaksAlertCodes_js_1.CopyleaksAlertCodes.SUSPECTED_AI_TEXT || !this.additionalData) {
             return null;
         }
         const json = trimTrailingNulAndWhitespace(this.additionalData);
@@ -55,7 +55,7 @@ class AlertsModel {
         if (typeof parsed !== 'object' || parsed === null || Array.isArray(parsed)) {
             return null;
         }
-        return new CopyleaksAiTextDetectionResponseModel_1.CopyleaksAiTextDetectionResponseModel(parsed);
+        return new CopyleaksAiTextDetectionResponseModel_js_1.CopyleaksAiTextDetectionResponseModel(parsed);
     }
 }
 exports.AlertsModel = AlertsModel;

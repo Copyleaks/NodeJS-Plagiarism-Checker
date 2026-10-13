@@ -24,8 +24,8 @@
 */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CopyleaksURLSubmissionModel = void 0;
-const CopyleaksSubmissionModel_1 = require("./CopyleaksSubmissionModel");
-class CopyleaksURLSubmissionModel extends CopyleaksSubmissionModel_1.CopyleaksSubmissionModel {
+const CopyleaksSubmissionModel_js_1 = require("./CopyleaksSubmissionModel.js");
+class CopyleaksURLSubmissionModel extends CopyleaksSubmissionModel_js_1.CopyleaksSubmissionModel {
     /**
      * @param url The url to be scanned
      * @param properties Check inner properties for more details.

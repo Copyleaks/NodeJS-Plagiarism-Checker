@@ -34,19 +34,19 @@ exports.Copyleaks = void 0;
  SOFTWARE.
 */
 const axios_1 = require("axios");
-const app_config_1 = require("./app.config");
-const exceptions_1 = require("./models/exceptions");
-const utils_1 = require("./utils");
-const AIDetectionClient_1 = require("./clients/AIDetectionClient");
-const WritingAssistantClient_1 = require("./clients/WritingAssistantClient");
-const TextModerationClient_1 = require("./clients/TextModerationClient");
-const AiImageDetectionClient_1 = require("./clients/AiImageDetectionClient");
+const app_config_js_1 = require("./app.config.js");
+const index_js_1 = require("./models/exceptions/index.js");
+const index_js_2 = require("./utils/index.js");
+const AIDetectionClient_js_1 = require("./clients/AIDetectionClient.js");
+const WritingAssistantClient_js_1 = require("./clients/WritingAssistantClient.js");
+const TextModerationClient_js_1 = require("./clients/TextModerationClient.js");
+const AiImageDetectionClient_js_1 = require("./clients/AiImageDetectionClient.js");
 class Copyleaks {
     constructor() {
-        this.aiDetectionClient = new AIDetectionClient_1.AIDetectionClient();
-        this.writingAssistantClient = new WritingAssistantClient_1.WritingAssistantClient();
-        this.textModerationClient = new TextModerationClient_1.TextModerationClient();
-        this.aiImageDetectionClient = new AiImageDetectionClient_1.AiImageDetectionClient();
+        this.aiDetectionClient = new AIDetectionClient_js_1.AIDetectionClient();
+        this.writingAssistantClient = new WritingAssistantClient_js_1.WritingAssistantClient();
+        this.textModerationClient = new TextModerationClient_js_1.TextModerationClient();
+        this.aiImageDetectionClient = new AiImageDetectionClient_js_1.AiImageDetectionClient();
     }
     /**
      * Login to Copyleaks authentication server.
@@ -64,24 +64,24 @@ class Copyleaks {
     loginAsync(email, key) {
         return __awaiter(this, void 0, void 0, function* () {
             // missing args check
-            const url = `${app_config_1.CopyleaksConfig.IDENTITY_SERVER_URI}/v3/account/login/api`;
+            const url = `${app_config_js_1.CopyleaksConfig.IDENTITY_SERVER_URI}/v3/account/login/api`;
             const payload = {
                 email,
                 key
             };
             const headers = {
                 'Content-Type': 'application/json',
-                'User-Agent': app_config_1.CopyleaksConfig.USER_AGENT
+                'User-Agent': app_config_js_1.CopyleaksConfig.USER_AGENT
             };
             const response = yield axios_1.default.post(url, payload, { headers });
-            if (utils_1.isSuccessStatusCode(response.status)) {
+            if ((0, index_js_2.isSuccessStatusCode)(response.status)) {
                 return response.data;
             }
-            else if (utils_1.isUnderMaintenanceResponse(response.status)) {
-                throw new exceptions_1.UnderMaintenanceException();
+            else if ((0, index_js_2.isUnderMaintenanceResponse)(response.status)) {
+                throw new index_js_1.UnderMaintenanceException();
             }
             else {
-                throw new exceptions_1.CommandException(response);
+                throw new index_js_1.CommandException(response);
             }
         });
     }
@@ -96,7 +96,7 @@ class Copyleaks {
         date.setMinutes(date.getMinutes() + 5); // adds 5 minutes ahead for a safety shield.
         const expiresDate = new Date(authToken['.expires']);
         if (expiresDate.getTime() <= date.getTime()) {
-            throw new exceptions_1.AuthExipredException(); // expired
+            throw new index_js_1.AuthExipredException(); // expired
         }
     }
     /**
@@ -116,20 +116,20 @@ class Copyleaks {
     submitFileAsync(authToken, scanId, submission) {
         return __awaiter(this, void 0, void 0, function* () {
             this.verifyAuthToken(authToken);
-            const url = `${app_config_1.CopyleaksConfig.API_SERVER_URI}/v3/scans/submit/file/${scanId}`;
+            const url = `${app_config_js_1.CopyleaksConfig.API_SERVER_URI}/v3/scans/submit/file/${scanId}`;
             const headers = {
                 'Content-Type': 'application/json',
-                'User-Agent': app_config_1.CopyleaksConfig.USER_AGENT,
+                'User-Agent': app_config_js_1.CopyleaksConfig.USER_AGENT,
                 'Authorization': `Bearer ${authToken['access_token']}`
             };
             const response = yield axios_1.default.put(url, submission, { headers });
-            if (utils_1.isSuccessStatusCode(response.status))
+            if ((0, index_js_2.isSuccessStatusCode)(response.status))
                 return; // Completed successfully
-            else if (utils_1.isUnderMaintenanceResponse(response.status)) {
-                throw new exceptions_1.UnderMaintenanceException();
+            else if ((0, index_js_2.isUnderMaintenanceResponse)(response.status)) {
+                throw new index_js_1.UnderMaintenanceException();
             }
             else {
-                throw new exceptions_1.CommandException(response);
+                throw new index_js_1.CommandException(response);
             }
         });
     }
@@ -150,20 +150,20 @@ class Copyleaks {
     submitFileOcrAsync(authToken, scanId, submission) {
         return __awaiter(this, void 0, void 0, function* () {
             this.verifyAuthToken(authToken);
-            const url = `${app_config_1.CopyleaksConfig.API_SERVER_URI}/v3/scans/submit/ocr/${scanId}`;
+            const url = `${app_config_js_1.CopyleaksConfig.API_SERVER_URI}/v3/scans/submit/ocr/${scanId}`;
             const headers = {
                 'Content-Type': 'application/json',
-                'User-Agent': app_config_1.CopyleaksConfig.USER_AGENT,
+                'User-Agent': app_config_js_1.CopyleaksConfig.USER_AGENT,
                 'Authorization': `Bearer ${authToken['access_token']}`
             };
             const response = yield axios_1.default.put(url, submission, { headers });
-            if (utils_1.isSuccessStatusCode(response.status))
+            if ((0, index_js_2.isSuccessStatusCode)(response.status))
                 return; // Completed successfully
-            else if (utils_1.isUnderMaintenanceResponse(response.status)) {
-                throw new exceptions_1.UnderMaintenanceException();
+            else if ((0, index_js_2.isUnderMaintenanceResponse)(response.status)) {
+                throw new index_js_1.UnderMaintenanceException();
             }
             else {
-                throw new exceptions_1.CommandException(response);
+                throw new index_js_1.CommandException(response);
             }
         });
     }
@@ -184,20 +184,20 @@ class Copyleaks {
     submitUrlAsync(authToken, scanId, submission) {
         return __awaiter(this, void 0, void 0, function* () {
             this.verifyAuthToken(authToken);
-            const url = `${app_config_1.CopyleaksConfig.API_SERVER_URI}/v3/scans/submit/url/${scanId}`;
+            const url = `${app_config_js_1.CopyleaksConfig.API_SERVER_URI}/v3/scans/submit/url/${scanId}`;
             const headers = {
                 'Content-Type': 'application/json',
-                'User-Agent': app_config_1.CopyleaksConfig.USER_AGENT,
+                'User-Agent': app_config_js_1.CopyleaksConfig.USER_AGENT,
                 'Authorization': `Bearer ${authToken['access_token']}`
             };
             const response = yield axios_1.default.put(url, submission, { headers });
-            if (utils_1.isSuccessStatusCode(response.status))
+            if ((0, index_js_2.isSuccessStatusCode)(response.status))
                 return; // Completed successfully
-            else if (utils_1.isUnderMaintenanceResponse(response.status)) {
-                throw new exceptions_1.UnderMaintenanceException();
+            else if ((0, index_js_2.isUnderMaintenanceResponse)(response.status)) {
+                throw new index_js_1.UnderMaintenanceException();
             }
             else {
-                throw new exceptions_1.CommandException(response);
+                throw new index_js_1.CommandException(response);
             }
         });
     }
@@ -219,21 +219,21 @@ class Copyleaks {
     exportAsync(authToken, scanId, exportId, model) {
         return __awaiter(this, void 0, void 0, function* () {
             this.verifyAuthToken(authToken);
-            const url = `${app_config_1.CopyleaksConfig.API_SERVER_URI}/v3/downloads/${scanId}/export/${exportId}`;
+            const url = `${app_config_js_1.CopyleaksConfig.API_SERVER_URI}/v3/downloads/${scanId}/export/${exportId}`;
             const headers = {
                 'Content-Type': 'application/json',
-                'User-Agent': app_config_1.CopyleaksConfig.USER_AGENT,
+                'User-Agent': app_config_js_1.CopyleaksConfig.USER_AGENT,
                 'Authorization': `Bearer ${authToken['access_token']}`
             };
             const response = yield axios_1.default.post(url, model, { headers });
-            if (utils_1.isSuccessStatusCode(response.status)) {
+            if ((0, index_js_2.isSuccessStatusCode)(response.status)) {
                 return; // Completed successfully
             }
-            else if (utils_1.isUnderMaintenanceResponse(response.status)) {
-                throw new exceptions_1.UnderMaintenanceException();
+            else if ((0, index_js_2.isUnderMaintenanceResponse)(response.status)) {
+                throw new index_js_1.UnderMaintenanceException();
             }
             else {
-                throw new exceptions_1.CommandException(response);
+                throw new index_js_1.CommandException(response);
             }
         });
     }
@@ -253,21 +253,21 @@ class Copyleaks {
     startAsync(authToken, model) {
         return __awaiter(this, void 0, void 0, function* () {
             this.verifyAuthToken(authToken);
-            const url = `${app_config_1.CopyleaksConfig.API_SERVER_URI}/v3/scans/start`;
+            const url = `${app_config_js_1.CopyleaksConfig.API_SERVER_URI}/v3/scans/start`;
             const headers = {
                 'Content-Type': 'application/json',
-                'User-Agent': app_config_1.CopyleaksConfig.USER_AGENT,
+                'User-Agent': app_config_js_1.CopyleaksConfig.USER_AGENT,
                 'Authorization': `Bearer ${authToken['access_token']}`
             };
             const response = yield axios_1.default.patch(url, model, { headers });
-            if (utils_1.isSuccessStatusCode(response.status)) {
+            if ((0, index_js_2.isSuccessStatusCode)(response.status)) {
                 return response.data; // Completed successfully
             }
-            else if (utils_1.isUnderMaintenanceResponse(response.status)) {
-                throw new exceptions_1.UnderMaintenanceException();
+            else if ((0, index_js_2.isUnderMaintenanceResponse)(response.status)) {
+                throw new index_js_1.UnderMaintenanceException();
             }
             else {
-                throw new exceptions_1.CommandException(response);
+                throw new index_js_1.CommandException(response);
             }
         });
     }
@@ -287,23 +287,23 @@ class Copyleaks {
     deleteAsync(authToken, payloads) {
         return __awaiter(this, void 0, void 0, function* () {
             this.verifyAuthToken(authToken);
-            const url = `${app_config_1.CopyleaksConfig.API_SERVER_URI}/v3.1/scans/delete`;
+            const url = `${app_config_js_1.CopyleaksConfig.API_SERVER_URI}/v3.1/scans/delete`;
             const headers = {
                 'Content-Type': 'application/json',
-                'User-Agent': app_config_1.CopyleaksConfig.USER_AGENT,
+                'User-Agent': app_config_js_1.CopyleaksConfig.USER_AGENT,
                 'Authorization': `Bearer ${authToken['access_token']}`
             };
             const response = yield axios_1.default.patch(url, payloads, { headers });
-            if (utils_1.isSuccessStatusCode(response.status))
+            if ((0, index_js_2.isSuccessStatusCode)(response.status))
                 return; // Completed successfully;
-            else if (utils_1.isUnderMaintenanceResponse(response.status)) {
-                throw new exceptions_1.UnderMaintenanceException();
+            else if ((0, index_js_2.isUnderMaintenanceResponse)(response.status)) {
+                throw new index_js_1.UnderMaintenanceException();
             }
-            else if (utils_1.isRateLimitResponse(response.status)) {
-                throw new exceptions_1.RateLimitException();
+            else if ((0, index_js_2.isRateLimitResponse)(response.status)) {
+                throw new index_js_1.RateLimitException();
             }
             else {
-                throw new exceptions_1.CommandException(response);
+                throw new index_js_1.CommandException(response);
             }
         });
     }
@@ -323,20 +323,20 @@ class Copyleaks {
     resendWebhookAsync(authToken, scanId) {
         return __awaiter(this, void 0, void 0, function* () {
             this.verifyAuthToken(authToken);
-            const url = `${app_config_1.CopyleaksConfig.API_SERVER_URI}/v3/scans/${scanId}/webhooks/resend`;
+            const url = `${app_config_js_1.CopyleaksConfig.API_SERVER_URI}/v3/scans/${scanId}/webhooks/resend`;
             const headers = {
                 'Content-Type': 'application/json',
-                'User-Agent': app_config_1.CopyleaksConfig.USER_AGENT,
+                'User-Agent': app_config_js_1.CopyleaksConfig.USER_AGENT,
                 'Authorization': `Bearer ${authToken['access_token']}`
             };
             const response = yield axios_1.default.post(url, null, { headers });
-            if (utils_1.isSuccessStatusCode(response.status))
+            if ((0, index_js_2.isSuccessStatusCode)(response.status))
                 return; // Completed successfully
-            else if (utils_1.isUnderMaintenanceResponse(response.status)) {
-                throw new exceptions_1.UnderMaintenanceException();
+            else if ((0, index_js_2.isUnderMaintenanceResponse)(response.status)) {
+                throw new index_js_1.UnderMaintenanceException();
             }
             else {
-                throw new exceptions_1.CommandException(response);
+                throw new index_js_1.CommandException(response);
             }
         });
     }
@@ -356,22 +356,22 @@ class Copyleaks {
     getCreditsBalanceAsync(authToken) {
         return __awaiter(this, void 0, void 0, function* () {
             this.verifyAuthToken(authToken);
-            const url = `${app_config_1.CopyleaksConfig.API_SERVER_URI}/v3/scans/credits`;
+            const url = `${app_config_js_1.CopyleaksConfig.API_SERVER_URI}/v3/scans/credits`;
             const headers = {
-                'User-Agent': app_config_1.CopyleaksConfig.USER_AGENT,
+                'User-Agent': app_config_js_1.CopyleaksConfig.USER_AGENT,
                 'Authorization': `Bearer ${authToken['access_token']}`
             };
             const response = yield axios_1.default.get(url, { headers });
-            if (utils_1.isSuccessStatusCode(response.status))
+            if ((0, index_js_2.isSuccessStatusCode)(response.status))
                 return response.data;
-            else if (utils_1.isUnderMaintenanceResponse(response.status)) {
-                throw new exceptions_1.UnderMaintenanceException();
+            else if ((0, index_js_2.isUnderMaintenanceResponse)(response.status)) {
+                throw new index_js_1.UnderMaintenanceException();
             }
-            else if (utils_1.isRateLimitResponse(response.status)) {
-                throw new exceptions_1.RateLimitException();
+            else if ((0, index_js_2.isRateLimitResponse)(response.status)) {
+                throw new index_js_1.RateLimitException();
             }
             else {
-                throw new exceptions_1.CommandException(response);
+                throw new index_js_1.CommandException(response);
             }
         });
     }
@@ -394,23 +394,23 @@ class Copyleaks {
     getUsagesHistoryCsvAsync(authToken, startDate, endDate) {
         return __awaiter(this, void 0, void 0, function* () {
             this.verifyAuthToken(authToken);
-            const url = `${app_config_1.CopyleaksConfig.API_SERVER_URI}/v3/scans/usages/history?start=${startDate}&end=${endDate}`;
+            const url = `${app_config_js_1.CopyleaksConfig.API_SERVER_URI}/v3/scans/usages/history?start=${startDate}&end=${endDate}`;
             const headers = {
                 'Content-Type': 'application/json',
-                'User-Agent': app_config_1.CopyleaksConfig.USER_AGENT,
+                'User-Agent': app_config_js_1.CopyleaksConfig.USER_AGENT,
                 'Authorization': `Bearer ${authToken['access_token']}`
             };
             const response = yield axios_1.default.get(url, { headers });
-            if (utils_1.isSuccessStatusCode(response.status))
+            if ((0, index_js_2.isSuccessStatusCode)(response.status))
                 return response.data;
-            else if (utils_1.isUnderMaintenanceResponse(response.status)) {
-                throw new exceptions_1.UnderMaintenanceException();
+            else if ((0, index_js_2.isUnderMaintenanceResponse)(response.status)) {
+                throw new index_js_1.UnderMaintenanceException();
             }
-            else if (utils_1.isRateLimitResponse(response.status)) {
-                throw new exceptions_1.RateLimitException();
+            else if ((0, index_js_2.isRateLimitResponse)(response.status)) {
+                throw new index_js_1.RateLimitException();
             }
             else {
-                throw new exceptions_1.CommandException(response);
+                throw new index_js_1.CommandException(response);
             }
         });
     }
@@ -428,22 +428,22 @@ class Copyleaks {
      */
     getReleaseNotesAsync() {
         return __awaiter(this, void 0, void 0, function* () {
-            const url = `${app_config_1.CopyleaksConfig.API_SERVER_URI}/v3/release-logs.json`;
+            const url = `${app_config_js_1.CopyleaksConfig.API_SERVER_URI}/v3/release-logs.json`;
             const headers = {
                 'Content-Type': 'application/json',
-                'User-Agent': app_config_1.CopyleaksConfig.USER_AGENT,
+                'User-Agent': app_config_js_1.CopyleaksConfig.USER_AGENT,
             };
             const response = yield axios_1.default.get(url, { headers });
-            if (utils_1.isSuccessStatusCode(response.status))
+            if ((0, index_js_2.isSuccessStatusCode)(response.status))
                 return response.data;
-            else if (utils_1.isUnderMaintenanceResponse(response.status)) {
-                throw new exceptions_1.UnderMaintenanceException();
+            else if ((0, index_js_2.isUnderMaintenanceResponse)(response.status)) {
+                throw new index_js_1.UnderMaintenanceException();
             }
-            else if (utils_1.isRateLimitResponse(response.status)) {
-                throw new exceptions_1.RateLimitException();
+            else if ((0, index_js_2.isRateLimitResponse)(response.status)) {
+                throw new index_js_1.RateLimitException();
             }
             else {
-                throw new exceptions_1.CommandException(response);
+                throw new index_js_1.CommandException(response);
             }
         });
     }
@@ -461,22 +461,22 @@ class Copyleaks {
      */
     getSupportedFileTypesAsync() {
         return __awaiter(this, void 0, void 0, function* () {
-            const url = `${app_config_1.CopyleaksConfig.API_SERVER_URI}/v3/miscellaneous/supported-file-types`;
+            const url = `${app_config_js_1.CopyleaksConfig.API_SERVER_URI}/v3/miscellaneous/supported-file-types`;
             const headers = {
                 'Content-Type': 'application/json',
-                'User-Agent': app_config_1.CopyleaksConfig.USER_AGENT,
+                'User-Agent': app_config_js_1.CopyleaksConfig.USER_AGENT,
             };
             const response = yield axios_1.default.get(url, { headers });
-            if (utils_1.isSuccessStatusCode(response.status))
+            if ((0, index_js_2.isSuccessStatusCode)(response.status))
                 return response.data;
-            else if (utils_1.isUnderMaintenanceResponse(response.status)) {
-                throw new exceptions_1.UnderMaintenanceException();
+            else if ((0, index_js_2.isUnderMaintenanceResponse)(response.status)) {
+                throw new index_js_1.UnderMaintenanceException();
             }
-            else if (utils_1.isRateLimitResponse(response.status)) {
-                throw new exceptions_1.RateLimitException();
+            else if ((0, index_js_2.isRateLimitResponse)(response.status)) {
+                throw new index_js_1.RateLimitException();
             }
             else {
-                throw new exceptions_1.CommandException(response);
+                throw new index_js_1.CommandException(response);
             }
         });
     }
@@ -494,22 +494,22 @@ class Copyleaks {
      */
     getOCRSupportedLanguagesAsync() {
         return __awaiter(this, void 0, void 0, function* () {
-            const url = `${app_config_1.CopyleaksConfig.API_SERVER_URI}/v3/miscellaneous/ocr-languages-list`;
+            const url = `${app_config_js_1.CopyleaksConfig.API_SERVER_URI}/v3/miscellaneous/ocr-languages-list`;
             const headers = {
                 'Content-Type': 'application/json',
-                'User-Agent': app_config_1.CopyleaksConfig.USER_AGENT,
+                'User-Agent': app_config_js_1.CopyleaksConfig.USER_AGENT,
             };
             const response = yield axios_1.default.get(url, { headers });
-            if (utils_1.isSuccessStatusCode(response.status))
+            if ((0, index_js_2.isSuccessStatusCode)(response.status))
                 return response.data;
-            else if (utils_1.isUnderMaintenanceResponse(response.status)) {
-                throw new exceptions_1.UnderMaintenanceException();
+            else if ((0, index_js_2.isUnderMaintenanceResponse)(response.status)) {
+                throw new index_js_1.UnderMaintenanceException();
             }
-            else if (utils_1.isRateLimitResponse(response.status)) {
-                throw new exceptions_1.RateLimitException();
+            else if ((0, index_js_2.isRateLimitResponse)(response.status)) {
+                throw new index_js_1.RateLimitException();
             }
             else {
-                throw new exceptions_1.CommandException(response);
+                throw new index_js_1.CommandException(response);
             }
         });
     }

@@ -24,7 +24,11 @@
 */
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
 }) : (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     o[k2] = m[k];
@@ -33,20 +37,20 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-__exportStar(require("./SubmissionProperties"), exports);
-__exportStar(require("./Actions"), exports);
-__exportStar(require("./AISourceMatch"), exports);
-__exportStar(require("./Author"), exports);
-__exportStar(require("./CopyleaksDB"), exports);
-__exportStar(require("./DomainsMode"), exports);
-__exportStar(require("./Exclude"), exports);
-__exportStar(require("./Filter"), exports);
-__exportStar(require("./Indexing"), exports);
-__exportStar(require("./PdfProperties"), exports);
-__exportStar(require("./Repository"), exports);
-__exportStar(require("./Scanning"), exports);
-__exportStar(require("./ScanningExclude"), exports);
-__exportStar(require("./ScanningRepository"), exports);
-__exportStar(require("./SensitiveDataProtection"), exports);
-__exportStar(require("./SubmissionProperties"), exports);
-__exportStar(require("./Webhooks"), exports);
+__exportStar(require("./SubmissionProperties.js"), exports);
+__exportStar(require("./Actions.js"), exports);
+__exportStar(require("./AISourceMatch.js"), exports);
+__exportStar(require("./Author.js"), exports);
+__exportStar(require("./CopyleaksDB.js"), exports);
+__exportStar(require("./DomainsMode.js"), exports);
+__exportStar(require("./Exclude.js"), exports);
+__exportStar(require("./Filter.js"), exports);
+__exportStar(require("./Indexing.js"), exports);
+__exportStar(require("./PdfProperties.js"), exports);
+__exportStar(require("./Repository.js"), exports);
+__exportStar(require("./Scanning.js"), exports);
+__exportStar(require("./ScanningExclude.js"), exports);
+__exportStar(require("./ScanningRepository.js"), exports);
+__exportStar(require("./SensitiveDataProtection.js"), exports);
+__exportStar(require("./SubmissionProperties.js"), exports);
+__exportStar(require("./Webhooks.js"), exports);

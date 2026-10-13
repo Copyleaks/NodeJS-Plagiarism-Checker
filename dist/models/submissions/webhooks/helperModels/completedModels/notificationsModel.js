@@ -24,7 +24,7 @@ exports.NotificationsModel = void 0;
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
 */
-const alertsModel_1 = require("../notificationsModels/alertsModel");
+const alertsModel_js_1 = require("../notificationsModels/alertsModel.js");
 class NotificationsModel {
     /**
      * @param init Wire data. Each alert can be a plain object; it is mapped to an AlertsModel instance.
@@ -32,7 +32,7 @@ class NotificationsModel {
     constructor(init) {
         Object.assign(this, init);
         if (init === null || init === void 0 ? void 0 : init.alerts) {
-            this.alerts = init.alerts.map((a) => new alertsModel_1.AlertsModel(a));
+            this.alerts = init.alerts.map((a) => new alertsModel_js_1.AlertsModel(a));
         }
     }
 }

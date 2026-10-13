@@ -34,4 +34,4 @@ var SubmissionFilterDomainsMode;
      * When Exclude is selected, Copyleaks will only find results outside of the properties.filters.domains list.
      */
     SubmissionFilterDomainsMode[SubmissionFilterDomainsMode["Exclude"] = 1] = "Exclude";
-})(SubmissionFilterDomainsMode = exports.SubmissionFilterDomainsMode || (exports.SubmissionFilterDomainsMode = {}));
+})(SubmissionFilterDomainsMode || (exports.SubmissionFilterDomainsMode = SubmissionFilterDomainsMode = {}));

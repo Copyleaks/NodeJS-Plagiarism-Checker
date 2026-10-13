@@ -1,7 +1,11 @@
 "use strict";
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
 }) : (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     o[k2] = m[k];
@@ -33,8 +37,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
 */
-__exportStar(require("./CopyleaksDeleteRequestModel"), exports);
-__exportStar(require("./CopyleaksStartRequestModel"), exports);
-__exportStar(require("./TextModeration/CopyleaksTextModerationRequestModel"), exports);
-__exportStar(require("./TextModeration/CopyleaksTextModerationLabel"), exports);
-__exportStar(require("./AiImageDetection/CopyleaksAiImageDetectionRequestModel"), exports);
+__exportStar(require("./CopyleaksDeleteRequestModel.js"), exports);
+__exportStar(require("./CopyleaksStartRequestModel.js"), exports);
+__exportStar(require("./TextModeration/CopyleaksTextModerationRequestModel.js"), exports);
+__exportStar(require("./TextModeration/CopyleaksTextModerationLabel.js"), exports);
+__exportStar(require("./AiImageDetection/CopyleaksAiImageDetectionRequestModel.js"), exports);

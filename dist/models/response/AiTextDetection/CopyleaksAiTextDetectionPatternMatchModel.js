@@ -24,7 +24,7 @@
 ********************************************************************************/
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CopyleaksAiTextDetectionPatternMatchModel = void 0;
-const CopyleaksAiTextDetectionPositionsModel_1 = require("./CopyleaksAiTextDetectionPositionsModel");
+const CopyleaksAiTextDetectionPositionsModel_js_1 = require("./CopyleaksAiTextDetectionPositionsModel.js");
 /**
  * Positions of the AI Logic patterns found in the text.
  */
@@ -35,10 +35,10 @@ class CopyleaksAiTextDetectionPatternMatchModel {
     constructor(init) {
         const raw = init || {};
         if (raw.chars != null) {
-            this.chars = new CopyleaksAiTextDetectionPositionsModel_1.CopyleaksAiTextDetectionPositionsModel(raw.chars);
+            this.chars = new CopyleaksAiTextDetectionPositionsModel_js_1.CopyleaksAiTextDetectionPositionsModel(raw.chars);
         }
         if (raw.words != null) {
-            this.words = new CopyleaksAiTextDetectionPositionsModel_1.CopyleaksAiTextDetectionPositionsModel(raw.words);
+            this.words = new CopyleaksAiTextDetectionPositionsModel_js_1.CopyleaksAiTextDetectionPositionsModel(raw.words);
         }
     }
 }

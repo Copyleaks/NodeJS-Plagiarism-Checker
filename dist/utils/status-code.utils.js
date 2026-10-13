@@ -23,16 +23,15 @@
  SOFTWARE.
 */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.isRateLimitResponse = exports.isUnderMaintenanceResponse = exports.isSuccessStatusCode = void 0;
+exports.isSuccessStatusCode = isSuccessStatusCode;
+exports.isUnderMaintenanceResponse = isUnderMaintenanceResponse;
+exports.isRateLimitResponse = isRateLimitResponse;
 function isSuccessStatusCode(statusCode) {
     return statusCode >= 200 && statusCode <= 299;
 }
-exports.isSuccessStatusCode = isSuccessStatusCode;
 function isUnderMaintenanceResponse(statusCode) {
     return statusCode === 503;
 }
-exports.isUnderMaintenanceResponse = isUnderMaintenanceResponse;
 function isRateLimitResponse(statusCode) {
     return statusCode === 429;
 }
-exports.isRateLimitResponse = isRateLimitResponse;

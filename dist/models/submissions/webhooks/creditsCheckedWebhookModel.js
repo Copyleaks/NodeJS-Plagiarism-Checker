@@ -24,15 +24,15 @@ exports.CreditsCheckedWebhookModel = void 0;
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
 */
-const scannedDocumentModel_1 = require("./helperModels/completedModels/scannedDocumentModel");
-const statusWebhookModel_1 = require("./helperModels/baseModels/statusWebhookModel");
-class CreditsCheckedWebhookModel extends statusWebhookModel_1.StatusWebhookModel {
+const scannedDocumentModel_js_1 = require("./helperModels/completedModels/scannedDocumentModel.js");
+const statusWebhookModel_js_1 = require("./helperModels/baseModels/statusWebhookModel.js");
+class CreditsCheckedWebhookModel extends statusWebhookModel_js_1.StatusWebhookModel {
     constructor(init) {
         if (init) {
             super(init);
             Object.assign(this, init);
             if (init.scannedDocument) {
-                this.scannedDocument = new scannedDocumentModel_1.ScannedDocumentModel(init.scannedDocument);
+                this.scannedDocument = new scannedDocumentModel_js_1.ScannedDocumentModel(init.scannedDocument);
             }
         }
     }

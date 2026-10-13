@@ -21,8 +21,8 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
 */
-import { RepositoriesMetadataModel } from "../resultsModels/repositoriesMetadataModel";
-import { SharedResultsModel } from "../resultsModels/sharedResultsModel";
+import { RepositoriesMetadataModel } from "../resultsModels/repositoriesMetadataModel.js";
+import { SharedResultsModel } from "../resultsModels/sharedResultsModel.js";
 
 export class NewResultsRepositoriesModel extends SharedResultsModel {
   

@@ -24,8 +24,8 @@
 ********************************************************************************/
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CopyleaksAiTextDetectionPatternsModel = void 0;
-const CopyleaksAiTextDetectionPatternMatchModel_1 = require("./CopyleaksAiTextDetectionPatternMatchModel");
-const CopyleaksAiTextDetectionPatternStatisticsModel_1 = require("./CopyleaksAiTextDetectionPatternStatisticsModel");
+const CopyleaksAiTextDetectionPatternMatchModel_js_1 = require("./CopyleaksAiTextDetectionPatternMatchModel.js");
+const CopyleaksAiTextDetectionPatternStatisticsModel_js_1 = require("./CopyleaksAiTextDetectionPatternStatisticsModel.js");
 /**
  * AI Logic patterns found in the text.
  */
@@ -36,13 +36,13 @@ class CopyleaksAiTextDetectionPatternsModel {
     constructor(init) {
         const raw = init || {};
         if (raw.statistics != null) {
-            this.statistics = new CopyleaksAiTextDetectionPatternStatisticsModel_1.CopyleaksAiTextDetectionPatternStatisticsModel(raw.statistics);
+            this.statistics = new CopyleaksAiTextDetectionPatternStatisticsModel_js_1.CopyleaksAiTextDetectionPatternStatisticsModel(raw.statistics);
         }
         if (raw.text != null) {
-            this.text = new CopyleaksAiTextDetectionPatternMatchModel_1.CopyleaksAiTextDetectionPatternMatchModel(raw.text);
+            this.text = new CopyleaksAiTextDetectionPatternMatchModel_js_1.CopyleaksAiTextDetectionPatternMatchModel(raw.text);
         }
         if (raw.html != null) {
-            this.html = new CopyleaksAiTextDetectionPatternMatchModel_1.CopyleaksAiTextDetectionPatternMatchModel(raw.html);
+            this.html = new CopyleaksAiTextDetectionPatternMatchModel_js_1.CopyleaksAiTextDetectionPatternMatchModel(raw.html);
         }
     }
 }

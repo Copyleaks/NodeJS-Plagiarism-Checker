@@ -1,5 +1,5 @@
-import { RepositoriesMetadataModel } from "../resultsModels/repositoriesMetadataModel";
-import { SharedResultsModel } from "../resultsModels/sharedResultsModel";
+import { RepositoriesMetadataModel } from "../resultsModels/repositoriesMetadataModel.js";
+import { SharedResultsModel } from "../resultsModels/sharedResultsModel.js";
 export declare class NewResultsRepositoriesModel extends SharedResultsModel {
     repositoryId?: string;
     metadata?: RepositoriesMetadataModel;

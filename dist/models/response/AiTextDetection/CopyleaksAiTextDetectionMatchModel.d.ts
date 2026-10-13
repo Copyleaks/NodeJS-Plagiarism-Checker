@@ -21,7 +21,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
 ********************************************************************************/
-import { CopyleaksAiTextDetectionMatchTextModel } from './CopyleaksAiTextDetectionMatchTextModel';
+import { CopyleaksAiTextDetectionMatchTextModel } from './CopyleaksAiTextDetectionMatchTextModel.js';
 /**
  * Location of the text segments that received a classification.
  */
@@ -34,7 +34,7 @@ export declare class CopyleaksAiTextDetectionMatchModel {
      * Positions in the HTML version of the document.
      * Returned only for HTML sources.
      */
-    html?: CopyleaksAiTextDetectionMatchTextModel;
+    html?: CopyleaksAiTextDetectionMatchTextModel | null;
     /**
      * @param init Parsed JSON object. Unknown fields are ignored.
      */
