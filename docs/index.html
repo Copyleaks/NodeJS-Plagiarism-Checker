@@ -61,19 +61,20 @@
 				<a href="#copyleaks-nodejs-sdk" id="copyleaks-nodejs-sdk" style="color: inherit; text-decoration: none;">
 					<h1>Copyleaks NodeJs SDK</h1>
 				</a>
-				<p>Copyleaks SDK enables you to scan text for plagiarism and detect content distribution online, using the Copyleaks plagiarism checker API.</p>
-				<p>Using Copyleaks SDK you can check for plagiarism in:</p>
+				<p>Copyleaks is the integrity layer for your tech stack that helps organizations and individuals understand what's human-made and original, AI-generated, or manipulated across text, image, audio and video.</p>
+				<p>This SDK gives you access to the following Copyleaks products:</p>
 				<ul>
-					<li>Online content and webpages</li>
-					<li>Local and cloud files (see <a href="https://api.copyleaks.com/documentation/specifications#2-supported-file-types">supported files</a>)</li>
-					<li>Free text</li>
-					<li>OCR (Optical Character Recognition) - scanning pictures with textual content (see <a href="https://api.copyleaks.com/documentation/specifications#6-supported-image-types-ocr">supported files</a>)</li>
+					<li>AI Text Detection</li>
+					<li>AI Image Detection</li>
+					<li>Plagiarism Checker (Authenticity scans: file, URL, OCR)</li>
+					<li>Grammar Checker</li>
+					<li>Text Moderation</li>
 				</ul>
 				<a href="#installation" id="installation" style="color: inherit; text-decoration: none;">
 					<h2>Installation</h2>
 				</a>
-				<p>Install using <a href="https://www.npmjs.com/package/plagiarism-checker">npm</a>.</p>
-				<pre><code class="language-bash"><span style="color: #000000">npm i plagiarism-checker</span>
+				<p>Install using <a href="https://www.npmjs.com/package/copyleaks">npm</a>.</p>
+				<pre><code class="language-bash"><span style="color: #000000">npm install copyleaks</span>
 </code></pre>
 				<a href="#register-and-get-your-api-key" id="register-and-get-your-api-key" style="color: inherit; text-decoration: none;">
 					<h2>Register and Get Your API Key</h2>
@@ -87,14 +88,14 @@
 				<a href="#javascript" id="javascript" style="color: inherit; text-decoration: none;">
 					<h4>Javascript</h4>
 				</a>
-				<pre><code class="language-js"><span style="color: #0000FF">const</span><span style="color: #000000"> { </span><span style="color: #0070C1">Copyleaks</span><span style="color: #000000"> } = </span><span style="color: #795E26">require</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;plagiarism-checker&#039;</span><span style="color: #000000">);  </span>
+				<pre><code class="language-js"><span style="color: #0000FF">const</span><span style="color: #000000"> { </span><span style="color: #0070C1">Copyleaks</span><span style="color: #000000"> } = </span><span style="color: #795E26">require</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;copyleaks&#039;</span><span style="color: #000000">);  </span>
 <span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">copyleaks</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Copyleaks</span><span style="color: #000000">();</span>
 <span style="color: #001080">copyleaks</span><span style="color: #000000">.</span><span style="color: #795E26">loginAsync</span><span style="color: #000000">(</span><span style="color: #800000">&lt;your</span><span style="color: #000000"> </span><span style="color: #FF0000">email</span><span style="color: #800000">&gt;</span><span style="color: #000000">,</span><span style="color: #800000">&lt;your</span><span style="color: #000000"> </span><span style="color: #FF0000">api</span><span style="color: #000000"> </span><span style="color: #FF0000">key</span><span style="color: #800000">&gt;</span><span style="color: #000000">).then(res=&gt; </span><span style="color: #0000FF">{</span><span style="color: #000000">...</span><span style="color: #0000FF">}</span><span style="color: #000000"> , err=&gt; </span><span style="color: #0000FF">{</span><span style="color: #000000">...</span><span style="color: #0000FF">}</span><span style="color: #000000">);</span>
 </code></pre>
 				<a href="#typescript" id="typescript" style="color: inherit; text-decoration: none;">
 					<h4>Typescript</h4>
 				</a>
-				<pre><code class="language-ts"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">Copyleaks</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;plagiarism-checker&#039;</span><span style="color: #000000">;  </span>
+				<pre><code class="language-ts"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">Copyleaks</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;copyleaks&#039;</span><span style="color: #000000">;  </span>
 
 <span style="color: #AF00DB">export</span><span style="color: #000000"> </span><span style="color: #0000FF">class</span><span style="color: #000000"> </span><span style="color: #267F99">MyClass</span><span style="color: #000000">{</span>
 <span style="color: #000000">    </span><span style="color: #0000FF">public</span><span style="color: #000000"> </span><span style="color: #001080">copyleaks</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Copyleaks</span><span style="color: #000000">();</span>

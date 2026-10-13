@@ -1,12 +1,21 @@
 {
-  "name": "plagiarism-checker",
+  "name": "copyleaks",
   "version": "6.0.0",
-  "description": "",
+  "description": "The official Copyleaks Node.js SDK.",
   "main": "dist/index.js",
   "license": "MIT",
   "keywords": [
-    "npm"
+    "copyleaks",
+    "ai-text-detection",
+    "ai-image-detection",
+    "plagiarism-checker",
+    "grammar-checker",
+    "text-moderation"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Copyleaks/NodeJS-Plagiarism-Checker.git"
+  },
   "scripts": {
     "build": "tsc",
     "build:watch": "tsc --watch",
