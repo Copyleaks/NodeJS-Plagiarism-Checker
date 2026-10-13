@@ -47,8 +47,10 @@ export declare class CopyleaksAiTextDetectionResponseModel {
     summary: CopyleaksAiTextDetectionSummaryModel;
     /**
      * General information about the scanned document.
+     * Returned by submitNaturalTextAsync. Can be missing in the "suspected-ai-text" alert data,
+     * for example for sandbox scans.
      */
-    scannedDocument: CopyleaksAiTextDetectionScannedDocumentModel;
+    scannedDocument?: CopyleaksAiTextDetectionScannedDocumentModel;
     /**
      * The machine translation provider used before detection.
      * 0 = none, 1 = Google Translate, 2 = Helsinki, 3 = Azure.

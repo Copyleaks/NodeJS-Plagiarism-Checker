@@ -19,12 +19,24 @@ export async function useEveryClient(): Promise<void> {
   const submission = new copyleaksSdk.CopyleaksURLSubmissionModel('https://example.com', {
     sandbox: true,
     action: submissionProperties.SubmissionActions.CheckCredits,
+    aiSourceMatch: { enable: true },
+    displayLanguage: 'en',
     webhooks: { status: 'https://example.com/webhook/{STATUS}' },
   });
   const submitted = await copyleaks.submitUrlAsync(token, 'scan1', submission);
   const submittedTyped: Equal<typeof submitted, void> = true;
   const start = await copyleaks.startAsync(token, new copyleaksSdk.CopyleaksStartRequestModel(['scan1']));
   const startTyped: Equal<typeof start, copyleaksSdk.CopyleaksStartResponseModel> = true;
+  const aiSourceMatch: submissionProperties.AISourceMatch = { enable: false };
+
+  // AI alert of the completed webhook
+  const completed = new copyleaksSdk.CompletedWebhookModel({ notifications: { alerts: [{ code: copyleaksSdk.CopyleaksAlertCodes.SUSPECTED_AI_TEXT }] } });
+  const aiAlertCode: Equal<typeof copyleaksSdk.CopyleaksAlertCodes.SUSPECTED_AI_TEXT, 'suspected-ai-text'> = true;
+  const aiAlert = completed.getAIDetectionAlert();
+  const aiAlertTyped: Equal<typeof aiAlert, copyleaksSdk.AlertsModel | null> = true;
+  const aiAlertResult = completed.getAIDetectionResult();
+  const aiAlertResultTyped: Equal<typeof aiAlertResult, copyleaksSdk.CopyleaksAiTextDetectionResponseModel | null> = true;
+  const aiAlertScanId: string | undefined = aiAlertResult?.scannedDocument?.scanId;
 
   // Account and public endpoints
   const credits = await copyleaks.getCreditsBalanceAsync(token);

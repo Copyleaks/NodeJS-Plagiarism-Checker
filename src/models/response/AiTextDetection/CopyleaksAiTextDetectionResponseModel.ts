@@ -52,8 +52,10 @@ export class CopyleaksAiTextDetectionResponseModel {
 
     /**
      * General information about the scanned document.
+     * Returned by submitNaturalTextAsync. Can be missing in the "suspected-ai-text" alert data,
+     * for example for sandbox scans.
      */
-    public scannedDocument!: CopyleaksAiTextDetectionScannedDocumentModel;
+    public scannedDocument?: CopyleaksAiTextDetectionScannedDocumentModel;
 
     /**
      * The machine translation provider used before detection.
