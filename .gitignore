@@ -1,1 +1,3 @@
 node_modules/
+# Build output: created by `npm run build`, which `npm install` and `npm publish` run through the `prepare` script.
+dist/
