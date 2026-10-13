@@ -73,7 +73,8 @@
     "url": "git+https://github.com/Copyleaks/NodeJS-Plagiarism-Checker.git"
   },
   "scripts": {
-    "build": "npm run build:cjs && npm run build:esm",
+    "build": "rimraf dist && npm run build:cjs && npm run build:esm",
+    "prepare": "npm run build",
     "build:cjs": "tsc -p tsconfig.cjs.json",
     "build:esm": "tsc -p tsconfig.esm.json && node -e \"require('fs').writeFileSync('dist/esm/package.json', JSON.stringify({ type: 'module' }, null, 2) + '\\n')\"",
     "build:watch": "tsc --watch",
