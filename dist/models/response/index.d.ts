@@ -8,3 +8,13 @@ export * from "./AiImageDetection/CopyleaksAiImageDetectionScannedDocumentModel"
 export * from "./AiImageDetection/CopyleaksAiImageDetectionResultModel";
 export * from "./AiImageDetection/CopyleaksAiImageDetectionResponseModel";
 export * from "./AiImageDetection/CopyleaksAiImageDetectionImageInfoModel";
+export * from "./AiTextDetection/CopyleaksAiTextDetectionPositionsModel";
+export * from "./AiTextDetection/CopyleaksAiTextDetectionMatchTextModel";
+export * from "./AiTextDetection/CopyleaksAiTextDetectionMatchModel";
+export * from "./AiTextDetection/CopyleaksAiTextDetectionResultModel";
+export * from "./AiTextDetection/CopyleaksAiTextDetectionSummaryModel";
+export * from "./AiTextDetection/CopyleaksAiTextDetectionPatternMatchModel";
+export * from "./AiTextDetection/CopyleaksAiTextDetectionPatternStatisticsModel";
+export * from "./AiTextDetection/CopyleaksAiTextDetectionPatternsModel";
+export * from "./AiTextDetection/CopyleaksAiTextDetectionExplainModel";
+export * from "./AiTextDetection/CopyleaksAiTextDetectionResponseModel";
