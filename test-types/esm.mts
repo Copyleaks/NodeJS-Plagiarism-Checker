@@ -77,13 +77,13 @@ export async function useEveryClient(): Promise<void> {
   const resentTyped: Equal<typeof resent, void> = true;
   const completed = new CompletedWebhookModel({ scannedDocument: undefined });
   const completedScanId: string | undefined = completed.scannedDocument?.scanId;
-  // AI alert of the completed webhook (BAC-5392)
+  // AI alert of the completed webhook
   const aiAlertCode: Equal<typeof CopyleaksAlertCodes.SUSPECTED_AI_TEXT, 'suspected-ai-text'> = true;
   const aiAlertResult = completed.getAIDetectionResult();
   const aiAlertResultTyped: Equal<typeof aiAlertResult, CopyleaksAiTextDetectionResponseModel | null> = true;
   const aiAlertDocTyped: Equal<CopyleaksAiTextDetectionResponseModel['scannedDocument'], CopyleaksAiTextDetectionScannedDocumentModel | undefined> = true;
   const aiAlertShare: number | undefined = aiAlertResult?.summary.ai;
-  // New submit properties (BAC-5378)
+  // New submit properties
   const aiSourceMatch: AISourceMatch = { enable: true };
   const newProperties: Pick<SubmissionProperties, 'aiSourceMatch' | 'displayLanguage'> = { aiSourceMatch, displayLanguage: 'en' };
 
