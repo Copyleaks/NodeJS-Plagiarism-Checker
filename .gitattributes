@@ -1,0 +1,3 @@
+# Compiled output of src/ (npm run build). GitHub collapses these files in PR diffs
+# and leaves them out of the language stats.
+dist/** linguist-generated=true
