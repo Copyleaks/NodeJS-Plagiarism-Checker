@@ -25,7 +25,11 @@ import { NotificationsModel } from "./helperModels/completedModels/notifications
 import { StatusWebhookModel } from "./helperModels/baseModels/statusWebhookModel.js";
 import { ResultsModel } from "./helperModels/completedModels/resultsModel.js";
 import { ScannedDocumentModel } from "./helperModels/completedModels/scannedDocumentModel.js";
+import { CopyleaksAlertCodes } from "../../constants/CopyleaksAlertCodes.js";
 export class CompletedWebhookModel extends StatusWebhookModel {
+    /**
+     * @param init Wire data. notifications.alerts items can be plain objects; they are mapped to AlertsModel instances.
+     */
     constructor(init) {
         super(init);
         if (init) {
@@ -39,5 +43,36 @@ export class CompletedWebhookModel extends StatusWebhookModel {
                 this.scannedDocument = new ScannedDocumentModel(init.scannedDocument);
             }
         }
+    }
+    /**
+     * Returns the first "suspected-ai-text" alert (CopyleaksAlertCodes.SUSPECTED_AI_TEXT) of the scan, or null.
+     *
+     * Returns null when the completed webhook contains no suspected-ai-text alert.
+     *
+     * @returns The AI alert, or null.
+     */
+    getAIDetectionAlert() {
+        var _a, _b;
+        const alerts = (_a = this.notifications) === null || _a === void 0 ? void 0 : _a.alerts;
+        if (!alerts) {
+            return null;
+        }
+        return (_b = alerts.find((alert) => alert.code === CopyleaksAlertCodes.SUSPECTED_AI_TEXT)) !== null && _b !== void 0 ? _b : null;
+    }
+    /**
+     * Returns the decoded AI text detection result of the "suspected-ai-text" alert, or null.
+     * Same as getAIDetectionAlert()?.getAIDetectionResult().
+     *
+     * Null is returned when there is no AI alert (see getAIDetectionAlert),
+     * and also when the AI alert is present but its additionalData is missing, empty,
+     * or valid JSON that is not a JSON object.
+     * In that case AI text was detected, but the details are not available.
+     *
+     * @returns The decoded AI text detection result, or null.
+     * @throws {SyntaxError} When the alert's additionalData is not valid JSON.
+     */
+    getAIDetectionResult() {
+        var _a, _b;
+        return (_b = (_a = this.getAIDetectionAlert()) === null || _a === void 0 ? void 0 : _a.getAIDetectionResult()) !== null && _b !== void 0 ? _b : null;
     }
 }

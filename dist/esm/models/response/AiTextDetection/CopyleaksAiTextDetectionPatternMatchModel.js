@@ -1,5 +1,4 @@
-"use strict";
-/*
+/********************************************************************************
  The MIT License(MIT)
 
  Copyright(c) 2016 Copyleaks LTD (https://copyleaks.com)
@@ -21,19 +20,22 @@
  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
-*/
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.CopyleaksSourceCodeSubmissionModel = void 0;
-const CopyleaksAIDetectionSubmissionModel_1 = require("./CopyleaksAIDetectionSubmissionModel");
-class CopyleaksSourceCodeSubmissionModel extends CopyleaksAIDetectionSubmissionModel_1.CopyleaksAIDetectionSubmissionModel {
+********************************************************************************/
+import { CopyleaksAiTextDetectionPositionsModel } from './CopyleaksAiTextDetectionPositionsModel.js';
+/**
+ * Positions of the AI Logic patterns found in the text.
+ */
+export class CopyleaksAiTextDetectionPatternMatchModel {
     /**
-     * @param text a text string.  25000 <= characters >= 255.
-     * @param sandbox You can test the integration with the Copyleaks API for free using the sandbox mode. You will be able to submit content for a scan and get back mock results, simulating the way Copyleaks will work to make sure that you successfully integrated with the API.
-     * @param filename The name of the file as it will appear in the Copyleaks scan report Make sure to include the right extension for your filetype.
+     * @param init Parsed JSON object. Unknown fields are ignored.
      */
-    constructor(text, filename, sandbox) {
-        super(text, sandbox);
-        this.filename = filename;
+    constructor(init) {
+        const raw = init || {};
+        if (raw.chars != null) {
+            this.chars = new CopyleaksAiTextDetectionPositionsModel(raw.chars);
+        }
+        if (raw.words != null) {
+            this.words = new CopyleaksAiTextDetectionPositionsModel(raw.words);
+        }
     }
 }
-exports.CopyleaksSourceCodeSubmissionModel = CopyleaksSourceCodeSubmissionModel;

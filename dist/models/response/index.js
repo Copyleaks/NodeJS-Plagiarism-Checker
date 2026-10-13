@@ -47,6 +47,15 @@ __exportStar(require("./AiImageDetection/CopyleaksAiImageDetectionScannedDocumen
 __exportStar(require("./AiImageDetection/CopyleaksAiImageDetectionResultModel.js"), exports);
 __exportStar(require("./AiImageDetection/CopyleaksAiImageDetectionResponseModel.js"), exports);
 __exportStar(require("./AiImageDetection/CopyleaksAiImageDetectionImageInfoModel.js"), exports);
+__exportStar(require("./AiTextDetection/CopyleaksAiTextDetectionPositionsModel.js"), exports);
+__exportStar(require("./AiTextDetection/CopyleaksAiTextDetectionMatchTextModel.js"), exports);
+__exportStar(require("./AiTextDetection/CopyleaksAiTextDetectionMatchModel.js"), exports);
+__exportStar(require("./AiTextDetection/CopyleaksAiTextDetectionResultModel.js"), exports);
+__exportStar(require("./AiTextDetection/CopyleaksAiTextDetectionSummaryModel.js"), exports);
+__exportStar(require("./AiTextDetection/CopyleaksAiTextDetectionPatternMatchModel.js"), exports);
+__exportStar(require("./AiTextDetection/CopyleaksAiTextDetectionPatternStatisticsModel.js"), exports);
+__exportStar(require("./AiTextDetection/CopyleaksAiTextDetectionPatternsModel.js"), exports);
+__exportStar(require("./AiTextDetection/CopyleaksAiTextDetectionExplainModel.js"), exports);
 __exportStar(require("./AiTextDetection/CopyleaksAiTextDetectionResponseModel.js"), exports);
 __exportStar(require("./WritingAssistant/CopyleaksWritingAssistantResponseModel.js"), exports);
 __exportStar(require("./WritingAssistant/CopyleaksCorrectionTypesResponseModel.js"), exports);

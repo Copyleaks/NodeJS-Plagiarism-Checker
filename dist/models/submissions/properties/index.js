@@ -39,6 +39,7 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./SubmissionProperties.js"), exports);
 __exportStar(require("./Actions.js"), exports);
+__exportStar(require("./AISourceMatch.js"), exports);
 __exportStar(require("./Author.js"), exports);
 __exportStar(require("./CopyleaksDB.js"), exports);
 __exportStar(require("./DomainsMode.js"), exports);

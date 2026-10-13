@@ -1,5 +1,6 @@
 export * from './SubmissionProperties.js';
 export * from './Actions.js';
+export * from './AISourceMatch.js';
 export * from './Author.js';
 export * from './CopyleaksDB.js';
 export * from './DomainsMode.js';

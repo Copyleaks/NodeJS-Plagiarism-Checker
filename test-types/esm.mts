@@ -7,6 +7,7 @@ import {
   Copyleaks,
   CopyleaksAiImageDetectionModels,
   CopyleaksAiImageDetectionRequestModel,
+  CopyleaksAlertCodes,
   CopyleaksConfig,
   CopyleaksDeleteRequestModel,
   CopyleaksExportModel,
@@ -25,6 +26,7 @@ import {
 import type {
   CopyleaksAiImageDetectionResponseModel,
   CopyleaksAiTextDetectionResponseModel,
+  CopyleaksAiTextDetectionScannedDocumentModel,
   CopyleaksAuthToken,
   CopyleaksCorrectionTypesResponseModel,
   CopyleaksCreditsBalanceResponseModel,
@@ -36,6 +38,7 @@ import type {
 } from 'copyleaks';
 // Folder deep import: types not exported from the root (resolves via the exact "./dist/<folder>" exports key).
 import { SubmissionActions } from 'copyleaks/dist/models/submissions/properties';
+import type { AISourceMatch, SubmissionProperties } from 'copyleaks/dist/models/submissions/properties';
 
 // True only when A and B are the same type. `any` never matches a concrete type.
 type Equal<A, B> = (<T>() => T extends A ? 1 : 2) extends (<T>() => T extends B ? 1 : 2) ? true : false;
@@ -74,6 +77,15 @@ export async function useEveryClient(): Promise<void> {
   const resentTyped: Equal<typeof resent, void> = true;
   const completed = new CompletedWebhookModel({ scannedDocument: undefined });
   const completedScanId: string | undefined = completed.scannedDocument?.scanId;
+  // AI alert of the completed webhook (BAC-5392)
+  const aiAlertCode: Equal<typeof CopyleaksAlertCodes.SUSPECTED_AI_TEXT, 'suspected-ai-text'> = true;
+  const aiAlertResult = completed.getAIDetectionResult();
+  const aiAlertResultTyped: Equal<typeof aiAlertResult, CopyleaksAiTextDetectionResponseModel | null> = true;
+  const aiAlertDocTyped: Equal<CopyleaksAiTextDetectionResponseModel['scannedDocument'], CopyleaksAiTextDetectionScannedDocumentModel | undefined> = true;
+  const aiAlertShare: number | undefined = aiAlertResult?.summary.ai;
+  // New submit properties (BAC-5378)
+  const aiSourceMatch: AISourceMatch = { enable: true };
+  const newProperties: Pick<SubmissionProperties, 'aiSourceMatch' | 'displayLanguage'> = { aiSourceMatch, displayLanguage: 'en' };
 
   // Account and public endpoints
   const credits = await copyleaks.getCreditsBalanceAsync(token);

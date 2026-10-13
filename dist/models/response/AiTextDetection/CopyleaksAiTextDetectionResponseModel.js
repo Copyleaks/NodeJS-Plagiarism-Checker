@@ -1,5 +1,5 @@
 "use strict";
-/*
+/********************************************************************************
  The MIT License(MIT)
 
  Copyright(c) 2016 Copyleaks LTD (https://copyleaks.com)
@@ -21,5 +21,49 @@
  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
-*/
+********************************************************************************/
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.CopyleaksAiTextDetectionResponseModel = void 0;
+const CopyleaksAiTextDetectionResultModel_js_1 = require("./CopyleaksAiTextDetectionResultModel.js");
+const CopyleaksAiTextDetectionSummaryModel_js_1 = require("./CopyleaksAiTextDetectionSummaryModel.js");
+const CopyleaksAiTextDetectionExplainModel_js_1 = require("./CopyleaksAiTextDetectionExplainModel.js");
+/**
+ * Result of Copyleaks AI text detection.
+ * Response of `AIDetectionClient.submitNaturalTextAsync`.
+ * For more info: https://docs.copyleaks.com/reference/data-types/ai-detector/ai-text-detector-response
+ * The "suspected-ai-text" alert of the completed webhook carries this result as a JSON string in additionalData.
+ * Use CompletedWebhookModel.getAIDetectionResult() or AlertsModel.getAIDetectionResult() to decode it.
+ */
+class CopyleaksAiTextDetectionResponseModel {
+    /**
+     * @param init Parsed JSON object. Unknown fields are ignored.
+     */
+    constructor(init) {
+        const raw = init || {};
+        if (raw.modelVersion != null) {
+            this.modelVersion = raw.modelVersion;
+        }
+        if (Array.isArray(raw.results)) {
+            this.results = raw.results.map((r) => new CopyleaksAiTextDetectionResultModel_js_1.CopyleaksAiTextDetectionResultModel(r));
+        }
+        if (raw.summary != null) {
+            this.summary = new CopyleaksAiTextDetectionSummaryModel_js_1.CopyleaksAiTextDetectionSummaryModel(raw.summary);
+        }
+        if (raw.scannedDocument != null) {
+            this.scannedDocument = raw.scannedDocument;
+        }
+        if (raw.translationProvider != null) {
+            this.translationProvider = raw.translationProvider;
+        }
+        if (raw.translation != null) {
+            this.translation = raw.translation;
+        }
+        if (raw.explain != null) {
+            this.explain = new CopyleaksAiTextDetectionExplainModel_js_1.CopyleaksAiTextDetectionExplainModel(raw.explain);
+        }
+        if (raw.scanType != null) {
+            this.scanType = raw.scanType;
+        }
+    }
+}
+exports.CopyleaksAiTextDetectionResponseModel = CopyleaksAiTextDetectionResponseModel;

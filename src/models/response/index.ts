@@ -32,6 +32,15 @@ export * from "./AiImageDetection/CopyleaksAiImageDetectionScannedDocumentModel.
 export * from "./AiImageDetection/CopyleaksAiImageDetectionResultModel.js";
 export * from "./AiImageDetection/CopyleaksAiImageDetectionResponseModel.js";
 export * from "./AiImageDetection/CopyleaksAiImageDetectionImageInfoModel.js";
+export * from "./AiTextDetection/CopyleaksAiTextDetectionPositionsModel.js";
+export * from "./AiTextDetection/CopyleaksAiTextDetectionMatchTextModel.js";
+export * from "./AiTextDetection/CopyleaksAiTextDetectionMatchModel.js";
+export * from "./AiTextDetection/CopyleaksAiTextDetectionResultModel.js";
+export * from "./AiTextDetection/CopyleaksAiTextDetectionSummaryModel.js";
+export * from "./AiTextDetection/CopyleaksAiTextDetectionPatternMatchModel.js";
+export * from "./AiTextDetection/CopyleaksAiTextDetectionPatternStatisticsModel.js";
+export * from "./AiTextDetection/CopyleaksAiTextDetectionPatternsModel.js";
+export * from "./AiTextDetection/CopyleaksAiTextDetectionExplainModel.js";
 export * from "./AiTextDetection/CopyleaksAiTextDetectionResponseModel.js";
 export * from "./WritingAssistant/CopyleaksWritingAssistantResponseModel.js";
 export * from "./WritingAssistant/CopyleaksCorrectionTypesResponseModel.js";
