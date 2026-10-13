@@ -25,6 +25,7 @@
 export * from './SubmissionProperties';
 
 export * from './Actions';
+export * from './AISourceMatch';
 export * from './Author';
 export * from './CopyleaksDB';
 export * from './DomainsMode';
