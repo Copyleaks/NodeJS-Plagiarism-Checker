@@ -1,4 +1,5 @@
 import { AIGeneratedText } from './AIGeneratedText';
+import { AISourceMatch } from './AISourceMatch';
 import { SubmissionActions } from './Actions';
 import { SubmissionAuthor } from './Author';
 import { CustomMetadata } from './CustomMetadata';
@@ -61,6 +62,20 @@ export interface SubmissionProperties {
      * Upon detection a scan alert of type "suspected-ai-text" will be added to the scan completion webhook.
      */
     aiGeneratedText?: AIGeneratedText;
+    /**
+     * Identifies online sources suspected of containing AI generated text.
+     * Currently only applies to documents detected as English.
+     * Leave it undefined to get the server default (disabled).
+     */
+    aiSourceMatch?: AISourceMatch;
+    /**
+     * The language the PDF report is generated in.
+     * Supported values are lowercase and case-sensitive: en, es, pt, fr, de, it.
+     * Any other value (for example "EN" or "en-US") is rejected by the server.
+     * Only takes effect when pdf.create is true.
+     * Leave it undefined to get the server default ("en"). Do not send null: the server would store it in place of the default.
+     */
+    displayLanguage?: string;
     /**
      * Types of content submission actions.
      *
