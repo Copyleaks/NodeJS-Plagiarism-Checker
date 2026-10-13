@@ -87,6 +87,7 @@ If your app loads the SDK with `import` and one of your dependencies loads it wi
 
 - `package.json` now has a `types` field that points at `dist/index.d.ts`. The type declarations themselves already shipped in `dist/` in 6.0.0, so there is still no `@types` package to install.
 - The package ships an ES module build (`dist/esm`) next to the CommonJS build (`dist`), with an `exports` map that picks the right one. See upgrade note 2.
+- For contributors: `dist/` is no longer committed to the repository. `npm install` builds it through the new `prepare` script, and so do `npm pack` and `npm publish`, so a release always ships a fresh build of `src/`.
 - These methods now return a typed result instead of `Promise<any>`:
 
   | Method | Result type |
