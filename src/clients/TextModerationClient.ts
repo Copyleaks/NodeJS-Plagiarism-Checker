@@ -22,23 +22,23 @@
  SOFTWARE.
 */
 import axios from "axios";
-import { CopyleaksConfig } from "../app.config";
+import { CopyleaksConfig } from "../app.config.js";
 import {
   UnderMaintenanceException,
   RateLimitException,
   CommandException,
-} from "../models/exceptions";
+} from "../models/exceptions/index.js";
 import {
   CopyleaksAuthToken,
   CopyleaksTextModerationResponseModel,
-} from "../models/response";
+} from "../models/response/index.js";
 import {
   isSuccessStatusCode,
   isUnderMaintenanceResponse,
   isRateLimitResponse,
-} from "../utils";
-import { ClientUtils } from "../utils/client-utils.utils";
-import { CopyleaksTextModerationRequestModel } from "../models/request/TextModeration/CopyleaksTextModerationRequestModel";
+} from "../utils/index.js";
+import { ClientUtils } from "../utils/client-utils.utils.js";
+import { CopyleaksTextModerationRequestModel } from "../models/request/TextModeration/CopyleaksTextModerationRequestModel.js";
 
 export class TextModerationClient {
 

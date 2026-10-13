@@ -22,9 +22,9 @@
  SOFTWARE.
 */
 
-export * from './ExportResults';
-export * from './ExportPdfReport';
-export * from './ExportCrawledVersion';
+export * from './ExportResults.js';
+export * from './ExportPdfReport.js';
+export * from './ExportCrawledVersion.js';
 
 
-export * from './CopyleaksExportModel';
+export * from './CopyleaksExportModel.js';

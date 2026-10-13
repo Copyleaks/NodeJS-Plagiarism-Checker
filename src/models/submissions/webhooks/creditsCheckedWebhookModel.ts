@@ -21,8 +21,8 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
 */
-import { ScannedDocumentModel } from "./helperModels/completedModels/scannedDocumentModel";
-import { StatusWebhookModel } from "./helperModels/baseModels/statusWebhookModel";
+import { ScannedDocumentModel } from "./helperModels/completedModels/scannedDocumentModel.js";
+import { StatusWebhookModel } from "./helperModels/baseModels/statusWebhookModel.js";
 
 export class CreditsCheckedWebhookModel extends StatusWebhookModel {
   credits?: number;

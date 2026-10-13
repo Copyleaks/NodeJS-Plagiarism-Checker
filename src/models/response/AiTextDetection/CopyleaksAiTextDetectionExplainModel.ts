@@ -22,7 +22,7 @@
  SOFTWARE.
 ********************************************************************************/
 
-import { CopyleaksAiTextDetectionPatternsModel } from './CopyleaksAiTextDetectionPatternsModel';
+import { CopyleaksAiTextDetectionPatternsModel } from './CopyleaksAiTextDetectionPatternsModel.js';
 
 /**
  * AI Logic explanation of the AI text detection result.

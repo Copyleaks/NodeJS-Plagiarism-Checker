@@ -22,7 +22,7 @@
  SOFTWARE.
 */
 
-import { SubmissionFilterDomainsMode } from './DomainsMode';
+import { SubmissionFilterDomainsMode } from './DomainsMode.js';
 
 export interface SubmissionFilter {
   /**

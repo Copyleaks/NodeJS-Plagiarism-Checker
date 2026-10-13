@@ -22,5 +22,5 @@
  SOFTWARE.
 */
 
-export * from './status-code.utils';
-export * from './client-utils.utils';
+export * from './status-code.utils.js';
+export * from './client-utils.utils.js';

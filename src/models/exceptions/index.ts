@@ -22,7 +22,7 @@
  SOFTWARE.
 */
 
-export * from './AuthExipredException';
-export * from './CommandException';
-export * from './UnderMaintenanceExceptions';
-export * from './RateLimitException';
+export * from './AuthExipredException.js';
+export * from './CommandException.js';
+export * from './UnderMaintenanceExceptions.js';
+export * from './RateLimitException.js';

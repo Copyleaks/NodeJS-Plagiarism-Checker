@@ -21,7 +21,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
 */
-import { MetadataModel } from "../baseModels/metadataModel";
+import { MetadataModel } from "../baseModels/metadataModel.js";
 
 export class SharedResultsModel {
   

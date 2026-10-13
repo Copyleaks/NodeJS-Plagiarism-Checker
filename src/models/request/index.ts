@@ -21,10 +21,10 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
 */
-export * from "./CopyleaksDeleteRequestModel";
-export * from "./CopyleaksStartRequestModel";
-export * from "./TextModeration/CopyleaksTextModerationRequestModel";
-export * from "./TextModeration/CopyleaksTextModerationLabel";
-export * from "./AiImageDetection/CopyleaksAiImageDetectionRequestModel";
+export * from "./CopyleaksDeleteRequestModel.js";
+export * from "./CopyleaksStartRequestModel.js";
+export * from "./TextModeration/CopyleaksTextModerationRequestModel.js";
+export * from "./TextModeration/CopyleaksTextModerationLabel.js";
+export * from "./AiImageDetection/CopyleaksAiImageDetectionRequestModel.js";
 
 

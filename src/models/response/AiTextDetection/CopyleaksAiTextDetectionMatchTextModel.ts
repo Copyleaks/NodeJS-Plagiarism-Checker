@@ -22,7 +22,7 @@
  SOFTWARE.
 ********************************************************************************/
 
-import { CopyleaksAiTextDetectionPositionsModel } from './CopyleaksAiTextDetectionPositionsModel';
+import { CopyleaksAiTextDetectionPositionsModel } from './CopyleaksAiTextDetectionPositionsModel.js';
 
 /**
  * Character and word positions of the matched text segments.

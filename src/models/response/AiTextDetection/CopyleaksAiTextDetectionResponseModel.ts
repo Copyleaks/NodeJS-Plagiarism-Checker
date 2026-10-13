@@ -22,12 +22,14 @@
  SOFTWARE.
 ********************************************************************************/
 
-import { CopyleaksAiTextDetectionResultModel } from './CopyleaksAiTextDetectionResultModel';
-import { CopyleaksAiTextDetectionSummaryModel } from './CopyleaksAiTextDetectionSummaryModel';
-import { CopyleaksAiTextDetectionExplainModel } from './CopyleaksAiTextDetectionExplainModel';
+import { CopyleaksAiTextDetectionResultModel } from './CopyleaksAiTextDetectionResultModel.js';
+import { CopyleaksAiTextDetectionSummaryModel } from './CopyleaksAiTextDetectionSummaryModel.js';
+import { CopyleaksAiTextDetectionExplainModel } from './CopyleaksAiTextDetectionExplainModel.js';
 
 /**
  * Result of Copyleaks AI text detection.
+ * Response of `AIDetectionClient.submitNaturalTextAsync`.
+ * For more info: https://docs.copyleaks.com/reference/data-types/ai-detector/ai-text-detector-response
  * The "suspected-ai-text" alert of the completed webhook carries this result as a JSON string in additionalData.
  * Use CompletedWebhookModel.getAIDetectionResult() or AlertsModel.getAIDetectionResult() to decode it.
  */
@@ -49,6 +51,13 @@ export class CopyleaksAiTextDetectionResponseModel {
     public summary!: CopyleaksAiTextDetectionSummaryModel;
 
     /**
+     * General information about the scanned document.
+     * Returned by submitNaturalTextAsync. Can be missing in the "suspected-ai-text" alert data,
+     * for example for sandbox scans.
+     */
+    public scannedDocument?: CopyleaksAiTextDetectionScannedDocumentModel;
+
+    /**
      * The machine translation provider used before detection.
      * 0 = none, 1 = Google Translate, 2 = Helsinki, 3 = Azure.
      */
@@ -67,6 +76,11 @@ export class CopyleaksAiTextDetectionResponseModel {
     public explain?: CopyleaksAiTextDetectionExplainModel;
 
     /**
+     * `"sandbox"` for sandbox scans. Not sent for regular scans.
+     */
+    public scanType?: string;
+
+    /**
      * @param init Parsed JSON object. Unknown fields are ignored.
      */
     constructor(init?: Partial<CopyleaksAiTextDetectionResponseModel>) {
@@ -80,6 +94,9 @@ export class CopyleaksAiTextDetectionResponseModel {
         if (raw.summary != null) {
             this.summary = new CopyleaksAiTextDetectionSummaryModel(raw.summary);
         }
+        if (raw.scannedDocument != null) {
+            this.scannedDocument = raw.scannedDocument;
+        }
         if (raw.translationProvider != null) {
             this.translationProvider = raw.translationProvider;
         }
@@ -89,5 +106,26 @@ export class CopyleaksAiTextDetectionResponseModel {
         if (raw.explain != null) {
             this.explain = new CopyleaksAiTextDetectionExplainModel(raw.explain);
         }
+        if (raw.scanType != null) {
+            this.scanType = raw.scanType;
+        }
     }
+}
+
+/**
+ * General information about the scanned document.
+ */
+export interface CopyleaksAiTextDetectionScannedDocumentModel {
+    /** The scan id given by the user. */
+    scanId: string;
+    /** Total number of words found in the scanned text. */
+    totalWords: number;
+    /** Number of excluded words in the scanned text. */
+    totalExcluded: number;
+    /** The number of credits spent on the scan. */
+    actualCredits: number;
+    /** The number of credits that was expected to be spent on the scan. */
+    expectedCredits: number;
+    /** ISO 8601 creation time of the scan (UTC). */
+    creationTime: string;
 }

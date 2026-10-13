@@ -22,7 +22,7 @@
  SOFTWARE.
 ********************************************************************************/
 
-import { CopyleaksAiTextDetectionMatchModel } from './CopyleaksAiTextDetectionMatchModel';
+import { CopyleaksAiTextDetectionMatchModel } from './CopyleaksAiTextDetectionMatchModel.js';
 
 /**
  * A classification of parts of the scanned text.

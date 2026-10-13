@@ -22,7 +22,7 @@
  SOFTWARE.
 ********************************************************************************/
 
-import { CopyleaksAiTextDetectionMatchTextModel } from './CopyleaksAiTextDetectionMatchTextModel';
+import { CopyleaksAiTextDetectionMatchTextModel } from './CopyleaksAiTextDetectionMatchTextModel.js';
 
 /**
  * Location of the text segments that received a classification.
@@ -37,7 +37,7 @@ export class CopyleaksAiTextDetectionMatchModel {
      * Positions in the HTML version of the document.
      * Returned only for HTML sources.
      */
-    public html?: CopyleaksAiTextDetectionMatchTextModel;
+    public html?: CopyleaksAiTextDetectionMatchTextModel | null;
 
     /**
      * @param init Parsed JSON object. Unknown fields are ignored.

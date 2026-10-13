@@ -22,7 +22,7 @@
  SOFTWARE.
 */
 
-import { ScoreWeights } from "./ScoreWeights";
+import { ScoreWeights } from "./ScoreWeights.js";
 
 export class CopyleaksWritingAssistantSubmissionModel {
   /**

@@ -21,13 +21,13 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
 */
-import { NotificationsModel } from "./helperModels/completedModels/notificationsModel";
-import { StatusWebhookModel } from "./helperModels/baseModels/statusWebhookModel";
-import { ResultsModel } from "./helperModels/completedModels/resultsModel";
-import { ScannedDocumentModel } from "./helperModels/completedModels/scannedDocumentModel";
-import { AlertsModel } from "./helperModels/notificationsModels/alertsModel";
-import { CopyleaksAlertCodes } from "../../constants/CopyleaksAlertCodes";
-import { CopyleaksAiTextDetectionResponseModel } from "../../response/AiTextDetection/CopyleaksAiTextDetectionResponseModel";
+import { NotificationsModel } from "./helperModels/completedModels/notificationsModel.js";
+import { StatusWebhookModel } from "./helperModels/baseModels/statusWebhookModel.js";
+import { ResultsModel } from "./helperModels/completedModels/resultsModel.js";
+import { ScannedDocumentModel } from "./helperModels/completedModels/scannedDocumentModel.js";
+import { AlertsModel } from "./helperModels/notificationsModels/alertsModel.js";
+import { CopyleaksAlertCodes } from "../../constants/CopyleaksAlertCodes.js";
+import { CopyleaksAiTextDetectionResponseModel } from "../../response/AiTextDetection/CopyleaksAiTextDetectionResponseModel.js";
 
 export class CompletedWebhookModel extends StatusWebhookModel {
   results?: ResultsModel;

@@ -22,7 +22,7 @@
  SOFTWARE.
 */
 
-import { SubmissionIndexingRepository } from './IndexingRepository';
+import { SubmissionIndexingRepository } from './IndexingRepository.js';
 
 export interface SubmissionIndexing {
   /**

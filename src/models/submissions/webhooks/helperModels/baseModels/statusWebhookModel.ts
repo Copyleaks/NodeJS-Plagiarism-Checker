@@ -21,7 +21,7 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
 */
-import { WebhookModel } from "./webhookModel";
+import { WebhookModel } from "./webhookModel.js";
 export class StatusWebhookModel extends WebhookModel {
   
   /*The current status of the scan. */

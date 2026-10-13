@@ -21,8 +21,8 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
 */
-import { CopyleaksAlertCodes } from '../../../../constants/CopyleaksAlertCodes';
-import { CopyleaksAiTextDetectionResponseModel } from '../../../../response/AiTextDetection/CopyleaksAiTextDetectionResponseModel';
+import { CopyleaksAlertCodes } from '../../../../constants/CopyleaksAlertCodes.js';
+import { CopyleaksAiTextDetectionResponseModel } from '../../../../response/AiTextDetection/CopyleaksAiTextDetectionResponseModel.js';
 
 export class AlertsModel {
   

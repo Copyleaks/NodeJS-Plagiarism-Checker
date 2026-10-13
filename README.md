@@ -26,6 +26,26 @@ Install using [npm](https://www.npmjs.com/package/copyleaks)
 npm install copyleaks
 ```
 
+## 🔷 TypeScript
+The SDK is written in TypeScript and its type declarations ship with the package, so there is no `@types` package to install. Responses are typed, for example `CopyleaksAiTextDetectionResponseModel` for AI Text Detection.
+
+The package works with both ES modules (`import`) and CommonJS (`require`):
+
+```typescript
+import { Copyleaks, CopyleaksNaturalLanguageSubmissionModel } from 'copyleaks';
+
+async function main() {
+  const copyleaks = new Copyleaks();
+  const authToken = await copyleaks.loginAsync('YOUR_EMAIL_ADDRESS', 'YOUR_API_KEY');
+
+  const submission = new CopyleaksNaturalLanguageSubmissionModel('TEXT_TO_CHECK_AT_LEAST_255_CHARACTERS', true);
+  const result = await copyleaks.aiDetectionClient.submitNaturalTextAsync(authToken, `scan${Date.now()}`, submission);
+  console.log(`AI score: ${result.summary.ai}`);
+}
+
+main().catch(err => console.error(err));
+```
+
 
 ## 📚 Documentation
 To learn more about how to use Copyleaks API please check out our [Documentation](https://docs.copyleaks.com/resources/sdks/javascript/). 
