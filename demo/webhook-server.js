@@ -77,7 +77,7 @@ app.post("/submit-url-webhook/indexed", (req, res) => {
 });
 
 //  CREDITS CHECKED webhook
-app.post("/submit-url-webhook/creditsChecked", (req, res) => {
+app.post("/submit-url-webhook/creditschecked", (req, res) => {
   console.log("[Webhook Server]: CREDITS CHECKED status received");
   try {
     const creditsChecked = new CreditsCheckedWebhookModel(req.body);

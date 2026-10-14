@@ -31,7 +31,7 @@ export interface SubmissionWebhooks {
   /**
    * This webhook event is triggered once the scan status changes.
    * Use the special token {STATUS} to track the current scan status.
-   * This special token will automatically be replaced by the Copyleaks servers with the optional values: completed, error, creditsChecked and indexed.
+   * This special token will automatically be replaced by the Copyleaks servers with the optional values: completed, error, creditschecked and indexed.
    * Read more about webhooks: https://api.copyleaks.com/documentation/v3/webhooks
    */
   status: string;
