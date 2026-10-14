@@ -22,9 +22,12 @@
  SOFTWARE.
 */
 
+import type { CopyleaksAsyncWebhookErrorModel } from '../CopyleaksAsyncWebhookErrorModel.js';
+
 /**
  * The AI Video Detector result that Copyleaks POSTs to your webhook (`webhooks.url` of the request).
  * Use `new CopyleaksAiVideoDetectionResponseModel(req.body)` in your webhook handler.
+ * Check `error` first: when the scan failed, the webhook has `error` and `developerPayload` only, and no result fields.
  * Positions and lengths are in milliseconds.
  * For more info: https://docs.copyleaks.com/reference/data-types/ai-detector/ai-video-detection-response
  */
@@ -43,6 +46,10 @@ export class CopyleaksAiVideoDetectionResponseModel {
   public videoInfo?: CopyleaksAiVideoDetectionVideoInfoModel;
   /** Metadata about the scan operation. */
   public scannedVideo?: CopyleaksAiVideoDetectionScannedVideoModel;
+  /** Why the scan failed. Set only when the scan failed, and then the result fields are missing. */
+  public error?: CopyleaksAsyncWebhookErrorModel;
+  /** The `developerPayload` of the request, unchanged. */
+  public developerPayload?: string;
 
   /**
    * @param init The parsed webhook JSON. Every field is copied, including fields this SDK version does not declare.

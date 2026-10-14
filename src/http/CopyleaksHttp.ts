@@ -39,6 +39,8 @@ export const DEFAULT_TIMEOUT_MS = 120000;
 export const DEFAULT_MAX_SOCKETS = 50;
 const DEFAULT_RETRY_DELAY_MS = 1000;
 const DEFAULT_MAX_RETRY_DELAY_MS = 30000;
+/** Idle keep-alive sockets are closed after this time, so a socket that the server may have closed is not reused. */
+const IDLE_SOCKET_TIMEOUT_MS = 5000;
 
 /** Connection errors where the request never reached the server, so any request can be retried. */
 const NOT_SENT_ERROR_CODES = new Set(['ECONNREFUSED', 'ENOTFOUND', 'EAI_AGAIN', 'EHOSTUNREACH', 'ENETUNREACH']);
@@ -57,8 +59,8 @@ export function createAxiosInstance(options: CopyleaksOptions = {}): AxiosInstan
   const maxSockets = options.maxSockets ?? DEFAULT_MAX_SOCKETS;
   return axios.create({
     timeout: options.timeout ?? DEFAULT_TIMEOUT_MS,
-    httpAgent: options.httpAgent ?? new http.Agent({ keepAlive: true, maxSockets }),
-    httpsAgent: options.httpsAgent ?? new https.Agent({ keepAlive: true, maxSockets }),
+    httpAgent: options.httpAgent ?? new http.Agent({ keepAlive: true, maxSockets, timeout: IDLE_SOCKET_TIMEOUT_MS }),
+    httpsAgent: options.httpsAgent ?? new https.Agent({ keepAlive: true, maxSockets, timeout: IDLE_SOCKET_TIMEOUT_MS }),
     validateStatus: () => true,
   });
 }
@@ -164,7 +166,7 @@ export class CopyleaksHttp {
       if (attempt < maxRetries && (isRateLimitResponse(response.status) || isUnderMaintenanceResponse(response.status))) {
         const retryAfter = retryAfterSeconds(toCopyleaksErrorResponse(response));
         const delay = retryAfter !== undefined ? retryAfter * 1000 : this.backoffDelay(attempt);
-        if (delay <= this.maxRetryDelay()) {
+        if (isRetryableResponse(response.status, request.method, retryAfter) && delay <= this.maxRetryDelay()) {
           await sleep(delay);
           continue;
         }
@@ -242,6 +244,18 @@ function toNetworkException(error: unknown, request: CopyleaksHttpRequest): Netw
     method: request.method,
     url: request.url,
   });
+}
+
+/**
+ * HTTP 429 is retried for every request. HTTP 503 is retried for GET requests, and for other requests
+ * only with `Retry-After` (maintenance): a 503 without it can come from a proxy after the server
+ * already accepted the request and charged credits.
+ */
+function isRetryableResponse(status: number, method: CopyleaksHttpRequest['method'], retryAfter: number | undefined): boolean {
+  if (isRateLimitResponse(status)) {
+    return true;
+  }
+  return isUnderMaintenanceResponse(status) && (method === 'GET' || retryAfter !== undefined);
 }
 
 function isRetryableNetworkError(exception: NetworkException, method: CopyleaksHttpRequest['method']): boolean {

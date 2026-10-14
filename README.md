@@ -65,7 +65,7 @@ const copyleaks = new Copyleaks({
 });
 ```
 
-A request that charges credits, such as a scan, is never retried after a timeout, because the server may already have processed it.
+A request that charges credits, such as a scan, is never retried after a timeout, or after HTTP 503 without a `Retry-After` header, because the server may already have processed it.
 
 Failed calls throw these exceptions. None of them contains your token:
 
@@ -389,10 +389,16 @@ await copyleaks.aiImageDetectionClient.submitUrlAsync(authToken, `scan${Date.now
 // In your webhook handler:
 app.post('/webhook/ai-image', (req, res) => {
   const result = new CopyleaksAiImageDetectionResponseModel(req.body);
-  console.log(result.isAiDetected, result.summary.ai);
+  if (result.error) {
+    console.log(`Scan failed: ${result.error.code} ${result.error.message}`, result.developerPayload);
+  } else {
+    console.log(result.isAiDetected, result.summary.ai);
+  }
   res.sendStatus(200);
 });
 ```
+When the scan fails, the webhook has only `error` (`type`, `id`, `code`, `message`, and optionally `url` and `details`) and your `developerPayload`, without the result fields. Check `error` first.
+
 For more details, see the AI Image Detector Async [Documentation](https://docs.copyleaks.com/reference/actions/ai-image-detector/submit/)
 ##
 ### Image Plagiarism Detection
@@ -435,10 +441,16 @@ await copyleaks.aiVideoDetectionClient.submitAsync(authToken, `video${Date.now()
 // In your webhook handler:
 app.post('/webhook/ai-video', (req, res) => {
   const result = new CopyleaksAiVideoDetectionResponseModel(req.body);
-  console.log(result.isAiDetected, result.summary.overallAIRatio, result.audioResult, result.visualResult);
+  if (result.error) {
+    console.log(`Scan failed: ${result.error.code} ${result.error.message}`, result.developerPayload);
+  } else {
+    console.log(result.isAiDetected, result.summary.overallAIRatio, result.audioResult, result.visualResult, result.developerPayload);
+  }
   res.sendStatus(200);
 });
 ```
+When the scan fails, the webhook has only `error` and your `developerPayload`, without the result fields, as for AI Image Detection. Check `error` first.
+
 For more details, see the AI Video Detection [Documentation](https://docs.copyleaks.com/reference/actions/ai-video-detector/submit/)
 ##
 ### AI Logic, sensitivity and AI credits

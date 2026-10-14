@@ -27,12 +27,15 @@ import { CopyleaksAiImageDetectionSummaryModel } from './CopyleaksAiImageDetecti
 import { CopyleaksAiImageDetectionImageInfoModel } from './CopyleaksAiImageDetectionImageInfoModel.js';
 import { CopyleaksAiImageDetectionScannedDocumentModel } from './CopyleaksAiImageDetectionScannedDocumentModel.js';
 import { CopyleaksAiImageDetectedObjectModel } from './CopyleaksAiImageDetectedObjectModel.js';
+import { CopyleaksAsyncWebhookErrorModel } from '../CopyleaksAsyncWebhookErrorModel.js';
 
 /**
  * Response model for Copyleaks AI image detection analysis.
  * Contains the AI detection results, image information, and scan metadata.
  * It is the response of `AiImageDetectionClient.submitAsync` and `submitFileAsync`, and the webhook body
  * of `submitUrlAsync`: use `new CopyleaksAiImageDetectionResponseModel(req.body)` in your webhook handler.
+ * In the webhook, check `error` first: when the scan failed, the webhook has `error` and `developerPayload` only,
+ * and no result fields.
  * Every field of the JSON is kept, including fields this SDK version does not declare.
  */
 export class CopyleaksAiImageDetectionResponseModel {
@@ -66,6 +69,15 @@ export class CopyleaksAiImageDetectionResponseModel {
      * Metadata about the scan operation.
      */
     public scannedDocument!: CopyleaksAiImageDetectionScannedDocumentModel;
+    /**
+     * Why the scan failed, in the webhook of `submitUrlAsync`. Set only when the scan failed,
+     * and then the result fields are missing.
+     */
+    public error?: CopyleaksAsyncWebhookErrorModel;
+    /**
+     * The `developerPayload` of the `submitUrlAsync` request, unchanged.
+     */
+    public developerPayload?: string;
 
     /**
      * @param init The parsed JSON response. Every field is copied, including fields this SDK version does not declare.

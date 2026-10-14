@@ -2,7 +2,7 @@
 
 ## 7.0.0
 
-This is the first release under the new npm name `copyleaks`. It replaces the `plagiarism-checker` package, whose last version is 6.0.0. Existing class and method names are the same as in 6.0.0. The package name, the module entry points, the errors that failed calls throw, the default request timeout and some TypeScript types changed, so this is a major version. Read the upgrade notes before you upgrade.
+This is the first release under the new npm name `copyleaks`. It replaces the `plagiarism-checker` package, whose last version is 6.0.0. Existing class and method names are the same as in 6.0.0. The package name, the module entry points, the errors that failed calls throw, the default request timeout, the axios instance that sends the requests and some TypeScript types changed, so this is a major version. Read the upgrade notes before you upgrade.
 
 ### Upgrade notes
 
@@ -72,11 +72,40 @@ In 6.0.0 every failed call rejected with the raw axios error, because axios reje
 
 Calls used to wait forever for a response. Now each request stops after 120 seconds and throws a `NetworkException` whose `isTimeout` is `true`. Change the limit with `new Copyleaks({ timeout: 300000 })`, or pass `timeout: 0` to wait without a limit.
 
-#### 8. Node.js 18 or later
+#### 8. The SDK no longer uses the global axios instance
+
+In 6.0.0 the SDK sent its requests through the default `axios` export, and `axios` was also a peer dependency, so the SDK usually shared your app's copy of axios and its global settings. Now the SDK sends its requests through its own instance, created with `axios.create()`, and `axios` is only a regular dependency, so npm may install a separate copy for the SDK. These global settings no longer apply to SDK calls:
+
+- `axios.interceptors`.
+- `axios.defaults.httpAgent` and `axios.defaults.httpsAgent`, for example a proxy or custom CA certificates.
+- `axios.defaults.timeout`. The SDK's own default is 2 minutes (upgrade note 7).
+
+Pass them in the SDK options instead:
+
+```js
+const https = require('https');
+const axios = require('axios');
+const { Copyleaks } = require('copyleaks');
+
+// A proxy or custom CA certificates, and a time limit
+const copyleaks = new Copyleaks({
+  httpsAgent: new https.Agent({ keepAlive: true, ca: myCaCertificate }),
+  timeout: 300000,
+});
+
+// Interceptors: send the requests through your own axios instance
+const instance = axios.create();
+instance.interceptors.request.use((config) => { console.log(config.method, config.url); return config; });
+const copyleaksWithInterceptors = new Copyleaks({ axiosInstance: instance });
+```
+
+To keep the 6.0.0 behavior, pass the global instance: `new Copyleaks({ axiosInstance: axios })`. Its interceptors and defaults then apply, including `axios.defaults.timeout` unless you also pass `timeout`.
+
+#### 9. Node.js 18 or later
 
 `package.json` now declares `"engines": { "node": ">=18" }`. The image uploads use the `FormData` and `Blob` classes built into Node.js 18.
 
-#### 9. Type and validation changes
+#### 10. Type and validation changes
 
 - `CopyleaksAiImageDetectionResponseModel.result` is now optional. The API leaves it out when the request sets `maskType` to `"none"`. With `strictNullChecks`, check it before you use it.
 - `matchedWords` of webhook results is now typed `number`, the type the API always sent. It was `string`.
@@ -105,7 +134,7 @@ New request models: `CopyleaksImagePlagiarismRequestModel`, `CopyleaksAiVideoDet
 `new Copyleaks(options)` takes optional settings (type `CopyleaksOptions`). The product clients take the same options when you create them on their own, for example `new AIDetectionClient(options)`.
 
 - `timeout`: time limit for each request, in milliseconds. Default: 120000.
-- `maxRetries`, `retryDelay`, `maxRetryDelay`: retry HTTP 429 and 503 responses and connection errors, with exponential backoff and `Retry-After`. Off by default. GET requests are also retried after timeouts. Other requests are never retried after a timeout, because the server may already have processed them and charged credits.
+- `maxRetries`, `retryDelay`, `maxRetryDelay`: retry HTTP 429 and 503 responses and connection errors, with exponential backoff and `Retry-After`. Off by default. GET requests are also retried after timeouts. Other requests are never retried after a timeout, or after HTTP 503 without a `Retry-After` header, because the server may already have processed them and charged credits.
 - `maxSockets`, `httpAgent`, `httpsAgent`: control the connection pool.
 - `axiosInstance`: send the requests through your own axios instance, for example one with interceptors.
 - `apiServerUri`, `identityServerUri`: server URLs for this instance only. `CopyleaksConfig` still sets the default for every instance.
@@ -129,6 +158,7 @@ New request models: `CopyleaksImagePlagiarismRequestModel`, `CopyleaksAiVideoDet
 - Text moderation: `modelVersion`.
 - Completed webhook: `referencesValidation` (Citation Checker summary), `results.internalAIData`, `url` of each `results.internet` item, and `scannedDocument.totalExcluded`.
 - Error webhook: `error.type`, `error.id`, `error.url` and `error.details`.
+- AI video and async AI image webhooks: `error` when the scan failed (new type `CopyleaksAsyncWebhookErrorModel`, with `type`, `id`, `code`, `message`, `url` and `details`), and `developerPayload`. A failed scan's webhook has no result fields, so check `error` first. `CopyleaksAiVideoDetectionResponseModel` and `CopyleaksAiImageDetectionResponseModel` declare both fields.
 - Exceptions: `status`, `body` and `response` on `CommandException`, `RateLimitException` and `UnderMaintenanceException`, `retryAfter` on `RateLimitException` and `UnderMaintenanceException`, and the new `NetworkException`. See upgrade note 6.
 
 #### Other additions
@@ -172,7 +202,7 @@ New request models: `CopyleaksImagePlagiarismRequestModel`, `CopyleaksAiVideoDet
 ### Changed
 
 - The npm package is now `copyleaks`. It was `plagiarism-checker`. See upgrade note 1. `package.json` has a description, keywords and a link to the GitHub repository.
-- All requests share one axios instance with keep-alive connections, so repeated calls reuse open connections instead of opening a new TLS connection each time. Each `Copyleaks` instance and its product clients share one pool.
+- All requests share one axios instance with keep-alive connections, so repeated calls reuse open connections instead of opening a new TLS connection each time. Each `Copyleaks` instance and its product clients share one pool. Connections idle for 5 seconds are closed, so a connection that the server may have closed is not reused. The SDK no longer uses the global axios instance (upgrade note 8).
 - Requests time out after 2 minutes by default (upgrade note 7).
 - HTTP 429 throws `RateLimitException` on every method. Before, the submit, start, export and login methods did not check for it.
 - Error messages include the HTTP status and the response body. The SDK exceptions set `name` to their class name, for example `CommandException`.
@@ -182,8 +212,8 @@ New request models: `CopyleaksImagePlagiarismRequestModel`, `CopyleaksAiVideoDet
 - `pdf.version` is deprecated. Use `pdf.reportVersion`.
 - `pdf.colors.title` is deprecated. Use `pdf.colors.titles`.
 - `CopyleaksAiImageDetectionResponseModel` and `CopyleaksTextModerationResponseModel` accept any parsed JSON in their constructor, so you can build them from a webhook body.
-- `axios` is a regular dependency only, no longer also a peer dependency. `rimraf`, a build tool, is no longer installed with the SDK.
-- `CopyleaksTextModerationRequestModel` accepts at most 16 labels (upgrade note 9).
+- `axios` is a regular dependency only, no longer also a peer dependency (upgrade note 8). `rimraf`, a build tool, is no longer installed with the SDK.
+- `CopyleaksTextModerationRequestModel` accepts at most 16 labels (upgrade note 10).
 
 ### Fixed
 

@@ -55,12 +55,12 @@ export interface CopyleaksOptions {
   maxSockets?: number;
   /**
    * Your own agent for `http://` URLs, for example an `http.Agent` with other keep-alive settings.
-   * Default: an `http.Agent` with `keepAlive: true`.
+   * Default: an `http.Agent` with `keepAlive: true` that closes connections idle for 5 seconds.
    */
   httpAgent?: AxiosRequestConfig['httpAgent'];
   /**
    * Your own agent for `https://` URLs, for example an `https.Agent` with a proxy or custom certificates.
-   * Default: an `https.Agent` with `keepAlive: true`.
+   * Default: an `https.Agent` with `keepAlive: true` that closes connections idle for 5 seconds.
    */
   httpsAgent?: AxiosRequestConfig['httpsAgent'];
   /**
@@ -71,10 +71,10 @@ export interface CopyleaksOptions {
   axiosInstance?: AxiosInstance;
   /**
    * How many times to retry a failed request. Default: 0 (no retries).
-   * Retried: HTTP 429 and 503 responses, and connection errors where the request did not reach the server.
-   * GET requests are also retried after timeouts and dropped connections.
-   * Other requests are never retried after a timeout, because the server may already have
-   * processed them and charged credits.
+   * Retried: HTTP 429 responses, and connection errors where the request did not reach the server.
+   * GET requests are also retried after HTTP 503, timeouts and dropped connections.
+   * Other requests are retried after HTTP 503 only when the server sends `Retry-After`, and never
+   * after a timeout, because the server may already have processed them and charged credits.
    */
   maxRetries?: number;
   /**

@@ -5,6 +5,7 @@ const assert = require('node:assert/strict');
 const {
   CompletedWebhookModel, ErrorWebhookModel, ExportCompletedWebhookModel, TaskModel, InternalAIDataModel,
   ReferencesValidationModel, CopyleaksAiVideoDetectionResponseModel, ScannedDocumentModel, InternetModel,
+  CopyleaksAiImageDetectionResponseModel,
 } = require('../dist');
 
 describe('webhooks', () => {
@@ -85,5 +86,36 @@ describe('webhooks', () => {
     assert.deepEqual({ ...parsed }, body);
     assert.equal(parsed.summary.overallAIRatio, 0.74);
     assert.equal(parsed.scannedVideo.scanId, 'video1');
+  });
+
+  test('AI video and async AI image webhooks of a failed scan keep error and developerPayload', () => {
+    const body = {
+      error: {
+        type: 'invalid_request_error',
+        id: 'invalid_url',
+        code: 400,
+        message: 'The file could not be downloaded.',
+        url: 'https://docs.copyleaks.com/errors',
+        details: [{ param: 'url', message: 'The server answered with HTTP 404.' }],
+      },
+      developerPayload: 'order-17',
+    };
+    for (const Model of [CopyleaksAiVideoDetectionResponseModel, CopyleaksAiImageDetectionResponseModel]) {
+      const parsed = new Model(JSON.parse(JSON.stringify(body)));
+      assert.deepEqual({ ...parsed }, body);
+      assert.equal(parsed.error.code, 400);
+      assert.equal(parsed.error.details[0].param, 'url');
+      assert.equal(parsed.developerPayload, 'order-17');
+      assert.equal(parsed.summary, undefined);
+    }
+    const minimal = new CopyleaksAiVideoDetectionResponseModel({ error: { type: 'api_error', id: 'internal', code: 500, message: 'failed' } });
+    assert.equal(minimal.error.url, undefined);
+    assert.equal(minimal.developerPayload, undefined);
+  });
+
+  test('a successful AI video webhook keeps developerPayload and has no error', () => {
+    const parsed = new CopyleaksAiVideoDetectionResponseModel({ model: 'ai-video-1-pro', isAiDetected: false, developerPayload: 'order-18' });
+    assert.equal(parsed.error, undefined);
+    assert.equal(parsed.developerPayload, 'order-18');
   });
 });

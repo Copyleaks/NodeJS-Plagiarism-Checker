@@ -54,3 +54,4 @@ export * from "./ImagePlagiarism/CopyleaksImagePlagiarismResponseModel.js";
 export * from "./Repositories/CopyleaksRepositoryInfoResponseModel.js";
 export * from "./CopyleaksCrossLanguagesResponseModel.js";
 export * from "./CopyleaksAiTextDetectionFileTypesResponseModel.js";
+export * from "./CopyleaksAsyncWebhookErrorModel.js";

@@ -137,6 +137,15 @@ describe('transport', () => {
     assert.ok(server.requests.every((r) => r.headers.connection === 'keep-alive'));
   });
 
+  test('the default keep-alive agents close sockets that are idle for 5 seconds', () => {
+    const { createAxiosInstance } = require('../dist/http/CopyleaksHttp');
+    const { httpAgent, httpsAgent } = createAxiosInstance().defaults;
+    for (const agent of [httpAgent, httpsAgent]) {
+      assert.equal(agent.keepAlive, true);
+      assert.equal(agent.options.timeout, 5000);
+    }
+  });
+
   test('clients created on their own share the default connection pool', async () => {
     const first = new AIDetectionClient({ apiServerUri: server.url });
     const second = new AIDetectionClient({ apiServerUri: server.url });
@@ -231,6 +240,23 @@ describe('transport', () => {
       assert.equal(result.summary.human, 1);
       assert.equal(server.requests.length, 2);
       assert.deepEqual(server.requests[0].json, server.requests[1].json);
+    });
+
+    test('do not retry a POST or PUT after HTTP 503 without Retry-After, because it may have been processed', async () => {
+      const retrying = new Copyleaks({ apiServerUri: server.url, maxRetries: 2, retryDelay: 1 });
+      server.reply(() => ({ status: 503 }));
+      await assert.rejects(retrying.aiDetectionClient.submitNaturalTextAsync(TOKEN, 'scan1', new CopyleaksNaturalLanguageSubmissionModel(TEXT, true)), UnderMaintenanceException);
+      await assert.rejects(retrying.submitFileAsync(TOKEN, 'scan1', { base64: 'aGk=', filename: 'a.txt', properties: { webhooks: { status: 'x' } } }), UnderMaintenanceException);
+      assert.deepEqual(server.requests.map((r) => r.method), ['POST', 'PUT']);
+    });
+
+    test('retry a POST or PUT after HTTP 503 with Retry-After', async () => {
+      const retrying = new Copyleaks({ apiServerUri: server.url, maxRetries: 1, retryDelay: 1 });
+      server.reply((req, i) => (i % 2 === 0 ? { status: 503, headers: { 'retry-after': '0' } } : { body: { summary: { human: 1, ai: 0 } } }));
+      const result = await retrying.aiDetectionClient.submitNaturalTextAsync(TOKEN, 'scan1', new CopyleaksNaturalLanguageSubmissionModel(TEXT, true));
+      assert.equal(result.summary.human, 1);
+      await retrying.submitFileAsync(TOKEN, 'scan1', { base64: 'aGk=', filename: 'a.txt', properties: { webhooks: { status: 'x' } } });
+      assert.deepEqual(server.requests.map((r) => r.method), ['POST', 'POST', 'PUT', 'PUT']);
     });
 
     test('give up after maxRetries and throw the last error', async () => {
