@@ -25,16 +25,21 @@
 import { AIGeneratedText } from './AIGeneratedText.js';
 import { AISourceMatch } from './AISourceMatch.js';
 import { SubmissionActions } from './Actions.js';
+import { SubmissionAssignment, SubmissionCourse, SubmissionInstitution } from './AnalyticsIdentifiers.js';
 import { SubmissionAuthor } from './Author.js';
 import { CustomMetadata } from './CustomMetadata.js';
 import { SubmissionExclude } from './Exclude.js';
 import { SubmissionFilter } from './Filter.js';
 import { SubmissionIndexing } from './Indexing.js';
+import { InternalAISourceMatch } from './InternalAISourceMatch.js';
+import { SubmissionOverview } from './Overview.js';
 import { SubmissionPDF } from './PdfProperties.js';
+import { SubmissionReferences } from './References.js';
 import { ScanMethodAlgorithm } from './ScanMethods.js';
 import { SubmissionScanning } from './Scanning.js';
 import { SubmissionSensitiveData } from './SensitiveDataProtection.js';
 import { SubmissionWebhooks } from './Webhooks.js';
+import { SubmissionWritingFeedback } from './WritingFeedback.js';
 
 export interface SubmissionProperties {
   webhooks: SubmissionWebhooks;
@@ -139,6 +144,39 @@ export interface SubmissionProperties {
    * Check inner properties for more details.
    */
   sensitiveDataProtection?: SubmissionSensitiveData
+  /**
+   * Time zone of the scan time shown in the PDF report, as a case-sensitive IANA time zone name,
+   * for example "America/New_York". Default: the time zone of the user's country, or UTC.
+   */
+  scanTimeZone?: string;
+  /**
+   * Course identifier, used for analytics.
+   */
+  course?: SubmissionCourse;
+  /**
+   * Assignment identifier, used for analytics.
+   */
+  assignment?: SubmissionAssignment;
+  /**
+   * Institution identifier, used for analytics.
+   */
+  institution?: SubmissionInstitution;
+  /**
+   * Run the Grammar Checker as part of the scan.
+   */
+  writingFeedback?: SubmissionWritingFeedback;
+  /**
+   * Gen-AI Overview: a summary of the key insights of the scan.
+   */
+  overview?: SubmissionOverview;
+  /**
+   * Find sources in the Copyleaks internal AI database that contain AI-generated text.
+   */
+  internalAiSourceMatch?: InternalAISourceMatch;
+  /**
+   * Citation Checker: validate the references found in the submitted text.
+   */
+  references?: SubmissionReferences;
 }
 
 

@@ -21,37 +21,32 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
 */
-import axios from "axios";
-import { CopyleaksConfig } from "../app.config.js";
-import {
-  UnderMaintenanceException,
-  RateLimitException,
-  CommandException,
-} from "../models/exceptions/index.js";
-import {
-  CopyleaksAuthToken,
-  CopyleaksTextModerationResponseModel,
-} from "../models/response/index.js";
-import {
-  isSuccessStatusCode,
-  isUnderMaintenanceResponse,
-  isRateLimitResponse,
-} from "../utils/index.js";
+import { CopyleaksAuthToken, CopyleaksTextModerationResponseModel } from "../models/response/index.js";
 import { ClientUtils } from "../utils/client-utils.utils.js";
 import { CopyleaksTextModerationRequestModel } from "../models/request/TextModeration/CopyleaksTextModerationRequestModel.js";
+import { CopyleaksHttp } from "../http/CopyleaksHttp.js";
+import { CopyleaksOptions } from "../http/CopyleaksOptions.js";
 
 export class TextModerationClient {
+  private readonly http: CopyleaksHttp;
+
+  /**
+   * @param options Optional settings, see `CopyleaksOptions`. `new Copyleaks(options)` passes its own options.
+   */
+  constructor(options?: CopyleaksOptions) {
+    this.http = new CopyleaksHttp(options);
+  }
 
       /**
     This endpoint will receive submitted text to be checked. The response will show potentially harmful content across multiple categories
-     * 
+     * For more info: https://docs.copyleaks.com/reference/actions/text-moderation/check
      * * Exceptions:
-     *  * CommandExceptions: Server reject the request. See response status code,
-     *     headers and content for more info.
+     *  * CommandException: Server reject the request. See `status` and `body` for more info.
      *  * UnderMaintenanceException: Copyleaks servers are unavailable for maintenance.
      *     We recommend to implement exponential backoff algorithm as described here:
      *     https://api.copyleaks.com/documentation/v3/exponential-backoff
      *  * RateLimitException: Too many requests have been sent. The request has been rejected.
+     *  * NetworkException: No HTTP response, for example a timeout.
      * @param authToken Copyleaks authentication token
      * @param scanId Attach your own scan Id
      * @param submission Submission properties
@@ -60,25 +55,14 @@ export class TextModerationClient {
     authToken: CopyleaksAuthToken,
     scanId: string,
     submission: CopyleaksTextModerationRequestModel
-  ) {
+  ): Promise<CopyleaksTextModerationResponseModel> {
     ClientUtils.verifyAuthToken(authToken);
-    const url = `${CopyleaksConfig.API_SERVER_URI}/v1/text-moderation/${scanId}/check`;
-
-    const headers = {
-      "Content-Type": "application/json",
-      "User-Agent": CopyleaksConfig.USER_AGENT,
-      Authorization: `Bearer ${authToken["access_token"]}`,
-    };
-
-    const response = await axios.post(url, submission, { headers });
-    if (isSuccessStatusCode(response.status))
-      return new CopyleaksTextModerationResponseModel(response.data);
-    else if (isUnderMaintenanceResponse(response.status)) {
-      throw new UnderMaintenanceException();
-    } else if (isRateLimitResponse(response.status)) {
-      throw new RateLimitException();
-    } else {
-      throw new CommandException(response);
-    }
+    const response = await this.http.request<CopyleaksTextModerationResponseModel>({
+      method: "POST",
+      url: this.http.apiUrl(`/v1/text-moderation/${scanId}/check`),
+      authToken,
+      body: submission,
+    });
+    return new CopyleaksTextModerationResponseModel(response.data);
   }
 }

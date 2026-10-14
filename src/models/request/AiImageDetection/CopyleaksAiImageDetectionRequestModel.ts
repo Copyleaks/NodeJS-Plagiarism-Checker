@@ -22,6 +22,8 @@
  SOFTWARE.
 ********************************************************************************/
 
+import { CopyleaksAiImageObjectDetectionModel } from './CopyleaksAiImageObjectDetectionModel.js';
+
 /**
  * Request model for Copyleaks AI image detection.
  * The request body is a JSON object containing the image to analyze.
@@ -31,7 +33,7 @@ export class CopyleaksAiImageDetectionRequestModel {
      * The base64-encoded image data to be analyzed for AI generation.
      * 
      * Requirements:
-     * - Minimum 512×512px, maximum 16 megapixels, less than 32MB
+     * - Minimum 512x512px, maximum 6000x4500px (27 megapixels), less than 32MB
      * - Supported formats: PNG, JPEG, BMP, WebP, HEIC/HEIF
      * 
      * @example "aGVsbG8gd29ybGQ="
@@ -73,10 +75,45 @@ export class CopyleaksAiImageDetectionRequestModel {
      */
     public sandbox: boolean = false;
 
-    constructor(base64: string, fileName: string, model: string, sandbox: boolean = false) {
+    /**
+     * The type of detection mask to return: "binary" (default), "heatmap" or "none".
+     * See `CopyleaksAiImageDetectionMaskTypes`.
+     * - "binary": an RLE mask of the AI regions in `result.starts` and `result.lengths`.
+     * - "heatmap": the RLE mask plus `result.labels`, a confidence band from 0 to 4 for each run.
+     * - "none": no mask. The response has no `result`.
+     */
+    public maskType?: string;
+
+    /**
+     * Objects to find in the image, for example [{ object: "face" }]. Up to 3 entries, each 1 to 32 characters.
+     * The response then contains `detectedObjects`, one entry for each object that was found.
+     */
+    public objectDetection?: CopyleaksAiImageObjectDetectionModel[];
+
+    /**
+     * @param base64 The base64-encoded image.
+     * @param fileName The image file name, with its extension.
+     * @param model The AI image detection model, for example `CopyleaksAiImageDetectionModels.AI_IMAGE_1_ULTRA`.
+     * @param sandbox Return mock results without using credits. Default: false.
+     * @param maskType The type of detection mask to return: "binary", "heatmap" or "none". Default: "binary".
+     * @param objectDetection Objects to find in the image, for example [{ object: "face" }]. Up to 3 entries.
+     */
+    constructor(
+        base64: string,
+        fileName: string,
+        model: string,
+        sandbox: boolean = false,
+        maskType?: string,
+        objectDetection?: CopyleaksAiImageObjectDetectionModel[]) {
         this.base64 = base64;
         this.fileName = fileName;
         this.model = model;
         this.sandbox = sandbox;
+        if (maskType !== undefined) {
+            this.maskType = maskType;
+        }
+        if (objectDetection !== undefined) {
+            this.objectDetection = objectDetection;
+        }
     }
 }

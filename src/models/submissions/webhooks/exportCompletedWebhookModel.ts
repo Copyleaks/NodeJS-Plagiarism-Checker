@@ -26,12 +26,13 @@ import { TaskModel } from "./helperModels/exportModels/taskModel.js";
 
 export class ExportCompletedWebhookModel extends WebhookModel {
   completed?: boolean;
-  tasks?: TaskModel;
+  /*The export tasks, one for each exported item. */
+  tasks?: TaskModel[];
 
   constructor(init?: Partial<ExportCompletedWebhookModel>) {
     super(init);
-    if (init?.tasks) {
-      this.tasks = new TaskModel(init.tasks);
+    if (Array.isArray(init?.tasks)) {
+      this.tasks = init!.tasks.map((task) => new TaskModel(task));
     }
   }
 }

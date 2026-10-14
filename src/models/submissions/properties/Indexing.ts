@@ -29,4 +29,8 @@ export interface SubmissionIndexing {
    * Check inner properties for more details.
    */
   repositories?: SubmissionIndexingRepository[];
+  /**
+   * Add the submitted document to the Copyleaks Shared Data Hub. Default: false.
+   */
+  copyleaksDb?: boolean;
 }

@@ -27,23 +27,25 @@ import { TextModerationScannedDocumentModel } from "./Submodules/TextModerationS
 */
 export class CopyleaksTextModerationResponseModel {
 
+  /*The version of the moderation model used for the scan, for example "v1".*/
+  public modelVersion?: string;
+
   /*Moderated text segments detected in the input text.*/
-  public moderations: ModerationsModel;
+  public moderations!: ModerationsModel;
 
   /*An array that provides a lookup for the labels referenced by their numerical indices in the text.chars.labels array. 
     Each object within this legend array defines a specific label that was used in the scan.*/
-  public legend: TextModerationsLegendModel[];
+  public legend!: TextModerationsLegendModel[];
 
   /*General information about the scanned document.*/
-  public scannedDocument: TextModerationScannedDocumentModel;
+  public scannedDocument!: TextModerationScannedDocumentModel;
 
-  constructor(init: {
-    moderations: ModerationsModel;
-    legend: TextModerationsLegendModel[];
-    scannedDocument: TextModerationScannedDocumentModel;
-  }) {
-    this.moderations = init.moderations;
-    this.legend = init.legend;
-    this.scannedDocument = init.scannedDocument;
+  /**
+   * @param init The parsed JSON response. Every field is copied, including fields this SDK version does not declare.
+   */
+  constructor(init?: Partial<CopyleaksTextModerationResponseModel>) {
+    if (init) {
+      Object.assign(this, init);
+    }
   }
 }

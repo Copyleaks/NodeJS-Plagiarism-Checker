@@ -22,9 +22,31 @@
  SOFTWARE.
 */
 
+
 export interface AIGeneratedText {
   /**
-   * Enable detection of AI generated text.
+   * Enable detection of AI generated text. Default: false.
    */
-  detect: boolean;
+  detect?: boolean;
+  /**
+   * How sensitive the AI detection is, from 1 to 3. Default: 2.
+   * 1 finds text copied from an AI tool without edits, 2 also finds AI text with minor changes,
+   * and 3 also finds AI text that was heavily modified.
+   */
+  sensitivity?: number;
+  /**
+   * AI Logic: explain why the text was detected as AI.
+   */
+  explain?: AIGeneratedTextExplain;
+}
+
+/**
+ * AI Logic settings of `aiGeneratedText`.
+ */
+export interface AIGeneratedTextExplain {
+  /**
+   * Enable AI Logic for the AI detection. Default: false.
+   * Explanations are returned for the AI Logic supported languages only.
+   */
+  enable?: boolean;
 }

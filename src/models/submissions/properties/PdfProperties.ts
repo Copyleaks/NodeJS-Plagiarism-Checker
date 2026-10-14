@@ -30,24 +30,24 @@ export interface SubmissionPDF {
    * Add a request to generate a customizable export of the scan report, in a pdf format.
    * Set to true in order to generate a pdf report for this scan.
    */
-  create: boolean;
+  create?: boolean;
   /**
    * Customize the title for the PDF report.
    */
-  title: string;
+  title?: string;
   /**
    * Customize the logo image in the PDF report.
    */
-  largeLogo: string;
+  largeLogo?: string;
   /**
    * When set to true the text in the report will be aligned from right to left.
    */
-  rtl: boolean;
+  rtl?: boolean;
   /**
-   * PDF version to generate. By default version 1 will be generated as it our current stable version. 
-   * Version 2 is our latest iteration of our PDF report and is currently in beta.
+   * PDF version to generate: 1, 2 or 3.
+   * @deprecated Use `reportVersion` instead. `reportVersion` overrides this value when you send both.
    */
-  version: PdfReportVersion;
+  version?: PdfReportVersion;
   /**
    * Which version of the PDF report to generate.
    * Supported values are lowercase and case-sensitive: v1, v2, v3, latest.

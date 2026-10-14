@@ -28,7 +28,13 @@ export interface PdfReportColors {
      */
     mainStrip?: string;
     /**
-     * The color for titles in copyleaks result report
+     * The color of titles in the PDF report, in HEX format. Default: #040F21.
+     */
+    titles?: string;
+    /**
+     * The color of titles in the PDF report.
+     * @deprecated Use `titles`. The API field is `titles`; the SDK sends this value as `titles`
+     * when `titles` is not set.
      */
     title?: string;
     /**
@@ -43,4 +49,12 @@ export interface PdfReportColors {
      * The highlight color for related meaning matches
      */
     relatedMeaning?: string;
+    /**
+     * The highlight color for AI content detection, in HEX format. Default: #FE5758.
+     */
+    aiDetection?: string;
+    /**
+     * The highlight color for writing feedback (Grammar Checker), in HEX format. Default: #FF9A02.
+     */
+    writingFeedback?: string;
 }

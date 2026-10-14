@@ -28,3 +28,5 @@ export * from './ExportCrawledVersion.js';
 
 
 export * from './CopyleaksExportModel.js';
+export * from './ExportTarget.js';
+export * from './ExportedOverviewModel.js';

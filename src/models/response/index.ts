@@ -24,7 +24,6 @@
 
 export * from "./CopyleaksAuthToken.js";
 export * from "./TextModeration/CopyleaksTextModerationResponseModel.js";
-export * from "./TextModeration/CopyleaksTextModerationResponseModel.js";
 export * from "./AiImageDetection/CopyleaksImageShapeModel.js";
 export * from "./AiImageDetection/CopyleaksImageMetadataModel.js";
 export * from "./AiImageDetection/CopyleaksAiImageDetectionSummaryModel.js";
@@ -48,3 +47,10 @@ export * from "./CopyleaksStartResponseModel.js";
 export * from "./CopyleaksCreditsBalanceResponseModel.js";
 export * from "./CopyleaksReleaseNotesResponseModel.js";
 export * from "./CopyleaksSupportedFileTypesResponseModel.js";
+export * from "./AiImageDetection/CopyleaksAiImageDetectedObjectModel.js";
+export * from "./AiTextDetection/CopyleaksAiTextDetectionCreditsResponseModel.js";
+export * from "./AiVideoDetection/CopyleaksAiVideoDetectionResponseModel.js";
+export * from "./ImagePlagiarism/CopyleaksImagePlagiarismResponseModel.js";
+export * from "./Repositories/CopyleaksRepositoryInfoResponseModel.js";
+export * from "./CopyleaksCrossLanguagesResponseModel.js";
+export * from "./CopyleaksAiTextDetectionFileTypesResponseModel.js";

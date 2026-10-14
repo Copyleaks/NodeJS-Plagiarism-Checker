@@ -30,4 +30,14 @@ export interface SubmissionScanningExclude {
    *  * '.' Matches a single (non whitespace) character
    */
   idPattern?: string
+  /**
+   * Exclude results that contain backlinks to these domains.
+   * Up to 10 domains, each 1 to 256 characters.
+   */
+  backlinksDomains?: string[];
+  /**
+   * Exclude results that contain these phrases.
+   * Up to 5 phrases, each 1 to 30 characters.
+   */
+  text?: string[];
 }

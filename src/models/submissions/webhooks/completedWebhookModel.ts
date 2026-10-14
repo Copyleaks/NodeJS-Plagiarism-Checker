@@ -25,6 +25,7 @@ import { NotificationsModel } from "./helperModels/completedModels/notifications
 import { StatusWebhookModel } from "./helperModels/baseModels/statusWebhookModel.js";
 import { ResultsModel } from "./helperModels/completedModels/resultsModel.js";
 import { ScannedDocumentModel } from "./helperModels/completedModels/scannedDocumentModel.js";
+import { ReferencesValidationModel } from "./helperModels/completedModels/referencesValidationModel.js";
 import { AlertsModel } from "./helperModels/notificationsModels/alertsModel.js";
 import { CopyleaksAlertCodes } from "../../constants/CopyleaksAlertCodes.js";
 import { CopyleaksAiTextDetectionResponseModel } from "../../response/AiTextDetection/CopyleaksAiTextDetectionResponseModel.js";
@@ -33,6 +34,10 @@ export class CompletedWebhookModel extends StatusWebhookModel {
   results?: ResultsModel;
   notifications?: NotificationsModel;
   scannedDocument?: ScannedDocumentModel;
+  /**
+   * Citation Checker summary. Returned when properties.references.validate was true.
+   */
+  referencesValidation?: ReferencesValidationModel;
 
   /**
    * @param init Wire data. notifications.alerts items can be plain objects; they are mapped to AlertsModel instances.
@@ -48,6 +53,9 @@ export class CompletedWebhookModel extends StatusWebhookModel {
       }
       if (init.scannedDocument) {
         this.scannedDocument = new ScannedDocumentModel(init.scannedDocument);
+      }
+      if (init.referencesValidation) {
+        this.referencesValidation = new ReferencesValidationModel(init.referencesValidation);
       }
     }
   }

@@ -31,4 +31,8 @@ export enum PdfReportVersion {
      * pdf version 2.
      */
     V2,
+    /**
+     * pdf version 3.
+     */
+    V3,
   }

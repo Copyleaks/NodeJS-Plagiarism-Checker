@@ -29,8 +29,15 @@ export class CopyleaksURLSubmissionModel extends CopyleaksSubmissionModel {
   /**
    * @param url The url to be scanned
    * @param properties Check inner properties for more details.
+   * @param verb The HTTP method Copyleaks uses to fetch the url: GET, POST or PUT. Default: GET.
+   * @param headers Headers Copyleaks sends when it fetches the url, for example a cookie or an Authorization header.
+   * When set, no default Copyleaks headers are sent. Example: [["header-key", "header-value"]]
    */
-  constructor(public url: string, properties: SubmissionProperties) {
+  constructor(
+    public url: string,
+    properties: SubmissionProperties,
+    public verb?: string,
+    public headers?: string[][]) {
     super(properties);
   }
 }

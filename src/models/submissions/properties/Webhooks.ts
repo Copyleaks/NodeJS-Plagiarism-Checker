@@ -35,4 +35,16 @@ export interface SubmissionWebhooks {
    * Read more about webhooks: https://api.copyleaks.com/documentation/v3/webhooks
    */
   status: string;
+  /**
+   * Headers to add to the newResult webhook request.
+   *
+   * Example: [["header-key1", "header-value1"], ["header-key2", "header-value2"]]
+   */
+  newResultHeaders?: string[][];
+  /**
+   * Headers to add to the status webhook request.
+   *
+   * Example: [["header-key1", "header-value1"], ["header-key2", "header-value2"]]
+   */
+  statusHeaders?: string[][];
 }

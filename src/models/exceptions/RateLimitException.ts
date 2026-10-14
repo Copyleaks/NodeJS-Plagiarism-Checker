@@ -22,8 +22,38 @@
  SOFTWARE.
 */
 
+
+import { CopyleaksErrorResponse, retryAfterSeconds, toCopyleaksErrorResponse } from './CopyleaksErrorResponse.js';
+
+/**
+ * Too many requests: the Copyleaks API answered with HTTP 429.
+ * Wait before you call again. `retryAfter` tells you how long, when the server sends it.
+ */
 export class RateLimitException extends Error {
-  constructor() {
+  /** HTTP status code of the response (429). */
+  public readonly status?: number;
+  /** Response body: the parsed JSON when the server sent JSON, otherwise the text. */
+  public readonly body?: unknown;
+  /** Seconds to wait before the next call, from the `Retry-After` header. Undefined when the server did not send it. */
+  public readonly retryAfter?: number;
+  /**
+   * The response: status, status text, headers and body (`data`).
+   * Request details, such as the `Authorization` header, are never included.
+   */
+  public readonly response?: CopyleaksErrorResponse;
+
+  /**
+   * @param response The HTTP response of the failed call.
+   */
+  constructor(response?: unknown) {
     super('Too many requests. Please wait before calling again.');
+    this.name = 'RateLimitException';
+    const details = toCopyleaksErrorResponse(response);
+    if (details) {
+      this.status = details.status;
+      this.body = details.data;
+      this.response = details;
+      this.retryAfter = retryAfterSeconds(details);
+    }
   }
 }

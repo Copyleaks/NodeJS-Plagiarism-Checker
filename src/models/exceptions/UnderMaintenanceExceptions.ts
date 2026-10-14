@@ -22,8 +22,38 @@
  SOFTWARE.
 */
 
+
+import { CopyleaksErrorResponse, retryAfterSeconds, toCopyleaksErrorResponse } from './CopyleaksErrorResponse.js';
+
+/**
+ * Copyleaks is under maintenance: the API answered with HTTP 503.
+ * Retry later, ideally with exponential backoff.
+ */
 export class UnderMaintenanceException extends Error {
-  constructor() {
+  /** HTTP status code of the response (503). */
+  public readonly status?: number;
+  /** Response body: the parsed JSON when the server sent JSON, otherwise the text. */
+  public readonly body?: unknown;
+  /** Seconds to wait before the next call, from the `Retry-After` header. Undefined when the server did not send it. */
+  public readonly retryAfter?: number;
+  /**
+   * The response: status, status text, headers and body (`data`).
+   * Request details, such as the `Authorization` header, are never included.
+   */
+  public readonly response?: CopyleaksErrorResponse;
+
+  /**
+   * @param response The HTTP response of the failed call.
+   */
+  constructor(response?: unknown) {
     super('Copyleaks is Under Maintenance, please visit https://status.copyleaks.com');
+    this.name = 'UnderMaintenanceException';
+    const details = toCopyleaksErrorResponse(response);
+    if (details) {
+      this.status = details.status;
+      this.body = details.data;
+      this.response = details;
+      this.retryAfter = retryAfterSeconds(details);
+    }
   }
 }

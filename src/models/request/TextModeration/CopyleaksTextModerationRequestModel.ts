@@ -22,6 +22,9 @@
  SOFTWARE.
 */
 
+/** The largest number of labels the Text Moderation API accepts in one request. */
+export const MAX_TEXT_MODERATION_LABELS = 16;
+
 export class CopyleaksTextModerationRequestModel {
   
   /*Text to produce Text Moderation report for.*/
@@ -34,7 +37,7 @@ export class CopyleaksTextModerationRequestModel {
     if the 'language' field is not specified, our system will automatically detect the language of the content. */
   public language?: string | null;
 
-  /*A list of label configurations to be used for the moderation process.*/
+  /*A list of label configurations to be used for the moderation process. Required: 1 to 16 labels.*/
   public labels: any[];
 
   /**
@@ -51,8 +54,8 @@ export class CopyleaksTextModerationRequestModel {
       throw new Error("Text is required and must be a string.");
     }
 
-  if (!Array.isArray(init.labels) || init.labels.length < 1 || init.labels.length > 32) {
-    throw new Error("Labels must be an array with at least 1 and no more than 32 elements.");
+  if (!Array.isArray(init.labels) || init.labels.length < 1 || init.labels.length > MAX_TEXT_MODERATION_LABELS) {
+    throw new Error(`Labels must be an array with at least 1 and no more than ${MAX_TEXT_MODERATION_LABELS} elements.`);
    }
    
     this.text = init.text;

@@ -21,51 +21,61 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
 */
-import axios from 'axios';
-import { CopyleaksConfig } from '../app.config.js';
-import { UnderMaintenanceException, RateLimitException, CommandException } from '../models/exceptions/index.js';
-import { CopyleaksAiTextDetectionResponseModel, CopyleaksAuthToken } from '../models/response/index.js';
-import { CopyleaksNaturalLanguageSubmissionModel,CopyleaksWritingAssistantSubmissionModel } from '../models/submissions/index.js';
-import { isSuccessStatusCode, isUnderMaintenanceResponse, isRateLimitResponse } from '../utils/index.js';
+import { CopyleaksAiTextDetectionCreditsResponseModel, CopyleaksAiTextDetectionResponseModel, CopyleaksAuthToken } from '../models/response/index.js';
+import { CopyleaksNaturalLanguageSubmissionModel } from '../models/submissions/index.js';
 import { ClientUtils } from '../utils/client-utils.utils.js';
+import { CopyleaksHttp } from '../http/CopyleaksHttp.js';
+import { CopyleaksOptions } from '../http/CopyleaksOptions.js';
 
 export class AIDetectionClient {
+  private readonly http: CopyleaksHttp;
+
+  /**
+   * @param options Optional settings, see `CopyleaksOptions`. `new Copyleaks(options)` passes its own options.
+   */
+  constructor(options?: CopyleaksOptions) {
+    this.http = new CopyleaksHttp(options);
+  }
 
   /**
     This endpoint will receive submitted text to be checked. At the end of the processing stage, 
     the result will be shown as classifications. Text classification is divided into sections. Each section may have a different classification.
-  * 
+  * For more info: https://docs.copyleaks.com/reference/actions/writer-detector/check
   * * Exceptions:
-  *  * CommandExceptions: Server reject the request. See response status code,
-  *     headers and content for more info.
+  *  * CommandException: Server reject the request. See `status` and `body` for more info.
   *  * UnderMaintenanceException: Copyleaks servers are unavailable for maintenance.
   *     We recommend to implement exponential backoff algorithm as described here:
   *     https://api.copyleaks.com/documentation/v3/exponential-backoff
   *  * RateLimitException: Too many requests have been sent. The request has been rejected.
+  *  * NetworkException: No HTTP response, for example a timeout.
   * @param authToken Copyleaks authentication token
   * @param scanId Attach your own scan Id
   * @param submission Submission properties
   */
-  public async submitNaturalTextAsync(authToken: CopyleaksAuthToken, scanId: string, submission: CopyleaksNaturalLanguageSubmissionModel) {
+  public async submitNaturalTextAsync(authToken: CopyleaksAuthToken, scanId: string, submission: CopyleaksNaturalLanguageSubmissionModel): Promise<CopyleaksAiTextDetectionResponseModel> {
     ClientUtils.verifyAuthToken(authToken);
+    const response = await this.http.request<CopyleaksAiTextDetectionResponseModel>({
+      method: 'POST',
+      url: this.http.apiUrl(`/v2/writer-detector/${scanId}/check`),
+      authToken,
+      body: submission,
+    });
+    return response.data;
+  }
 
-    const url = `${CopyleaksConfig.API_SERVER_URI}/v2/writer-detector/${scanId}/check`;
-
-    const headers = {
-      'Content-Type': 'application/json',
-      'User-Agent': CopyleaksConfig.USER_AGENT,
-      'Authorization': `Bearer ${authToken['access_token']}`
-    }
-
-    const response = await axios.post<CopyleaksAiTextDetectionResponseModel>(url, submission, { headers });
-    if (isSuccessStatusCode(response.status))
-      return response.data;
-    else if (isUnderMaintenanceResponse(response.status)) {
-      throw new UnderMaintenanceException()
-    } else if (isRateLimitResponse(response.status)) {
-      throw new RateLimitException();
-    } else {
-      throw new CommandException(response)
-    }
+  /**
+   * Get the credits available for AI text detection in your account wallet.
+   * For more info: https://docs.copyleaks.com/reference/actions/writer-detector/credits
+   * * Exceptions: CommandException, RateLimitException, UnderMaintenanceException, NetworkException, AuthExipredException.
+   * @param authToken Copyleaks authentication token
+   */
+  public async getCreditsBalanceAsync(authToken: CopyleaksAuthToken): Promise<CopyleaksAiTextDetectionCreditsResponseModel> {
+    ClientUtils.verifyAuthToken(authToken);
+    const response = await this.http.request<CopyleaksAiTextDetectionCreditsResponseModel>({
+      method: 'GET',
+      url: this.http.apiUrl('/v2/writer-detector/credits'),
+      authToken,
+    });
+    return response.data;
   }
 }

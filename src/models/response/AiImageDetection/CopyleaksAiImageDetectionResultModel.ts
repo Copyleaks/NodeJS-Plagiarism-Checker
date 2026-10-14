@@ -35,9 +35,17 @@ export class CopyleaksAiImageDetectionResultModel {
      * Lengths of AI-detected segments corresponding to each start position.
      */
     public lengths: number[];
+    /**
+     * Confidence band of each segment, from 0 (lowest) to 4 (highest), aligned with `starts` and `lengths`.
+     * Present only when the request set `maskType` to "heatmap".
+     */
+    public labels?: number[];
 
-    constructor(starts: number[], lengths: number[]) {
+    constructor(starts: number[], lengths: number[], labels?: number[]) {
         this.starts = starts;
         this.lengths = lengths;
+        if (labels !== undefined) {
+            this.labels = labels;
+        }
     }
 }

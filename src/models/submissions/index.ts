@@ -55,3 +55,5 @@ export * from './webhooks/helperModels/resultsModels/repositoriesModel.js';
 export * from './webhooks/helperModels/resultsModels/scoreModel.js';
 export * from './webhooks/helperModels/resultsModels/sharedResultsModel.js';
 export * from './webhooks/helperModels/resultsModels/tagsModel.js';
+export * from './webhooks/helperModels/resultsModels/internalAIDataModel.js';
+export * from './webhooks/helperModels/completedModels/referencesValidationModel.js';

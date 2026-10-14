@@ -25,7 +25,9 @@ import { SharedResultsModel } from "./sharedResultsModel.js";
 import { TagsModel } from "./tagsModel.js";
 
 export class InternetModel extends SharedResultsModel {
-  
+  /*Public URL of the result. */
+  url?: string;
+
   /*Tags object array */
   tags?: TagsModel[];
 

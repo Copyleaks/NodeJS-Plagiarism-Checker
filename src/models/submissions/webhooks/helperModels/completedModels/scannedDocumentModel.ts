@@ -31,6 +31,11 @@ export class ScannedDocumentModel {
   totalWords?: number;
   
   /*Number of excluded words in the submitted content. */
+  totalExcluded?: number;
+  /**
+   * Number of excluded words in the submitted content.
+   * @deprecated Misspelled. Use `totalExcluded`. The constructor copies `totalExcluded` into it.
+   */
   totalExecluded?: number;
   
   /*Overall credits used for the scan. */
@@ -45,8 +50,9 @@ export class ScannedDocumentModel {
   constructor(init?: Partial<ScannedDocumentModel>) {
     if (init) {
       Object.assign(this, init);
-
-      
+      if (init.totalExcluded !== undefined && init.totalExecluded === undefined) {
+        this.totalExecluded = init.totalExcluded;
+      }
       if (init.metadata) {
         this.metadata = new MetadataModel(init.metadata);
       }

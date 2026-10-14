@@ -21,75 +21,57 @@
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
 */
-import axios from 'axios';
-import { CopyleaksConfig } from '../app.config.js';
-import { UnderMaintenanceException, RateLimitException, CommandException } from '../models/exceptions/index.js';
 import { CopyleaksAuthToken, CopyleaksCorrectionTypesResponseModel, CopyleaksWritingAssistantResponseModel } from '../models/response/index.js';
 import { CopyleaksWritingAssistantSubmissionModel } from '../models/submissions/index.js';
-import { isSuccessStatusCode, isUnderMaintenanceResponse, isRateLimitResponse } from '../utils/index.js';
 import { ClientUtils } from '../utils/client-utils.utils.js';
+import { CopyleaksHttp } from '../http/CopyleaksHttp.js';
+import { CopyleaksOptions } from '../http/CopyleaksOptions.js';
 
 export class WritingAssistantClient {
+    private readonly http: CopyleaksHttp;
+
+    /**
+     * @param options Optional settings, see `CopyleaksOptions`. `new Copyleaks(options)` passes its own options.
+     */
+    constructor(options?: CopyleaksOptions) {
+        this.http = new CopyleaksHttp(options);
+    }
+
     /**
     This endpoint will receive submitted text to be checked. The response will show the suggested corrections to the input text.
-     * 
+     * For more info: https://docs.copyleaks.com/reference/actions/writing-assistant/check
      * * Exceptions:
-     *  * CommandExceptions: Server reject the request. See response status code,
-     *     headers and content for more info.
+     *  * CommandException: Server reject the request. See `status` and `body` for more info.
      *  * UnderMaintenanceException: Copyleaks servers are unavailable for maintenance.
      *     We recommend to implement exponential backoff algorithm as described here:
      *     https://api.copyleaks.com/documentation/v3/exponential-backoff
      *  * RateLimitException: Too many requests have been sent. The request has been rejected.
+     *  * NetworkException: No HTTP response, for example a timeout.
      */
-    public async submitTextAsync(authToken: CopyleaksAuthToken, scanId: string, submission: CopyleaksWritingAssistantSubmissionModel) {
+    public async submitTextAsync(authToken: CopyleaksAuthToken, scanId: string, submission: CopyleaksWritingAssistantSubmissionModel): Promise<CopyleaksWritingAssistantResponseModel> {
         ClientUtils.verifyAuthToken(authToken);
-        const url = `${CopyleaksConfig.API_SERVER_URI}/v1/writing-feedback/${scanId}/check`;
-
-        const headers = {
-            'Content-Type': 'application/json',
-            'User-Agent': CopyleaksConfig.USER_AGENT,
-            'Authorization': `Bearer ${authToken['access_token']}`
-        }
-
-        const response = await axios.post<CopyleaksWritingAssistantResponseModel>(url, submission, { headers });
-        if (isSuccessStatusCode(response.status))
-            return response.data;
-        else if (isUnderMaintenanceResponse(response.status)) {
-            throw new UnderMaintenanceException()
-        } else if (isRateLimitResponse(response.status)) {
-            throw new RateLimitException();
-        } else {
-            throw new CommandException(response)
-        }
+        const response = await this.http.request<CopyleaksWritingAssistantResponseModel>({
+            method: 'POST',
+            url: this.http.apiUrl(`/v1/writing-feedback/${scanId}/check`),
+            authToken,
+            body: submission,
+        });
+        return response.data;
     }
 
     /**
     Get a list of correction types supported within the Writing Assistant API. Correction types apply to all supported languages. 
     The supplied language code for this request is used to determine the language of the texts returned.
-     * * Exceptions:
-     *  * CommandExceptions: Server reject the request. See response status code,
-     *     headers and content for more info.
-     *  * UnderMaintenanceException: Copyleaks servers are unavailable for maintenance.
-     *     We recommend to implement exponential backoff algorithm as described here:
-     *     https://api.copyleaks.com/documentation/v3/exponential-backoff
+     * For more info: https://docs.copyleaks.com/reference/actions/writing-assistant/correction-types
+     * * Exceptions: CommandException, RateLimitException, UnderMaintenanceException, NetworkException, AuthExipredException.
      */
-    public async getCorrectionTypesAsync(authToken: CopyleaksAuthToken, languageCode: string) {
+    public async getCorrectionTypesAsync(authToken: CopyleaksAuthToken, languageCode: string): Promise<CopyleaksCorrectionTypesResponseModel> {
         ClientUtils.verifyAuthToken(authToken);
-        const url = `${CopyleaksConfig.API_SERVER_URI}/v1/writing-feedback/correction-types/${languageCode}`;
-
-        const headers = {
-            'Content-Type': 'application/json',
-            'User-Agent': CopyleaksConfig.USER_AGENT,
-            'Authorization': `Bearer ${authToken['access_token']}`
-        }
-
-        const response = await axios.get<CopyleaksCorrectionTypesResponseModel>(url, { headers });
-        if (isSuccessStatusCode(response.status))
-            return response.data;
-        else if (isUnderMaintenanceResponse(response.status)) {
-            throw new UnderMaintenanceException()
-        } else {
-            throw new CommandException(response)
-        }
+        const response = await this.http.request<CopyleaksCorrectionTypesResponseModel>({
+            method: 'GET',
+            url: this.http.apiUrl(`/v1/writing-feedback/correction-types/${languageCode}`),
+            authToken,
+        });
+        return response.data;
     }
 }

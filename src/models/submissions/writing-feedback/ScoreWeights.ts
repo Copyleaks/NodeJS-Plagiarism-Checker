@@ -22,24 +22,28 @@
  SOFTWARE.
 */
 
+/**
+ * Weight of each correction category in the overall writing score.
+ * Each weight is between 0.0 and 1.0. A weight you leave out defaults to 1.0. A weight of 0 ignores the category.
+ */
 export interface ScoreWeights {
     /**
      * Grammar correction category weight in the overall score.
      */
-    grammarScoreWeight: number;
+    grammarScoreWeight?: number;
 
     /**
      * Mechanics correction category weight in the overall score.
      */
-    mechanicsScoreWeight: number;
+    mechanicsScoreWeight?: number;
 
     /**
      * Sentence structure correction category weight in the overall score.
      */
-    sentenceStructureScoreWeight: number;
+    sentenceStructureScoreWeight?: number;
 
     /**
      * Word choice correction category weight in the overall score.
      */
-    wordChoiceScoreWeight: number;
+    wordChoiceScoreWeight?: number;
 }

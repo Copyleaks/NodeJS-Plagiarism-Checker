@@ -35,7 +35,7 @@ export class SharedResultsModel {
   introduction?: string;
 
   /*Total matched words between this result and the scanned document. */
-  matchedWords?: string;
+  matchedWords?: number;
 
   /*In case a result was found in the Copyleaks internal database, and was submitted by you, this will show the scan id of the specific result. Otherwise, this field will remain empty. */
   scanId?: string;
