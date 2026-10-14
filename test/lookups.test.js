@@ -20,7 +20,8 @@ describe('lookups', () => {
   });
 
   test('getAllowedCrossLanguagesAsync: GET /v3/miscellaneous/allowed-cross-languages, public', async () => {
-    const body = { documentLanguages: ['da', 'en'], resultLanguages: ['sq', 'vi'] };
+    // The API maps each language name to its ISO-639-1 code.
+    const body = { documentLanguages: { danish: 'da', english: 'en' }, resultLanguages: { albanian: 'sq', vietnamese: 'vi' } };
     server.reply(() => ({ body }));
     assert.deepEqual(await copyleaks.getAllowedCrossLanguagesAsync(), body);
     const req = server.last;

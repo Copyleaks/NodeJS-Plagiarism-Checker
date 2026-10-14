@@ -477,6 +477,7 @@ Export the extra reports with the `aiDetection`, `writingFeedback` and `overview
 ```javascript
 // No login needed:
 const { documentLanguages, resultLanguages } = await copyleaks.getAllowedCrossLanguagesAsync();
+console.log(Object.values(resultLanguages)); // language name -> ISO-639-1 code, for example { english: 'en' }
 const { supportedAiFileTypes } = await copyleaks.getSupportedAiTextDetectionFileTypesAsync();
 
 // Private Cloud Hub repository information (Admin or Super Admin role):

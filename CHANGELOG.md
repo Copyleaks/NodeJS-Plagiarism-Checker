@@ -94,7 +94,7 @@ Calls used to wait forever for a response. Now each request stops after 120 seco
 | `aiImageDetectionClient.submitUrlAsync` | AI Image Detector for an image URL, with the result sent to your webhook: `PUT /v1/ai-image-detector-async/{scanId}/submit`. Parse the webhook with `new CopyleaksAiImageDetectionResponseModel(body)`. |
 | `aiImageDetectionClient.submitFileAsync` | AI Image Detector with the image bytes uploaded as multipart/form-data, without base64. Same endpoint and result as `submitAsync`. |
 | `aiDetectionClient.getCreditsBalanceAsync` | AI text detector credits: `GET /v2/writer-detector/credits`. Returns `CopyleaksAiTextDetectionCreditsResponseModel`. |
-| `Copyleaks.getAllowedCrossLanguagesAsync` | Languages for cross-language plagiarism detection: `GET /v3/miscellaneous/allowed-cross-languages`. No login needed. |
+| `Copyleaks.getAllowedCrossLanguagesAsync` | Languages for cross-language plagiarism detection: `GET /v3/miscellaneous/allowed-cross-languages`. Each list maps a language name to its ISO-639-1 code. No login needed. |
 | `Copyleaks.getSupportedAiTextDetectionFileTypesAsync` | File types of AI text detection: `GET /v3/miscellaneous/supported-ai-text-detection-file-types`. No login needed. |
 | `Copyleaks.getRepositoryInfoAsync` | Private Cloud Hub repository information: `GET /v3/repositories/repository/{repositoryId}/info`. |
 

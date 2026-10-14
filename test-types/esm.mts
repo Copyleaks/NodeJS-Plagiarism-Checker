@@ -249,6 +249,8 @@ export async function useNewApi(): Promise<void> {
   // Lookups
   const crossLanguages = await copyleaks.getAllowedCrossLanguagesAsync();
   const crossLanguagesTyped: Equal<typeof crossLanguages, CopyleaksCrossLanguagesResponseModel> = true;
+  const resultCodes: string[] = Object.values(crossLanguages.resultLanguages);
+  const englishCode: string | undefined = crossLanguages.documentLanguages['english'];
   const aiFileTypes = await copyleaks.getSupportedAiTextDetectionFileTypesAsync();
   const aiFileTypesTyped: Equal<typeof aiFileTypes, CopyleaksAiTextDetectionFileTypesResponseModel> = true;
   const repository = await copyleaks.getRepositoryInfoAsync(token, 'repo1');

@@ -23,13 +23,15 @@
 */
 
 /**
- * Response of `Copyleaks.getAllowedCrossLanguagesAsync`: the ISO-639-1 language codes
- * supported by cross-language plagiarism detection (`properties.scanning.crossLanguages`).
+ * Response of `Copyleaks.getAllowedCrossLanguagesAsync`: the languages supported by cross-language
+ * plagiarism detection (`properties.scanning.crossLanguages`).
+ * Each list maps the lowercase English language name to its ISO-639-1 code, for example
+ * `{ "english": "en", "french": "fr" }`. Use `Object.values(...)` to get the codes.
  * For more info: https://docs.copyleaks.com/reference/actions/miscellaneous/supported-cross-languages
  */
 export interface CopyleaksCrossLanguagesResponseModel {
-  /** Languages the submitted document can be written in. */
-  documentLanguages: string[];
-  /** Languages the document can be compared against. */
-  resultLanguages: string[];
+  /** Languages the submitted document can be written in: language name to ISO-639-1 code. */
+  documentLanguages: Record<string, string>;
+  /** Languages the document can be compared against: language name to ISO-639-1 code. */
+  resultLanguages: Record<string, string>;
 }
