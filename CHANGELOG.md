@@ -2,7 +2,7 @@
 
 ## 7.0.0
 
-This is the first release under the new npm name `copyleaks`. It replaces the `plagiarism-checker` package, whose last version is 6.0.0. Class and method names are the same as in 6.0.0. The package name, the module entry points and some TypeScript types changed, so this is a major version.
+This is the first release under the new npm name `copyleaks`. It replaces the `plagiarism-checker` package, whose last version is 6.0.0. Existing class and method names are the same as in 6.0.0. The package name, the module entry points, the errors that failed calls throw, the default request timeout and some TypeScript types changed, so this is a major version. Read the upgrade notes before you upgrade.
 
 ### Upgrade notes
 
@@ -39,10 +39,7 @@ These paths no longer resolve. Node.js reports `ERR_PACKAGE_PATH_NOT_EXPORTED`:
 
 Folders without an `index.js`, such as `copyleaks/dist/models`, did not resolve in 6.0.0 and still do not.
 
-The package root does not export some types, so you still need a deep import for them:
-
-- From the folder `copyleaks/dist/models/submissions/properties`: the submission property interfaces, such as `SubmissionProperties`, `SubmissionPDF` and `AISourceMatch`, and the `SubmissionActions` and `SubmissionFilterDomainsMode` enums.
-- From their own file in that folder: `AIGeneratedText`, `CrossLanguages`, `CustomMetadata`, `ExcludeCode`, `Language`, `PdfReportColors` and `PdfReportVersion`, each in a file of the same name (for example `.../properties/PdfReportVersion`), plus `SubmissionIndexingRepository` (`.../properties/IndexingRepository`), `MaskingPolicy` (`.../properties/Policies`) and `ScanMethodAlgorithm` (`.../properties/ScanMethods`).
+The package root does not export the submission property types, so you still need a deep import for them. The folder `copyleaks/dist/models/submissions/properties` now exports all of them, for example `SubmissionProperties`, `SubmissionPDF`, `AISourceMatch`, `PdfReportColors`, `PdfReportVersion`, `MaskingPolicy`, `ScanMethodAlgorithm` and the `SubmissionActions` and `SubmissionFilterDomainsMode` enums. Each type is also still available from its own file in that folder, for example `.../properties/PdfReportVersion`.
 
 For TypeScript: with `moduleResolution` set to `node16`, `nodenext` or `bundler`, TypeScript resolves through the same `exports` map. With the older `node` setting, it ignores the map and finds the declarations through the new `types` field.
 
@@ -58,14 +55,88 @@ Nine methods that returned `Promise<any>` now return a typed result (see "First-
 
 If your app loads the SDK with `import` and one of your dependencies loads it with `require`, Node.js loads two separate copies. Settings such as `CopyleaksConfig.API_SERVER_URI` that you set through one copy do not apply to the other, and `instanceof CommandException` does not match errors thrown by the other copy. Use either `import` or `require` for the SDK in one process.
 
-### Changes
+#### 6. Failed calls throw SDK exceptions
 
-#### New submit properties
+In 6.0.0 every failed call rejected with the raw axios error, because axios rejected the request before the SDK could map it. That error held the request configuration, including the `Authorization: Bearer` header, so logging it exposed your token. Now:
 
+| What happened | 6.0.0 | 7.0.0 |
+|---|---|---|
+| HTTP 429 | axios error | `RateLimitException`, with `retryAfter` (seconds) when the server sends `Retry-After` |
+| HTTP 503 | axios error | `UnderMaintenanceException` |
+| Any other non-2xx status | axios error | `CommandException` |
+| No response: a timeout or a connection error | axios error | `NetworkException`, with `code` (for example `ECONNABORTED`) and `isTimeout` |
+
+`CommandException`, `RateLimitException` and `UnderMaintenanceException` have `status` and `body`, and `response` with `status`, `statusText`, `headers` and `data`, so code that reads `err.response.status` or `err.response.data` keeps working. `err.config`, `err.request` and `err.isAxiosError` are gone. Replace `axios.isAxiosError(err)` checks with `instanceof` checks on the SDK exceptions.
+
+#### 7. Requests time out after 2 minutes
+
+Calls used to wait forever for a response. Now each request stops after 120 seconds and throws a `NetworkException` whose `isTimeout` is `true`. Change the limit with `new Copyleaks({ timeout: 300000 })`, or pass `timeout: 0` to wait without a limit.
+
+#### 8. Node.js 18 or later
+
+`package.json` now declares `"engines": { "node": ">=18" }`. The image uploads use the `FormData` and `Blob` classes built into Node.js 18.
+
+#### 9. Type and validation changes
+
+- `CopyleaksAiImageDetectionResponseModel.result` is now optional. The API leaves it out when the request sets `maskType` to `"none"`. With `strictNullChecks`, check it before you use it.
+- `matchedWords` of webhook results is now typed `number`, the type the API always sent. It was `string`.
+- `ExportCompletedWebhookModel.tasks` is now a list, `TaskModel[]`, as the API sends it. In 6.0.0 the constructor turned the list into a single, broken `TaskModel`.
+- `CopyleaksTextModerationRequestModel` now accepts at most 16 labels, the limit of the API. It used to accept 32 and the API rejected more than 16.
+
+### Added
+
+#### New products and endpoints
+
+| Method | Endpoint |
+|---|---|
+| `imagePlagiarismClient.submitAsync` | Image Plagiarism Detector: search the web for copies of an image. `POST /v1/image-plagiarism-detector/{scanId}/check`, multipart upload. Returns `CopyleaksImagePlagiarismResponseModel`. |
+| `aiVideoDetectionClient.submitAsync` | AI Video Detector: `POST /v1/ai-video-detector/{scanId}/submit`. The result is sent to your webhook; parse it with `new CopyleaksAiVideoDetectionResponseModel(body)`. |
+| `aiImageDetectionClient.submitUrlAsync` | AI Image Detector for an image URL, with the result sent to your webhook: `PUT /v1/ai-image-detector-async/{scanId}/submit`. Parse the webhook with `new CopyleaksAiImageDetectionResponseModel(body)`. |
+| `aiImageDetectionClient.submitFileAsync` | AI Image Detector with the image bytes uploaded as multipart/form-data, without base64. Same endpoint and result as `submitAsync`. |
+| `aiDetectionClient.getCreditsBalanceAsync` | AI text detector credits: `GET /v2/writer-detector/credits`. Returns `CopyleaksAiTextDetectionCreditsResponseModel`. |
+| `Copyleaks.getAllowedCrossLanguagesAsync` | Languages for cross-language plagiarism detection: `GET /v3/miscellaneous/allowed-cross-languages`. No login needed. |
+| `Copyleaks.getSupportedAiTextDetectionFileTypesAsync` | File types of AI text detection: `GET /v3/miscellaneous/supported-ai-text-detection-file-types`. No login needed. |
+| `Copyleaks.getRepositoryInfoAsync` | Private Cloud Hub repository information: `GET /v3/repositories/repository/{repositoryId}/info`. |
+
+New request models: `CopyleaksImagePlagiarismRequestModel`, `CopyleaksAiVideoDetectionRequestModel`, `CopyleaksAiImageDetectionAsyncRequestModel` and `CopyleaksAiImageDetectionFileRequestModel`. New constants: `CopyleaksAiVideoDetectionModels`, `CopyleaksAiImageDetectionMaskTypes` and `CopyleaksImagePlagiarismMatchTypes`.
+
+#### Client options
+
+`new Copyleaks(options)` takes optional settings (type `CopyleaksOptions`). The product clients take the same options when you create them on their own, for example `new AIDetectionClient(options)`.
+
+- `timeout`: time limit for each request, in milliseconds. Default: 120000.
+- `maxRetries`, `retryDelay`, `maxRetryDelay`: retry HTTP 429 and 503 responses and connection errors, with exponential backoff and `Retry-After`. Off by default. GET requests are also retried after timeouts. Other requests are never retried after a timeout, because the server may already have processed them and charged credits.
+- `maxSockets`, `httpAgent`, `httpsAgent`: control the connection pool.
+- `axiosInstance`: send the requests through your own axios instance, for example one with interceptors.
+- `apiServerUri`, `identityServerUri`: server URLs for this instance only. `CopyleaksConfig` still sets the default for every instance.
+
+#### New request fields
+
+- Scan properties: `scanTimeZone`, `course.id`, `assignment.id`, `institution.id`, `writingFeedback` (`enable` and `score` weights, to run the Grammar Checker in the scan), `overview` (`enable`, `ignoreAIDetection`, `ignorePlagiarismDetection`, `ignoreWritingFeedback`, `ignoreAuthorData`), `internalAiSourceMatch.enable`, `references.validate` (Citation Checker), `aiGeneratedText.sensitivity` and `aiGeneratedText.explain.enable` (AI Logic).
+- `webhooks.newResultHeaders` and `webhooks.statusHeaders`.
+- `scanning.crossLanguages.languages`, `scanning.include.idPattern`, `scanning.exclude.backlinksDomains` and `scanning.exclude.text`.
+- `indexing.copyleaksDb`.
+- `pdf.colors.titles`, `pdf.colors.aiDetection` and `pdf.colors.writingFeedback`, and `PdfReportVersion.V3`.
+- Submit URL: `verb` and `headers` (`new CopyleaksURLSubmissionModel(url, properties, verb, headers)`).
+- Delete: `headers` for the completion webhook (fourth argument of `CopyleaksDeleteRequestModel`).
+- Export: the `aiDetection`, `writingFeedback` and `overview` targets and `completionWebhookHeaders` (new arguments 7 to 10 of `CopyleaksExportModel`, or set the fields). `CopyleaksExportedOverviewModel` describes the uploaded overview file.
+- AI text detection: `explain` (AI Logic) and `sensitivity` (arguments 4 and 5 of `CopyleaksNaturalLanguageSubmissionModel`).
+- AI image detection: `maskType` (`binary`, `heatmap` or `none`) and `objectDetection` (arguments 5 and 6 of `CopyleaksAiImageDetectionRequestModel`).
+
+#### New response and webhook fields
+
+- AI image detection: `isAiDetected`, `detectedObjects`, `result.labels` (heatmap) and `imageInfo.metadata.contentSummary`.
+- Text moderation: `modelVersion`.
+- Completed webhook: `referencesValidation` (Citation Checker summary), `results.internalAIData`, `url` of each `results.internet` item, and `scannedDocument.totalExcluded`.
+- Error webhook: `error.type`, `error.id`, `error.url` and `error.details`.
+- Exceptions: `status`, `body` and `response` on `CommandException`, `RateLimitException` and `UnderMaintenanceException`, `retryAfter` on `RateLimitException` and `UnderMaintenanceException`, and the new `NetworkException`. See upgrade note 6.
+
+#### Other additions
+
+- The client classes (`AIDetectionClient`, `AiImageDetectionClient`, `AiVideoDetectionClient`, `ImagePlagiarismClient`, `TextModerationClient` and `WritingAssistantClient`) and the `CopyleaksOptions` type are exported from the package root.
 - `SubmissionProperties.aiSourceMatch` (`{ enable?: boolean }`, new type `AISourceMatch`): finds online sources that are suspected of containing AI-generated text. It only applies to documents detected as English. When you leave it out, the server default is off.
 - `SubmissionProperties.displayLanguage`: the language of the scan's PDF report. Supported values are lowercase: `en`, `es`, `pt`, `fr`, `de`, `it`. The server rejects other values, such as `EN` or `en-US`. When you leave it out, the report is in English. Do not send `null`.
 - `SubmissionPDF.reportVersion` (`pdf.reportVersion`): which PDF report version to generate. Supported values are lowercase: `v1`, `v2`, `v3`, `latest`. It overrides `pdf.version` when you send both.
-- `AISourceMatch` is exported from `copyleaks/dist/models/submissions/properties`.
 
 #### Read the AI alert from the completed webhook
 
@@ -76,11 +147,6 @@ If your app loads the SDK with `import` and one of your dependencies loads it wi
 - `new CompletedWebhookModel(req.body)` now turns each item of `notifications.alerts` into an `AlertsModel` instance, so the methods above work on a parsed webhook.
 - The root package exports all the new classes and the constant.
 - The README and `demo/webhook-server.js` show how to read the alert.
-
-#### Package renamed to `copyleaks`
-
-- The npm package is now `copyleaks`. It was `plagiarism-checker`. See upgrade note 1.
-- `package.json` has a description, keywords and a link to the GitHub repository.
 
 #### First-class TypeScript support
 
@@ -102,3 +168,29 @@ If your app loads the SDK with `import` and one of your dependencies loads it wi
 
 - The new result types are exported from the package root, together with their parts: `CopyleaksStartResponseScanModel`, `CopyleaksReleaseNoteModel`, `CopyleaksCorrectionTypeModel`, the `CopyleaksWritingAssistant...Model` types and `CopyleaksAiTextDetectionScannedDocumentModel`.
 - `CopyleaksAiTextDetectionResponseModel` (new in this release) also describes the result of `submitNaturalTextAsync`, so it gained the optional `scannedDocument` and `scanType` fields of that response. `submitNaturalTextAsync` results include `scannedDocument`, but the `suspected-ai-text` alert data can leave it out, for example for sandbox scans, so check it before you use it. `submitNaturalTextAsync` still returns the plain JSON object, not a class instance, so `instanceof CopyleaksAiTextDetectionResponseModel` is `false` for it. Call `new CopyleaksAiTextDetectionResponseModel(result)` if you need an instance.
+
+### Changed
+
+- The npm package is now `copyleaks`. It was `plagiarism-checker`. See upgrade note 1. `package.json` has a description, keywords and a link to the GitHub repository.
+- All requests share one axios instance with keep-alive connections, so repeated calls reuse open connections instead of opening a new TLS connection each time. Each `Copyleaks` instance and its product clients share one pool.
+- Requests time out after 2 minutes by default (upgrade note 7).
+- HTTP 429 throws `RateLimitException` on every method. Before, the submit, start, export and login methods did not check for it.
+- Error messages include the HTTP status and the response body. The SDK exceptions set `name` to their class name, for example `CommandException`.
+- `getSupportedFileTypesAsync` calls the documented path `/v3/miscellaneous/supported-plagiarism-file-types`. The response is the same.
+- The `User-Agent` header is `node-sdk/7.0.0`. It was `node-sdk/3.0`.
+- These fields are now optional, as in the API: `pdf.create`, `pdf.title`, `pdf.largeLogo`, `pdf.rtl` and `pdf.version`, the four `ScoreWeights` weights (a weight you leave out counts as 1.0), `aiGeneratedText.detect`, and the `results` and `crawledVersion` arguments of `CopyleaksExportModel`.
+- `pdf.version` is deprecated. Use `pdf.reportVersion`.
+- `pdf.colors.title` is deprecated. Use `pdf.colors.titles`.
+- `CopyleaksAiImageDetectionResponseModel` and `CopyleaksTextModerationResponseModel` accept any parsed JSON in their constructor, so you can build them from a webhook body.
+- `axios` is a regular dependency only, no longer also a peer dependency. `rimraf`, a build tool, is no longer installed with the SDK.
+- `CopyleaksTextModerationRequestModel` accepts at most 16 labels (upgrade note 9).
+
+### Fixed
+
+- `CommandException`, `RateLimitException` and `UnderMaintenanceException` are now thrown. Before, axios rejected every non-2xx response first, and the raw axios error exposed the bearer token. `CommandException` also had the message `[object Object]`.
+- The PDF title color is sent as `titles`, the field the API reads. It was sent as `title`, so the API ignored it. Code that still sets `colors.title` now works too.
+- The AI image detection result no longer drops fields: it keeps `isAiDetected`, `detectedObjects` and any other field the API returns. The text moderation result keeps `modelVersion` and every other field.
+- `scanning.crossLanguages` can be set. The `CrossLanguages` type existed but no property used it.
+- `ExportCompletedWebhookModel` keeps every task of the `tasks` list.
+- `scannedDocument.totalExcluded` of the completed webhook is declared with the API's spelling. The misspelled `totalExecluded` is deprecated and now holds the same value.
+- `getUsagesHistoryCsvAsync` returns the CSV text without first trying to parse it as JSON.

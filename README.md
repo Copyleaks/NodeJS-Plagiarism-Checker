@@ -7,7 +7,9 @@ This SDK gives you access to the following Copyleaks products:
 
 *   AI Text Detection
 *   AI Image Detection
+*   AI Video Detection
 *   Plagiarism Checker (Authenticity scans: file, URL, OCR)
+*   Image Plagiarism Detection
 *   Grammar Checker
 *   Text Moderation
 
@@ -16,6 +18,7 @@ Before you start, ensure you have the following:
 
 *   An active Copyleaks account. If you don’t have one, [sign up for free](https://copyleaks.com/signup).
 *   You can find your API key on the [API Dashboard](https://api.copyleaks.com/dashboard).
+*   Node.js 18 or later.
 
 Once you have your account and API key:
 
@@ -46,6 +49,45 @@ async function main() {
 main().catch(err => console.error(err));
 ```
 
+
+## Configuration and errors
+Create one `Copyleaks` instance and reuse it. All its calls share one pool of keep-alive connections. Every option is optional:
+
+```javascript
+const { Copyleaks } = require('copyleaks');
+
+const copyleaks = new Copyleaks({
+  timeout: 120000,    // time limit for each request in milliseconds (default 2 minutes, 0 = no limit)
+  maxRetries: 2,      // retry HTTP 429/503 and connection errors (default 0)
+  retryDelay: 1000,   // first backoff delay in milliseconds, doubled on each retry; Retry-After wins
+  maxSockets: 50,     // largest number of open connections per host
+  // axiosInstance, httpAgent, httpsAgent, apiServerUri and identityServerUri are also available
+});
+```
+
+A request that charges credits, such as a scan, is never retried after a timeout, because the server may already have processed it.
+
+Failed calls throw these exceptions. None of them contains your token:
+
+```javascript
+const { CommandException, RateLimitException, UnderMaintenanceException, NetworkException } = require('copyleaks');
+
+try {
+  await copyleaks.getCreditsBalanceAsync(authToken);
+} catch (err) {
+  if (err instanceof RateLimitException) {
+    console.log(`Too many requests, retry in ${err.retryAfter ?? 60} seconds`);
+  } else if (err instanceof UnderMaintenanceException) {
+    console.log('Copyleaks is under maintenance, retry later');
+  } else if (err instanceof CommandException) {
+    console.log(`Rejected with HTTP ${err.status}:`, err.body); // 400, 401, 402, 403, 404, 409...
+  } else if (err instanceof NetworkException) {
+    console.log(err.isTimeout ? 'Timed out' : `Connection error ${err.code}`);
+  } else {
+    throw err;
+  }
+}
+```
 
 ## 📚 Documentation
 To learn more about how to use Copyleaks API please check out our [Documentation](https://docs.copyleaks.com/resources/sdks/javascript/). 
@@ -307,6 +349,140 @@ main().catch(err => console.error(err));
 For a full guide please refer to our step by step [Guide](https://docs.copyleaks.com/guides/ai-detector/ai-image-detection/)
 
 For a detailed understanding of the AI Image Detection process, refer to the Copyleaks AI image detection Endpoint [Documentation](https://docs.copyleaks.com/reference/actions/ai-image-detector/check/)
+
+##
+### AI Image Detection: upload the file, masks and objects
+`submitFileAsync` uploads the image bytes as multipart/form-data, without base64. Both methods accept a mask type (`binary`, `heatmap` or `none`) and up to 3 objects to find.
+
+```javascript
+const fs = require('fs');
+const {
+  CopyleaksAiImageDetectionFileRequestModel, CopyleaksAiImageDetectionModels, CopyleaksAiImageDetectionMaskTypes,
+} = require('copyleaks');
+
+const model = new CopyleaksAiImageDetectionFileRequestModel(
+  fs.readFileSync('path/to/image.png'),
+  'image.png',
+  CopyleaksAiImageDetectionModels.AI_IMAGE_1_ULTRA,
+  true, // sandbox mode
+  CopyleaksAiImageDetectionMaskTypes.HEATMAP,
+  [{ object: 'face' }]
+);
+const result = await copyleaks.aiImageDetectionClient.submitFileAsync(authToken, `scan${Date.now()}`, model);
+console.log(result.isAiDetected, result.summary.ai, result.result?.labels, result.detectedObjects);
+```
+##
+### AI Image Detection for an image URL (webhook)
+Copyleaks downloads the image and POSTs the result to your webhook. The call returns when the request is accepted.
+
+```javascript
+const { CopyleaksAiImageDetectionAsyncRequestModel, CopyleaksAiImageDetectionResponseModel } = require('copyleaks');
+
+await copyleaks.aiImageDetectionClient.submitUrlAsync(authToken, `scan${Date.now()}`, new CopyleaksAiImageDetectionAsyncRequestModel({
+  url: 'https://example.com/image.png',
+  fileName: 'image.png',
+  model: 'ai-image-1-ultra',
+  webhooks: { url: 'https://your-server.com/webhook/ai-image' },
+  sandbox: true,
+}));
+
+// In your webhook handler:
+app.post('/webhook/ai-image', (req, res) => {
+  const result = new CopyleaksAiImageDetectionResponseModel(req.body);
+  console.log(result.isAiDetected, result.summary.ai);
+  res.sendStatus(200);
+});
+```
+For more details, see the AI Image Detector Async [Documentation](https://docs.copyleaks.com/reference/actions/ai-image-detector/submit/)
+##
+### Image Plagiarism Detection
+Search the web for copies of an image. The image is uploaded as multipart/form-data and the result comes back in the response.
+
+```javascript
+const fs = require('fs');
+const { CopyleaksImagePlagiarismRequestModel, CopyleaksImagePlagiarismMatchTypes } = require('copyleaks');
+
+const model = new CopyleaksImagePlagiarismRequestModel(
+  fs.readFileSync('path/to/photo.jpg'),
+  'photo.jpg',
+  true // sandbox mode: mock results, no credits used
+);
+const result = await copyleaks.imagePlagiarismClient.submitAsync(authToken, `scan${Date.now()}`, model);
+console.log(`Total matches: ${result.matches.score.totalMatches}`);
+for (const match of result.matches.internet) {
+  const type = match.matchType === CopyleaksImagePlagiarismMatchTypes.FULL ? 'full' : 'partial';
+  console.log(type, match.url, (match.webPages || []).map(page => page.url));
+}
+```
+For more details, see the Image Plagiarism Detection [Documentation](https://docs.copyleaks.com/reference/actions/image-plagiarism-detector/check/)
+##
+### AI Video Detection
+Submit a video URL. Copyleaks POSTs the result to your webhook when the analysis is done.
+
+```javascript
+const {
+  CopyleaksAiVideoDetectionRequestModel, CopyleaksAiVideoDetectionModels, CopyleaksAiVideoDetectionResponseModel,
+} = require('copyleaks');
+
+await copyleaks.aiVideoDetectionClient.submitAsync(authToken, `video${Date.now()}`, new CopyleaksAiVideoDetectionRequestModel({
+  url: 'https://example.com/my-video.mp4',
+  filename: 'my-video.mp4',
+  model: CopyleaksAiVideoDetectionModels.AI_VIDEO_1_PRO,
+  webhooks: { url: 'https://your-server.com/webhook/ai-video' },
+  sandbox: true,
+}));
+
+// In your webhook handler:
+app.post('/webhook/ai-video', (req, res) => {
+  const result = new CopyleaksAiVideoDetectionResponseModel(req.body);
+  console.log(result.isAiDetected, result.summary.overallAIRatio, result.audioResult, result.visualResult);
+  res.sendStatus(200);
+});
+```
+For more details, see the AI Video Detection [Documentation](https://docs.copyleaks.com/reference/actions/ai-video-detector/submit/)
+##
+### AI Logic, sensitivity and AI credits
+```javascript
+const { CopyleaksNaturalLanguageSubmissionModel } = require('copyleaks');
+
+// text, sandbox, language, explain (AI Logic), sensitivity (1 to 3)
+const submission = new CopyleaksNaturalLanguageSubmissionModel(sampleText, true, 'en', true, 3);
+const result = await copyleaks.aiDetectionClient.submitNaturalTextAsync(authToken, `scan${Date.now()}`, submission);
+console.log(result.summary.ai, result.explain);
+
+const { credits } = await copyleaks.aiDetectionClient.getCreditsBalanceAsync(authToken);
+```
+##
+### Scan options
+Plagiarism scans accept more options in `properties`, for example the Grammar Checker, the Gen-AI Overview, the Citation Checker and cross-language detection:
+
+```javascript
+const submission = new CopyleaksURLSubmissionModel('https://example.com/article', {
+  sandbox: true,
+  webhooks: { status: `${WEBHOOK_URL}/webhook/{STATUS}`, statusHeaders: [['Authorization', 'Bearer my-webhook-token']] },
+  aiGeneratedText: { detect: true, sensitivity: 2, explain: { enable: true } },
+  writingFeedback: { enable: true },
+  overview: { enable: true },
+  references: { validate: true },
+  internalAiSourceMatch: { enable: true },
+  scanTimeZone: 'America/New_York',
+  scanning: { crossLanguages: { languages: [{ code: 'fr' }, { code: 'es' }] } },
+  pdf: { create: true, reportVersion: 'latest', colors: { titles: '#040F21' } },
+});
+await copyleaks.submitUrlAsync(authToken, `scan${Date.now()}`, submission);
+```
+Export the extra reports with the `aiDetection`, `writingFeedback` and `overview` targets of `CopyleaksExportModel`.
+##
+### Lookups
+```javascript
+// No login needed:
+const { documentLanguages, resultLanguages } = await copyleaks.getAllowedCrossLanguagesAsync();
+const { supportedAiFileTypes } = await copyleaks.getSupportedAiTextDetectionFileTypesAsync();
+
+// Private Cloud Hub repository information (Admin or Super Admin role):
+const repository = await copyleaks.getRepositoryInfoAsync(authToken, 'my-repository-id');
+console.log(repository.name, repository.currentCredits, repository.maxCredits);
+```
 
 ##
 ### Further Resources
