@@ -27,7 +27,7 @@ import { CopyleaksAiImageDetectionSummaryModel } from './CopyleaksAiImageDetecti
 import { CopyleaksAiImageDetectionImageInfoModel } from './CopyleaksAiImageDetectionImageInfoModel.js';
 import { CopyleaksAiImageDetectionScannedDocumentModel } from './CopyleaksAiImageDetectionScannedDocumentModel.js';
 import { CopyleaksAiImageDetectedObjectModel } from './CopyleaksAiImageDetectedObjectModel.js';
-import { CopyleaksAsyncWebhookErrorModel } from '../CopyleaksAsyncWebhookErrorModel.js';
+import { ErrorModel } from '../../submissions/webhooks/helperModels/errorModels/errorModel.js';
 
 /**
  * Response model for Copyleaks AI image detection analysis.
@@ -73,7 +73,7 @@ export class CopyleaksAiImageDetectionResponseModel {
      * Why the scan failed, in the webhook of `submitUrlAsync`. Set only when the scan failed,
      * and then the result fields are missing.
      */
-    public error?: CopyleaksAsyncWebhookErrorModel;
+    public error?: ErrorModel;
     /**
      * The `developerPayload` of the `submitUrlAsync` request, unchanged.
      */

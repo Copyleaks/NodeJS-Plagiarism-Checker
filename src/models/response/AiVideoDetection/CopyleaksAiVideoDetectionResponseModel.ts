@@ -22,7 +22,7 @@
  SOFTWARE.
 */
 
-import type { CopyleaksAsyncWebhookErrorModel } from '../CopyleaksAsyncWebhookErrorModel.js';
+import type { ErrorModel } from '../../submissions/webhooks/helperModels/errorModels/errorModel.js';
 
 /**
  * The AI Video Detector result that Copyleaks POSTs to your webhook (`webhooks.url` of the request).
@@ -47,7 +47,7 @@ export class CopyleaksAiVideoDetectionResponseModel {
   /** Metadata about the scan operation. */
   public scannedVideo?: CopyleaksAiVideoDetectionScannedVideoModel;
   /** Why the scan failed. Set only when the scan failed, and then the result fields are missing. */
-  public error?: CopyleaksAsyncWebhookErrorModel;
+  public error?: ErrorModel;
   /** The `developerPayload` of the request, unchanged. */
   public developerPayload?: string;
 

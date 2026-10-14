@@ -40,7 +40,7 @@ import {
 import type {
   CopyleaksAiImageDetectedObjectModel,
   CopyleaksAiImageDetectionResponseModel,
-  CopyleaksAsyncWebhookErrorModel,
+  ErrorModel,
   CopyleaksAiTextDetectionCreditsResponseModel,
   CopyleaksAiTextDetectionFileTypesResponseModel,
   CopyleaksCrossLanguagesResponseModel,
@@ -246,15 +246,13 @@ export async function useNewApi(): Promise<void> {
   const videoTyped: Equal<typeof video, void> = true;
   const videoResult = new CopyleaksAiVideoDetectionResponseModel({ isAiDetected: true });
   const overallRatio: number = videoResult.summary.overallAIRatio;
-  const videoError: CopyleaksAsyncWebhookErrorModel | undefined = videoResult.error;
+  const videoError: ErrorModel | undefined = videoResult.error;
   const videoErrorCode: number | undefined = videoResult.error?.code;
   const videoErrorParam: string | undefined = videoResult.error?.details?.[0]?.param;
   const videoPayload: string | undefined = videoResult.developerPayload;
   const imageError = aiImage.error;
   const imagePayload: string | undefined = aiImage.developerPayload;
-  const imageErrorTyped: Equal<typeof imageError, CopyleaksAsyncWebhookErrorModel | undefined> = true;
-  // @ts-expect-error -- code, message, type and id are required
-  const incompleteError: CopyleaksAsyncWebhookErrorModel = { message: 'failed' };
+  const imageErrorTyped: Equal<typeof imageError, ErrorModel | undefined> = true;
 
   // Lookups
   const crossLanguages = await copyleaks.getAllowedCrossLanguagesAsync();

@@ -158,7 +158,7 @@ New request models: `CopyleaksImagePlagiarismRequestModel`, `CopyleaksAiVideoDet
 - Text moderation: `modelVersion`.
 - Completed webhook: `referencesValidation` (Citation Checker summary), `results.internalAIData`, `url` of each `results.internet` item, and `scannedDocument.totalExcluded`.
 - Error webhook: `error.type`, `error.id`, `error.url` and `error.details`.
-- AI video and async AI image webhooks: `error` when the scan failed (new type `CopyleaksAsyncWebhookErrorModel`, with `type`, `id`, `code`, `message`, `url` and `details`), and `developerPayload`. A failed scan's webhook has no result fields, so check `error` first. `CopyleaksAiVideoDetectionResponseModel` and `CopyleaksAiImageDetectionResponseModel` declare both fields.
+- AI video and async AI image webhooks: `error` when the scan failed (an `ErrorModel`, the same type as in error webhooks, with `type`, `id`, `code`, `message`, `url` and `details`), and `developerPayload`. A failed scan's webhook has no result fields, so check `error` first. `CopyleaksAiVideoDetectionResponseModel` and `CopyleaksAiImageDetectionResponseModel` declare both fields.
 - Exceptions: `status`, `body` and `response` on `CommandException`, `RateLimitException` and `UnderMaintenanceException`, `retryAfter` on `RateLimitException` and `UnderMaintenanceException`, and the new `NetworkException`. See upgrade note 6.
 
 #### Other additions
