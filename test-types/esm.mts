@@ -86,8 +86,10 @@ export async function useEveryClient(): Promise<void> {
   // New submit properties (BAC-5378)
   const aiSourceMatch: AISourceMatch = { enable: true };
   const newProperties: Pick<SubmissionProperties, 'aiSourceMatch' | 'displayLanguage'> = { aiSourceMatch, displayLanguage: 'en' };
-  // PDF version is optional (deprecated) so reportVersion can be used alone (BAC-6814)
-  const pdfReportV3: Pick<SubmissionPDF, 'create' | 'version' | 'reportVersion'> = { create: true, reportVersion: 'v3' };
+  // PDF reportVersion v3 is accepted; the legacy version field was removed (BAC-6816)
+  const pdfReportV3: Pick<SubmissionPDF, 'create' | 'reportVersion'> = { create: true, reportVersion: 'v3' };
+  // @ts-expect-error -- legacy pdf version field no longer exists
+  const pdfLegacyVersion: Partial<SubmissionPDF> = { version: 2 };
 
   // Account and public endpoints
   const credits = await copyleaks.getCreditsBalanceAsync(token);

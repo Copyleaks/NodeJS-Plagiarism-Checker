@@ -23,7 +23,6 @@
 */
 
 import { PdfReportColors } from "./PdfReportColors.js";
-import { PdfReportVersion } from "./PdfReportVersion.js";
 
 export interface SubmissionPDF {
   /**
@@ -43,13 +42,10 @@ export interface SubmissionPDF {
    * When set to true the text in the report will be aligned from right to left.
    */
   rtl: boolean;
-  /** @deprecated PDF report versions 1 and 2 are deprecated; use reportVersion: "v3" instead. */
-  version?: PdfReportVersion;
   /**
    * Which version of the PDF report to generate.
-   * Supported values are lowercase and case-sensitive: v1 (deprecated), v2 (deprecated), v3, latest.
+   * Supported values are lowercase and case-sensitive: v3, latest.
    * Any other value (for example "V3" or "Latest") is rejected by the server.
-   * Overrides version when both are supplied.
    * Only takes effect when create is true.
    * Leave it undefined to get the server default.
    */
