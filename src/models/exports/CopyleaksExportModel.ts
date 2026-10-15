@@ -1,5 +1,3 @@
-import { ExportCrawledVersion } from './ExportCrawledVersion.js';
-import { ExportPdfReport } from './ExportPdfReport.js';
 import { ExportResults } from './ExportResults.js';
 import { ExportTarget } from './ExportTarget.js';
 
@@ -17,10 +15,10 @@ export class CopyleaksExportModel {
   constructor(
     public completionWebhook: string,
     public results?: ExportResults[],
-    public crawledVersion?: ExportCrawledVersion,
+    public crawledVersion?: ExportTarget,
     public maxRetries?: number,
     public developerPayload?: string,
-    public pdfReport?: ExportPdfReport,
+    public pdfReport?: ExportTarget,
     public completionWebhookHeaders?: string[][],
     public aiDetection?: ExportTarget,
     public writingFeedback?: ExportTarget,

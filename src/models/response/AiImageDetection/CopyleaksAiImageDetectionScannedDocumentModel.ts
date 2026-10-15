@@ -1,4 +1,4 @@
-/** Metadata of an AI image detection scan. */
+/** Metadata of an AI image or AI video detection scan. */
 export class CopyleaksAiImageDetectionScannedDocumentModel {
     public scanId: string;
 

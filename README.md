@@ -57,7 +57,7 @@ Create one `Copyleaks` instance and reuse it. All its calls share one pool of ke
 const { Copyleaks } = require('copyleaks');
 
 const copyleaks = new Copyleaks({
-  timeout: 120000,    // time limit for each request in milliseconds (default 2 minutes, 0 = no limit)
+  timeout: 120000,    // time limit per attempt in milliseconds (default 2 minutes, 0 = no limit)
   maxRetries: 2,      // retry HTTP 429/503 and connection errors (default 0)
   retryDelay: 1000,   // first backoff delay in milliseconds, doubled on each retry; Retry-After wins
   maxSockets: 50,     // largest number of open connections per host

@@ -1,5 +1,6 @@
 export * from "./CopyleaksAuthToken.js";
 export * from "./TextModeration/CopyleaksTextModerationResponseModel.js";
+export * from "./CopyleaksRangesModel.js";
 export * from "./AiImageDetection/CopyleaksImageShapeModel.js";
 export * from "./AiImageDetection/CopyleaksImageMetadataModel.js";
 export * from "./AiImageDetection/CopyleaksAiImageDetectionSummaryModel.js";

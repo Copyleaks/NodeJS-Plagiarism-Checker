@@ -1,4 +1,5 @@
 export * from './AuthExipredException.js';
+export * from './CopyleaksApiException.js';
 export * from './CommandException.js';
 export * from './UnderMaintenanceExceptions.js';
 export * from './RateLimitException.js';

@@ -70,7 +70,7 @@ In 6.0.0 every failed call rejected with the raw axios error, because axios reje
 
 #### 7. Requests time out after 2 minutes
 
-Calls used to wait forever for a response. Now each request stops after 120 seconds and throws a `NetworkException` whose `isTimeout` is `true`. Change the limit with `new Copyleaks({ timeout: 300000 })`, or pass `timeout: 0` to wait without a limit.
+Calls used to wait forever for a response. Now each attempt stops after 120 seconds and throws a `NetworkException` whose `isTimeout` is `true`. Change the limit with `new Copyleaks({ timeout: 300000 })`, or pass `timeout: 0` to wait without a limit.
 
 #### 8. The SDK no longer uses the global axios instance
 
@@ -133,7 +133,7 @@ New request models: `CopyleaksImagePlagiarismRequestModel`, `CopyleaksAiVideoDet
 
 `new Copyleaks(options)` takes optional settings (type `CopyleaksOptions`). The product clients take the same options when you create them on their own, for example `new AIDetectionClient(options)`.
 
-- `timeout`: time limit for each request, in milliseconds. Default: 120000.
+- `timeout`: time limit per attempt, in milliseconds. Default: 120000. With retries, a call can take up to (`maxRetries` + 1) times `timeout`, plus the retry delays.
 - `maxRetries`, `retryDelay`, `maxRetryDelay`: retry HTTP 429 and 503 responses and connection errors, with exponential backoff and `Retry-After`. Off by default. GET requests are also retried after timeouts. Other requests are never retried after a timeout, or after HTTP 503 without a `Retry-After` header, because the server may already have processed them and charged credits.
 - `maxSockets`, `httpAgent`, `httpsAgent`: control the connection pool.
 - `axiosInstance`: send the requests through your own axios instance, for example one with interceptors.
@@ -159,7 +159,7 @@ New request models: `CopyleaksImagePlagiarismRequestModel`, `CopyleaksAiVideoDet
 - Completed webhook: `referencesValidation` (Citation Checker summary), `results.internalAIData`, `url` of each `results.internet` item, and `scannedDocument.totalExcluded`.
 - Error webhook: `error.type`, `error.id`, `error.url` and `error.details`.
 - AI video and async AI image webhooks: `error` when the scan failed (an `ErrorModel`, the same type as in error webhooks, with `type`, `id`, `code`, `message`, `url` and `details`), and `developerPayload`. A failed scan's webhook has no result fields, so check `error` first. `CopyleaksAiVideoDetectionResponseModel` and `CopyleaksAiImageDetectionResponseModel` declare both fields.
-- Exceptions: `status`, `body` and `response` on `CommandException`, `RateLimitException` and `UnderMaintenanceException`, `retryAfter` on `RateLimitException` and `UnderMaintenanceException`, and the new `NetworkException`. See upgrade note 6.
+- Exceptions: `status`, `body` and `response` on `CommandException`, `RateLimitException` and `UnderMaintenanceException` (all three extend the new `CopyleaksApiException`), `retryAfter` on `RateLimitException` and `UnderMaintenanceException`, and the new `NetworkException`. See upgrade note 6.
 
 #### Other additions
 

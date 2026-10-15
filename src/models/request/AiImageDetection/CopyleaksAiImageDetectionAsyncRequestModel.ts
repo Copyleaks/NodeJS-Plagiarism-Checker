@@ -1,8 +1,9 @@
 import { CopyleaksAsyncWebhooksModel } from '../CopyleaksAsyncWebhooksModel.js';
+import { CopyleaksAiImageDetectionBaseRequestModel } from './CopyleaksAiImageDetectionBaseRequestModel.js';
 import { CopyleaksAiImageObjectDetectionModel } from './CopyleaksAiImageObjectDetectionModel.js';
 
 /** Request of `AiImageDetectionClient.submitUrlAsync`. */
-export class CopyleaksAiImageDetectionAsyncRequestModel {
+export class CopyleaksAiImageDetectionAsyncRequestModel extends CopyleaksAiImageDetectionBaseRequestModel {
   /** Publicly accessible URL of the image. */
   public url: string;
   /** The image file name, with its extension: .jpg, .jpeg, .png, .webp, .tiff, .bmp, .heic or .heif. */
@@ -11,10 +12,6 @@ export class CopyleaksAiImageDetectionAsyncRequestModel {
   public model: string;
   /** Where Copyleaks sends the result. */
   public webhooks: CopyleaksAsyncWebhooksModel;
-  /** Detection mask: "binary" (default) or "heatmap". */
-  public maskType?: string;
-  /** Objects to find in the image, for example [{ object: "face" }]. Up to 3 entries. */
-  public objectDetection?: CopyleaksAiImageObjectDetectionModel[];
   /** Headers Copyleaks sends when it downloads the image. Example: [["X-Custom-Auth", "my-token"]] */
   public headers?: string[][];
   /** Return a mock result without using credits. */
@@ -33,6 +30,7 @@ export class CopyleaksAiImageDetectionAsyncRequestModel {
     sandbox?: boolean;
     developerPayload?: string;
   }) {
+    super();
     this.url = init.url;
     this.fileName = init.fileName;
     this.model = init.model;

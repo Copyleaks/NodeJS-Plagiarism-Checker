@@ -9,7 +9,7 @@ import { CopyleaksAuthToken } from '../models/response/CopyleaksAuthToken.js';
 import { isRateLimitResponse, isSuccessStatusCode, isUnderMaintenanceResponse } from '../utils/status-code.utils.js';
 import { CopyleaksOptions } from './CopyleaksOptions.js';
 
-/** Default time limit for each request, in milliseconds (2 minutes). */
+/** Default time limit per attempt, in milliseconds (2 minutes). */
 export const DEFAULT_TIMEOUT_MS = 120000;
 /** Default largest number of open sockets per host. */
 export const DEFAULT_MAX_SOCKETS = 50;

@@ -1,4 +1,7 @@
 import type { ErrorModel } from '../../submissions/webhooks/helperModels/errorModels/errorModel.js';
+import type { CopyleaksAiImageDetectionScannedDocumentModel } from '../AiImageDetection/CopyleaksAiImageDetectionScannedDocumentModel.js';
+import type { CopyleaksImageMetadataModel } from '../AiImageDetection/CopyleaksImageMetadataModel.js';
+import type { CopyleaksRangesModel } from '../CopyleaksRangesModel.js';
 
 /**
  * AI video detection result, POSTed to `webhooks.url` of the request. Parse it with
@@ -18,7 +21,8 @@ export class CopyleaksAiVideoDetectionResponseModel {
   /** Whether the video was determined to contain AI-generated content. */
   public isAiDetected!: boolean;
   public videoInfo?: CopyleaksAiVideoDetectionVideoInfoModel;
-  public scannedVideo?: CopyleaksAiVideoDetectionScannedVideoModel;
+  /** Scan id, credits and creation time. */
+  public scannedVideo?: CopyleaksAiImageDetectionScannedDocumentModel;
   /** Why the scan failed. */
   public error?: ErrorModel;
   /** The `developerPayload` of the request, unchanged. */
@@ -34,22 +38,10 @@ export class CopyleaksAiVideoDetectionResponseModel {
   }
 }
 
-/** AI-detected segments of one track (audio or visual), in milliseconds. */
-export interface CopyleaksAiVideoDetectionTrackResultModel {
-  /** Start positions of the AI-detected segments, in milliseconds. */
-  starts: number[];
-  /** Durations of the AI-detected segments, in milliseconds, one for each start position. */
-  lengths: number[];
+/** AI-detected segments of one track (audio or visual): `starts` and `lengths` in milliseconds. */
+export interface CopyleaksAiVideoDetectionTrackResultModel extends CopyleaksRangesModel {
   /** Ranges of the track that were not scored and are left out of the AI ratios. */
-  exclude?: CopyleaksAiVideoDetectionRangesModel;
-}
-
-/** Time ranges of a track, in milliseconds. */
-export interface CopyleaksAiVideoDetectionRangesModel {
-  /** Start positions of the ranges, in milliseconds. */
-  starts: number[];
-  /** Durations of the ranges, in milliseconds. */
-  lengths: number[];
+  exclude?: CopyleaksRangesModel;
 }
 
 /** Overall AI ratios of a video, each from 0.0 to 1.0. */
@@ -67,29 +59,5 @@ export interface CopyleaksAiVideoDetectionVideoInfoModel {
   /** Duration of the video, in seconds. */
   duration?: number;
   /** Metadata extracted from the video file, for example C2PA provenance data. */
-  metadata?: CopyleaksAiVideoDetectionMetadataModel;
-}
-
-/** Metadata extracted from the video file. */
-export interface CopyleaksAiVideoDetectionMetadataModel {
-  /** When the video was created, if available. */
-  issuedTime?: string;
-  /** The AI service or tool that created the video, if available. */
-  issuedBy?: string;
-  /** The application or device used to create the video, if available. */
-  appOrDeviceUsed?: string;
-  /** A summary of how the video was generated, if available. */
-  contentSummary?: string;
-}
-
-/** Metadata about an AI video scan. */
-export interface CopyleaksAiVideoDetectionScannedVideoModel {
-  /** The scan id of the request. */
-  scanId: string;
-  /** The number of credits charged for the scan. */
-  actualCredits: number;
-  /** The number of credits expected for the scan. */
-  expectedCredits: number;
-  /** ISO 8601 creation time of the scan. */
-  creationTime: string;
+  metadata?: CopyleaksImageMetadataModel;
 }

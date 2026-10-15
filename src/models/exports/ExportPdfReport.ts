@@ -1,8 +1,4 @@
-export interface ExportPdfReport {
-  /** URL that Copyleaks uploads the data to. */
-  endpoint: string;
-  /** HTTP method of the upload, for example POST. */
-  verb: string;
-  /** Headers of the upload request, such as Authorization. Example: [["header-key", "header-value"]] */
-  headers?: string[][];
-}
+import type { ExportTarget } from './ExportTarget.js';
+
+/** Where Copyleaks uploads the PDF report. Same as `ExportTarget`. */
+export type ExportPdfReport = ExportTarget;

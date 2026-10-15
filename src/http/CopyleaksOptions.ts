@@ -16,7 +16,8 @@ export interface CopyleaksOptions {
    */
   identityServerUri?: string;
   /**
-   * Time limit for each request, in milliseconds; `0` means none. Default: 120000 (2 minutes).
+   * Time limit per attempt, in milliseconds; `0` means none. Default: 120000 (2 minutes).
+   * With retries, a call can take up to (maxRetries + 1) times the timeout, plus the retry delays.
    * A timeout throws a `NetworkException` with `isTimeout` true.
    * With your own `axiosInstance` and no `timeout`, the instance's timeout applies.
    */

@@ -1,6 +1,6 @@
 /**
- * Where Copyleaks uploads one exported report: the `aiDetection`, `writingFeedback` and `overview`
- * targets of `CopyleaksExportModel`.
+ * Where Copyleaks uploads one exported item: the `crawledVersion`, `pdfReport`, `aiDetection`,
+ * `writingFeedback` and `overview` targets of `CopyleaksExportModel`.
  */
 export interface ExportTarget {
   /** URL that Copyleaks uploads the data to. */

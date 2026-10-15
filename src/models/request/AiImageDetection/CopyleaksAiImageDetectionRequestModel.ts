@@ -1,7 +1,8 @@
+import { CopyleaksAiImageDetectionBaseRequestModel } from './CopyleaksAiImageDetectionBaseRequestModel.js';
 import { CopyleaksAiImageObjectDetectionModel } from './CopyleaksAiImageObjectDetectionModel.js';
 
 /** Request of `AiImageDetectionClient.submitAsync`. */
-export class CopyleaksAiImageDetectionRequestModel {
+export class CopyleaksAiImageDetectionRequestModel extends CopyleaksAiImageDetectionBaseRequestModel {
     /** The image, base64-encoded. 512x512 to 6000x4500 px, under 32 MB. PNG, JPEG, BMP, WebP or HEIC/HEIF. */
     public base64: string;
 
@@ -17,15 +18,6 @@ export class CopyleaksAiImageDetectionRequestModel {
     /** Return mock results without using credits, to test your integration. */
     public sandbox: boolean = false;
 
-    /** "binary" (default), "heatmap" or "none", see `CopyleaksAiImageDetectionMaskTypes`. */
-    public maskType?: string;
-
-    /**
-     * Up to 3 objects to find, for example [{ object: "face" }].
-     * The response lists the ones found in `detectedObjects`.
-     */
-    public objectDetection?: CopyleaksAiImageObjectDetectionModel[];
-
     constructor(
         base64: string,
         fileName: string,
@@ -33,6 +25,7 @@ export class CopyleaksAiImageDetectionRequestModel {
         sandbox: boolean = false,
         maskType?: string,
         objectDetection?: CopyleaksAiImageObjectDetectionModel[]) {
+        super();
         this.base64 = base64;
         this.fileName = fileName;
         this.model = model;
