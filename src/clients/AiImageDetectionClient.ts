@@ -1,26 +1,3 @@
-/*
- The MIT License(MIT)
-
- Copyright(c) 2016 Copyleaks LTD (https://copyleaks.com)
-
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
-
- The above copyright notice and this permission notice shall be included in all
- copies or substantial portions of the Software.
-
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- SOFTWARE.
-*/
 import {
   CopyleaksAiImageDetectionResponseModel,
   CopyleaksAuthToken,
@@ -35,6 +12,7 @@ import { CopyleaksHttp } from "../http/CopyleaksHttp.js";
 import { CopyleaksOptions } from "../http/CopyleaksOptions.js";
 import { buildMultipartForm } from "../http/wire.js";
 
+/** AI Image Detection. */
 export class AiImageDetectionClient {
   private readonly http: CopyleaksHttp;
 
@@ -45,21 +23,11 @@ export class AiImageDetectionClient {
     this.http = new CopyleaksHttp(options);
   }
 
-      /**
-    This endpoint will receive submitted image to be checked. The image is sent as base64 in a JSON body.
-    To upload the image bytes without base64, use `submitFileAsync`.
-     * For more info: https://docs.copyleaks.com/reference/actions/ai-image-detector/check
-     * * Exceptions:
-     *  * CommandException: Server reject the request. See `status` and `body` for more info.
-     *  * UnderMaintenanceException: Copyleaks servers are unavailable for maintenance.
-     *     We recommend to implement exponential backoff algorithm as described here:
-     *     https://api.copyleaks.com/documentation/v3/exponential-backoff
-     *  * RateLimitException: Too many requests have been sent. The request has been rejected.
-     *  * NetworkException: No HTTP response, for example a timeout.
-     * @param authToken Copyleaks authentication token
-     * @param scanId Attach your own scan Id
-     * @param submission Submission image request model
-     */
+  /**
+   * Checks a base64-encoded image for AI generation. To upload the raw bytes, use `submitFileAsync`.
+   * For more info: https://docs.copyleaks.com/reference/actions/ai-image-detector/check
+   * @param scanId Your own ID for the scan.
+   */
   public async submitAsync(
     authToken: CopyleaksAuthToken,
     scanId: string,
@@ -76,13 +44,9 @@ export class AiImageDetectionClient {
   }
 
   /**
-   * Checks an image for AI generation, uploading the image bytes as multipart/form-data.
-   * Same endpoint and response as `submitAsync`, without the base64 overhead.
+   * Same as `submitAsync`, but uploads the raw image bytes as multipart/form-data, without the base64 overhead.
    * For more info: https://docs.copyleaks.com/reference/actions/ai-image-detector/check
-   * * Exceptions: CommandException, RateLimitException, UnderMaintenanceException, NetworkException, AuthExipredException.
-   * @param authToken Copyleaks authentication token
-   * @param scanId Attach your own scan Id
-   * @param submission The image bytes, file name, model and options.
+   * @param scanId Your own ID for the scan.
    */
   public async submitFileAsync(
     authToken: CopyleaksAuthToken,
@@ -109,15 +73,10 @@ export class AiImageDetectionClient {
   }
 
   /**
-   * Submits an image URL for asynchronous AI image detection.
-   * Copyleaks downloads the image and POSTs the result to `submission.webhooks.url`.
-   * Parse the webhook body with `new CopyleaksAiImageDetectionResponseModel(body)`.
-   * The call returns once the request is accepted (HTTP 201).
+   * Submits an image URL and returns once it is accepted (HTTP 201). Copyleaks downloads the image and POSTs
+   * the result, a `CopyleaksAiImageDetectionResponseModel`, to `submission.webhooks.url`.
    * For more info: https://docs.copyleaks.com/reference/actions/ai-image-detector/submit
-   * * Exceptions: CommandException, RateLimitException, UnderMaintenanceException, NetworkException, AuthExipredException.
-   * @param authToken Copyleaks authentication token
-   * @param scanId Attach your own scan Id
-   * @param submission The image URL, file name, model, webhook and options.
+   * @param scanId Your own ID for the scan.
    */
   public async submitUrlAsync(
     authToken: CopyleaksAuthToken,

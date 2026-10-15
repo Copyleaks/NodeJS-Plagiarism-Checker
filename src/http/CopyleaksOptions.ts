@@ -1,33 +1,8 @@
-/*
- The MIT License(MIT)
-
- Copyright(c) 2016 Copyleaks LTD (https://copyleaks.com)
-
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
-
- The above copyright notice and this permission notice shall be included in all
- copies or substantial portions of the Software.
-
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- SOFTWARE.
-*/
 import type { AxiosInstance, AxiosRequestConfig } from 'axios';
 
 /**
- * Options for `new Copyleaks(options)` and for the product clients
- * (for example `new AIDetectionClient(options)`).
- * Every option is optional. Create one `Copyleaks` instance and reuse it, so that
- * all calls share the same connection pool.
+ * Options for `new Copyleaks(options)` and the product clients, all optional.
+ * Create one `Copyleaks` instance and reuse it, so that all calls share one connection pool.
  */
 export interface CopyleaksOptions {
   /**
@@ -41,16 +16,14 @@ export interface CopyleaksOptions {
    */
   identityServerUri?: string;
   /**
-   * Time limit for each request, in milliseconds. `0` means no time limit.
-   * Default: 120000 (2 minutes). When the time limit is reached, the call throws a `NetworkException`
-   * whose `isTimeout` is true.
-   * When you pass `axiosInstance` and leave this out, the timeout of your instance applies.
+   * Time limit for each request, in milliseconds; `0` means none. Default: 120000 (2 minutes).
+   * A timeout throws a `NetworkException` with `isTimeout` true.
+   * With your own `axiosInstance` and no `timeout`, the instance's timeout applies.
    */
   timeout?: number;
   /**
    * Largest number of open sockets per host. Default: 50.
-   * Used only for the keep-alive agents that the SDK creates. It is ignored when you pass
-   * `httpAgent`, `httpsAgent` or `axiosInstance`.
+   * Ignored when you pass `httpAgent`, `httpsAgent` or `axiosInstance`.
    */
   maxSockets?: number;
   /**

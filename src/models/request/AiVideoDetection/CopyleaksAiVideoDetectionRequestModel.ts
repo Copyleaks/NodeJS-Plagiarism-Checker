@@ -1,34 +1,6 @@
-/*
- The MIT License(MIT)
-
- Copyright(c) 2016 Copyleaks LTD (https://copyleaks.com)
-
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
-
- The above copyright notice and this permission notice shall be included in all
- copies or substantial portions of the Software.
-
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- SOFTWARE.
-*/
 import { CopyleaksAsyncWebhooksModel } from '../CopyleaksAsyncWebhooksModel.js';
 
-/**
- * Request model for the AI Video Detector.
- * Copyleaks downloads the video from `url` and POSTs the result to `webhooks.url`.
- * The webhook body is a `CopyleaksAiVideoDetectionResponseModel`.
- * Use it with `AiVideoDetectionClient.submitAsync`.
- */
+/** Request of `AiVideoDetectionClient.submitAsync`. */
 export class CopyleaksAiVideoDetectionRequestModel {
   /** Publicly accessible URL of the video. */
   public url: string;
@@ -37,7 +9,7 @@ export class CopyleaksAiVideoDetectionRequestModel {
    * Extensions: .mp4, .avi, .mov, .mkv, .webm, .flv, .wmv, .mpg, .m4v, .3gp, .mxf.
    */
   public filename: string;
-  /** The AI video detection model, for example `CopyleaksAiVideoDetectionModels.AI_VIDEO_1_PRO`. */
+  /** See `CopyleaksAiVideoDetectionModels`. */
   public model: string;
   /** Where Copyleaks sends the result. */
   public webhooks: CopyleaksAsyncWebhooksModel;
@@ -45,7 +17,7 @@ export class CopyleaksAiVideoDetectionRequestModel {
   public headers?: string[][];
   /** The HTTP method Copyleaks uses to download the video: GET, POST or PUT. */
   public verb?: string;
-  /** Return a mock result without using credits. Default: false. */
+  /** Return a mock result without using credits. */
   public sandbox?: boolean;
   /** A string that Copyleaks returns in the webhook, to match the result with your records. */
   public developerPayload?: string;
