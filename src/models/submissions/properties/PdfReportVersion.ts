@@ -22,6 +22,7 @@
  SOFTWARE.
 */
 
+/** @deprecated PDF report versions 1 and 2 are deprecated; use reportVersion: "v3" instead. */
 export enum PdfReportVersion {
     /**
      * pdf version 1.

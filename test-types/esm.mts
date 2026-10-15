@@ -38,7 +38,7 @@ import type {
 } from 'copyleaks';
 // Folder deep import: types not exported from the root (resolves via the exact "./dist/<folder>" exports key).
 import { SubmissionActions } from 'copyleaks/dist/models/submissions/properties';
-import type { AISourceMatch, SubmissionProperties } from 'copyleaks/dist/models/submissions/properties';
+import type { AISourceMatch, SubmissionPDF, SubmissionProperties } from 'copyleaks/dist/models/submissions/properties';
 
 // True only when A and B are the same type. `any` never matches a concrete type.
 type Equal<A, B> = (<T>() => T extends A ? 1 : 2) extends (<T>() => T extends B ? 1 : 2) ? true : false;
@@ -86,6 +86,8 @@ export async function useEveryClient(): Promise<void> {
   // New submit properties (BAC-5378)
   const aiSourceMatch: AISourceMatch = { enable: true };
   const newProperties: Pick<SubmissionProperties, 'aiSourceMatch' | 'displayLanguage'> = { aiSourceMatch, displayLanguage: 'en' };
+  // PDF version is optional (deprecated) so reportVersion can be used alone (BAC-6814)
+  const pdfReportV3: Pick<SubmissionPDF, 'create' | 'version' | 'reportVersion'> = { create: true, reportVersion: 'v3' };
 
   // Account and public endpoints
   const credits = await copyleaks.getCreditsBalanceAsync(token);
