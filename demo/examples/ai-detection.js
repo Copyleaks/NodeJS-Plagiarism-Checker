@@ -22,7 +22,6 @@ function TEST_submitAiImageDetection(copyleaks, loginResult, base64Img) {
   
   console.log("Submitting a new image for AI image detection...");
 
-  // Read and encode your image file to base64
   const imagePath = "PATH/TO/YOUR/IMAGE"; // Update this path to your image
   const base64Image = fs.readFileSync(imagePath, { encoding: 'base64' });
   

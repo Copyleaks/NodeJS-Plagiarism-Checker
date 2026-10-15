@@ -1,4 +1,3 @@
-// Export all example functions from a single entry point
 module.exports = {
   ...require('./misc'),
   ...require('./credits-usage'),
