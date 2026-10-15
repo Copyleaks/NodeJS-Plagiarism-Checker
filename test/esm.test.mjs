@@ -3,7 +3,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { createRequire } from 'node:module';
 import {
-  Copyleaks, CopyleaksConfig, CopyleaksImagePlagiarismRequestModel, CommandException, NetworkException,
+  Copyleaks, CopyleaksConfig, CopyleaksImagePlagiarismRequestModel, CommandException, NetworkException, CopyleaksApiException,
 } from 'copyleaks';
 
 const require = createRequire(import.meta.url);
@@ -21,7 +21,7 @@ test('ESM: multipart upload, error mapping and timeouts work', async () => {
     assert.deepEqual(parseMultipart(server.last).map((p) => p.name), ['image', 'filename', 'sandbox']);
 
     server.reply(() => ({ status: 400, body: { error: 'bad' } }));
-    await assert.rejects(copyleaks.getReleaseNotesAsync(), (e) => e instanceof CommandException && e.status === 400);
+    await assert.rejects(copyleaks.getReleaseNotesAsync(), (e) => e instanceof CommandException && e instanceof CopyleaksApiException && e.status === 400);
 
     server.reply(() => ({ delayMs: 400 }));
     await assert.rejects(copyleaks.getReleaseNotesAsync(), (e) => e instanceof NetworkException && e.isTimeout);

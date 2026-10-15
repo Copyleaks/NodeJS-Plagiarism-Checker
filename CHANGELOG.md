@@ -37,6 +37,8 @@ These paths no longer resolve. Node.js reports `ERR_PACKAGE_PATH_NOT_EXPORTED`:
 
 - Any path outside `dist/` other than `package.json`, for example `copyleaks/src/...`, `copyleaks/demo/...` or `copyleaks/docs/...`. The package no longer contains those folders. It now ships only `dist/`, `README.md`, `CHANGELOG.md` and `package.json`.
 
+The 6.0.0 package also contained three build files with no source, which are gone: `dist/DeprecationService`, `dist/models/constants/SupportedFilesTypes` and `dist/models/submissions/ai-detector/CopyleaksSourceCodeSubmissionModel`.
+
 Folders without an `index.js`, such as `copyleaks/dist/models`, did not resolve in 6.0.0 and still do not.
 
 The package root does not export the submission property types, so you still need a deep import for them. The folder `copyleaks/dist/models/submissions/properties` now exports all of them, for example `SubmissionProperties`, `SubmissionPDF`, `AISourceMatch`, `PdfReportColors`, `PdfReportVersion`, `MaskingPolicy`, `ScanMethodAlgorithm` and the `SubmissionActions` and `SubmissionFilterDomainsMode` enums. Each type is also still available from its own file in that folder, for example `.../properties/PdfReportVersion`.
@@ -127,7 +129,7 @@ To keep the 6.0.0 behavior, pass the global instance: `new Copyleaks({ axiosInst
 | `Copyleaks.getSupportedAiTextDetectionFileTypesAsync` | File types of AI text detection: `GET /v3/miscellaneous/supported-ai-text-detection-file-types`. No login needed. |
 | `Copyleaks.getRepositoryInfoAsync` | Private Cloud Hub repository information: `GET /v3/repositories/repository/{repositoryId}/info`. |
 
-New request models: `CopyleaksImagePlagiarismRequestModel`, `CopyleaksAiVideoDetectionRequestModel`, `CopyleaksAiImageDetectionAsyncRequestModel` and `CopyleaksAiImageDetectionFileRequestModel`. New constants: `CopyleaksAiVideoDetectionModels`, `CopyleaksAiImageDetectionMaskTypes` and `CopyleaksImagePlagiarismMatchTypes`.
+New request models: `CopyleaksImagePlagiarismRequestModel`, `CopyleaksAiVideoDetectionRequestModel`, `CopyleaksAiImageDetectionAsyncRequestModel` and `CopyleaksAiImageDetectionFileRequestModel`; the AI image request models share the new base `CopyleaksAiImageDetectionBaseRequestModel`. New constants: `CopyleaksAiVideoDetectionModels`, `CopyleaksAiImageDetectionMaskTypes` and `CopyleaksImagePlagiarismMatchTypes`.
 
 #### Client options
 
@@ -154,7 +156,7 @@ New request models: `CopyleaksImagePlagiarismRequestModel`, `CopyleaksAiVideoDet
 
 #### New response and webhook fields
 
-- AI image detection: `isAiDetected`, `detectedObjects`, `result.labels` (heatmap) and `imageInfo.metadata.contentSummary`.
+- AI image detection: `isAiDetected`, `detectedObjects`, `result.labels` (heatmap) and `imageInfo.metadata.contentSummary`. Masks and video ranges use the new `CopyleaksRangesModel` (`starts`, `lengths`).
 - Text moderation: `modelVersion`.
 - Completed webhook: `referencesValidation` (Citation Checker summary), `results.internalAIData`, `url` of each `results.internet` item, and `scannedDocument.totalExcluded`.
 - Error webhook: `error.type`, `error.id`, `error.url` and `error.details`.

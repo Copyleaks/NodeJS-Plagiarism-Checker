@@ -8,6 +8,7 @@ const { startMockServer, validToken, guardNetwork } = require('./helpers/mock-se
 const {
   Copyleaks, CopyleaksConfig, AIDetectionClient, CommandException, RateLimitException,
   UnderMaintenanceException, NetworkException, AuthExipredException, CopyleaksNaturalLanguageSubmissionModel,
+  CopyleaksApiException,
 } = require('../dist');
 
 guardNetwork(CopyleaksConfig);
@@ -48,6 +49,7 @@ describe('transport', () => {
     const err = await copyleaks.submitUrlAsync(TOKEN, 'scan1', { url: 'https://example.com', properties: { webhooks: { status: 'https://example.com/{STATUS}' } } })
       .then(() => assert.fail('expected an error'), (e) => e);
     assert.ok(err instanceof CommandException, `got ${err && err.name}`);
+    assert.ok(err instanceof CopyleaksApiException);
     assert.equal(err.name, 'CommandException');
     assert.equal(err.status, 400);
     assert.deepEqual(err.body, { error: 'scanId is invalid' });
@@ -83,6 +85,7 @@ describe('transport', () => {
     for (const call of calls) {
       const err = await call().catch((e) => e);
       assert.ok(err instanceof RateLimitException, `got ${err && err.name}`);
+      assert.ok(err instanceof CopyleaksApiException);
       assert.equal(err.status, 429);
       assert.equal(err.retryAfter, 42);
       assert.deepEqual(err.body, { error: 'Rate limit exceeded.' });
@@ -94,6 +97,7 @@ describe('transport', () => {
     server.reply(() => ({ status: 503, body: { message: 'maintenance' } }));
     const err = await copyleaks.getOCRSupportedLanguagesAsync().catch((e) => e);
     assert.ok(err instanceof UnderMaintenanceException, `got ${err && err.name}`);
+    assert.ok(err instanceof CopyleaksApiException);
     assert.equal(err.status, 503);
     assert.deepEqual(err.body, { message: 'maintenance' });
   });
@@ -110,6 +114,7 @@ describe('transport', () => {
     server.reply(() => ({ delayMs: 400, body: {} }));
     const err = await fast.getCreditsBalanceAsync(TOKEN).catch((e) => e);
     assert.ok(err instanceof NetworkException, `got ${err && err.name}: ${err && err.message}`);
+    assert.ok(!(err instanceof CopyleaksApiException));
     assert.equal(err.isTimeout, true);
     assert.equal(err.method, 'GET');
     assert.equal(err.url, `${server.url}/v3/scans/credits`);

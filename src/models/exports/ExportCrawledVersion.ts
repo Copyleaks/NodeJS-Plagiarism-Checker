@@ -1,4 +1,6 @@
 import type { ExportTarget } from './ExportTarget.js';
 
 /** Where Copyleaks uploads the crawled version of the scanned document. Same as `ExportTarget`. */
-export type ExportCrawledVersion = ExportTarget;
+// An interface, not a type alias, so that 6.x declaration merging keeps working.
+// tslint:disable-next-line:no-empty-interface
+export interface ExportCrawledVersion extends ExportTarget {}
