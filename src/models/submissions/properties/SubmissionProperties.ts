@@ -21,11 +21,11 @@ export interface SubmissionProperties {
   webhooks: SubmissionWebhooks;
   /** Also produce the report in HTML format, not only text. */
   includeHtml?: boolean;
-  /** Returned in the webhooks of the scan. */
+  /** Returned in the webhooks of the scan; up to 512 characters. */
   developerPayload?: string;
   /** Return mock results without using credits, to test your integration. Turn it off in production. */
   sandbox?: boolean;
-  /** Hours to keep the scan on the Copyleaks servers. It is then deleted. */
+  /** Hours to keep the scan on the Copyleaks servers, 1 to 2880 (default 2880). It is then deleted. */
   expiration?: number;
   /**
    * Plagiarism sensitivity, 1 to 5: 1 is a faster scan that finds the most plagiarism,

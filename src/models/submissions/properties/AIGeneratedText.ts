@@ -1,7 +1,7 @@
 export interface AIGeneratedText {
   /**
    * Detect AI-generated text. Default: false.
-   * A "suspected-ai-text" alert is then added to the completed webhook.
+   * When AI text is found, a "suspected-ai-text" alert is added to the completed webhook.
    */
   detect?: boolean;
   /**

@@ -187,7 +187,7 @@ export class Copyleaks {
     });
   }
 
-  /** For more info: https://docs.copyleaks.com/reference/actions/admin/check-credits */
+  /** Credit balance of the account. Docs: https://docs.copyleaks.com/reference/actions/admin/check-credits */
   public async getCreditsBalanceAsync(authToken: CopyleaksAuthToken): Promise<CopyleaksCreditsBalanceResponseModel> {
     this.verifyAuthToken(authToken);
     const response = await this.http.request<CopyleaksCreditsBalanceResponseModel>({
