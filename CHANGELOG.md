@@ -210,7 +210,7 @@ New request models: `CopyleaksImagePlagiarismRequestModel`, `CopyleaksAiVideoDet
 - Error messages include the HTTP status and the response body. The SDK exceptions set `name` to their class name, for example `CommandException`.
 - `getSupportedFileTypesAsync` calls the documented path `/v3/miscellaneous/supported-plagiarism-file-types`. The response is the same.
 - The `User-Agent` header is `node-sdk/7.0.0`. It was `node-sdk/3.0`.
-- These fields are now optional, as in the API: `pdf.create`, `pdf.title`, `pdf.largeLogo`, `pdf.rtl` and `pdf.version`, the four `ScoreWeights` weights (a weight you leave out counts as 1.0), `aiGeneratedText.detect`, and the `results` and `crawledVersion` arguments of `CopyleaksExportModel`.
+- These fields are now optional, as in the API: `pdf.create`, `pdf.title`, `pdf.largeLogo`, `pdf.rtl` and `pdf.version`, the four `ScoreWeights` weights (a weight you leave out counts as 1.0), `aiGeneratedText.detect`, `indexing.repositories[].maskingPolicy` (code that reads it back should allow `undefined`), and the `results` and `crawledVersion` arguments of `CopyleaksExportModel`.
 - `pdf.version` is deprecated. Use `pdf.reportVersion`.
 - `pdf.colors.title` is deprecated. Use `pdf.colors.titles`.
 - `CopyleaksAiImageDetectionResponseModel` and `CopyleaksTextModerationResponseModel` accept any parsed JSON in their constructor, so you can build them from a webhook body.

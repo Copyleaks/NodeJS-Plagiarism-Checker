@@ -62,7 +62,7 @@ import type {
 } from 'copyleaks';
 // Folder deep import: types not exported from the root (resolves via the exact "./dist/<folder>" exports key).
 import { SubmissionActions } from 'copyleaks/dist/models/submissions/properties';
-import type { AISourceMatch, PdfReportColors, SubmissionPDF, SubmissionProperties } from 'copyleaks/dist/models/submissions/properties';
+import type { AISourceMatch, PdfReportColors, SubmissionIndexingRepository, SubmissionPDF, SubmissionProperties } from 'copyleaks/dist/models/submissions/properties';
 import { PdfReportVersion } from 'copyleaks/dist/models/submissions/properties';
 
 // True only when A and B are the same type. `any` never matches a concrete type.
@@ -275,3 +275,7 @@ export async function useNewApi(): Promise<void> {
   const matchedWords: number | undefined = completed.results?.internet?.[0]?.matchedWords;
   const resultUrl: string | undefined = completed.results?.internet?.[0]?.url;
 }
+
+// An indexing repository needs only an id; maskingPolicy is optional.
+const indexingRepository: SubmissionIndexingRepository = { id: 'repo-1' };
+void indexingRepository;
