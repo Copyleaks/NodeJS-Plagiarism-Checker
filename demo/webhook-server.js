@@ -19,24 +19,18 @@ const bodyParser = require("body-parser");
 const hostname = "127.0.0.1";
 const webhookPort = 3001; // if you are using ngrok then run it on this port
 
-// this class is for creating express server that listen to the webhooks, in this example we are listening to the  submit-url-webhook webhooks
-// you can change it, or change how to handle the response.
-// you can easily access the response data by using or pre-built classes thats imported above
+// Receives the webhooks of the URL submission example and parses them with the SDK models.
 const app = express();
 
-// Middleware
 app.use(bodyParser.json());
 
-//  COMPLETED webhook
 app.post("/submit-url-webhook/completed", (req, res) => {
   console.log("[Webhook Server]: COMPLETED status received");
   try {
     const completed = new CompletedWebhookModel(req.body);
     console.log("Deserialized into CompletedWebhook:", completed);
 
-    // AI text detection: the "suspected-ai-text" alert carries the AI detection result as a JSON string.
-    // getAIDetectionResult() decodes it. It returns null when the alert has no data, and throws on malformed JSON.
-    // The decode has its own try/catch so that a bad alert still gets the webhook acknowledged below.
+    // getAIDetectionResult() throws on malformed JSON; this try/catch still lets the webhook be acknowledged.
     if (completed.getAIDetectionAlert()) {
       try {
         const aiResult = completed.getAIDetectionResult();
@@ -52,7 +46,6 @@ app.post("/submit-url-webhook/completed", (req, res) => {
   }
 });
 
-//  ERROR webhook
 app.post("/submit-url-webhook/error", (req, res) => {
   console.log("[Webhook Server]: ERROR status received");
   try {
@@ -64,7 +57,6 @@ app.post("/submit-url-webhook/error", (req, res) => {
   }
 });
 
-//  INDEXED webhook
 app.post("/submit-url-webhook/indexed", (req, res) => {
   console.log("[Webhook Server]: INDEXED status received");
   try {
@@ -76,8 +68,7 @@ app.post("/submit-url-webhook/indexed", (req, res) => {
   }
 });
 
-//  CREDITS CHECKED webhook
-app.post("/submit-url-webhook/creditsChecked", (req, res) => {
+app.post("/submit-url-webhook/creditschecked", (req, res) => {
   console.log("[Webhook Server]: CREDITS CHECKED status received");
   try {
     const creditsChecked = new CreditsCheckedWebhookModel(req.body);
@@ -88,7 +79,6 @@ app.post("/submit-url-webhook/creditsChecked", (req, res) => {
   }
 });
 
-//  NEW RESULTS webhook
 app.post("/submit-url-webhook/new-results", (req, res) => {
   console.log("[Webhook Server]: CREDITS CHECKED status received");
   try {

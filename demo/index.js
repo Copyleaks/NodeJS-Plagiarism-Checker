@@ -4,7 +4,6 @@ const { Copyleaks } = require("../dist");
 const path = require('path');
 const base64Img = require("./base64.img");
 
-// Import example functions
 const { TEST_MISC } = require('./examples/misc');
 const { TEST_CreditsBalance, TEST_UsageHistory } = require('./examples/credits-usage');
 const { TEST_submitUrlAsync } = require('./examples/url-submission');
@@ -19,7 +18,7 @@ const port = 3000;
 
 const DEMO_EMAIL = "<EMAIL>"; // change this with your own copyleaks email.
 const DEMO_KEY = "<API_KEY>"; // change this with your own copyleaks API key.
-const WEBHOOK_URL = "<WEBHOOK_URL>"; //exe https://glacial-refuge-96501.herokuapp.com/10b0z2w1
+const WEBHOOK_URL = "<WEBHOOK_URL>"; // a public URL that reaches webhook-server.js
 const copyleaks = new Copyleaks();
 
 let testingInProgress = false;
@@ -27,7 +26,6 @@ let testingInProgress = false;
 // Spawn webhook server on startup in order to listen to webhooks
 const webhookServerPath = path.join(__dirname, 'webhook-server.js');
 
-// Spawn webhook server on startup in order to listen to webhooks
 const webhookServerProcess = spawn("node", [webhookServerPath]);
 console.log(`Server is running...`);
 console.log(`Press Ctrl+C to shutdown server`);
@@ -59,7 +57,6 @@ TEST_copyleaks = () => {
   }
   testingInProgress = true;
 
-  // Login
   copyleaks.loginAsync(DEMO_EMAIL, DEMO_KEY).then(
     (loginResult) => {
       console.log("----------SUCCESS----------");
@@ -93,7 +90,6 @@ TEST_copyleaks = () => {
       console.error("loginAsync:");
       console.error("Error Message:", err.message || err);
       
-      // Enhanced error details
       if (err.response) {
         console.error("Response Status:", err.response.status);
         console.error("Response Status Text:", err.response.statusText);
@@ -124,7 +120,6 @@ server.listen(port, hostname, () => {
   console.log(`please visit http://${hostname}:${port}/ to start the test`);
 });
 
-// Handle process termination
 process.on('SIGINT', () => {
   console.log('Received SIGINT. Graceful shutdown...');
   webhookServerProcess.kill();
