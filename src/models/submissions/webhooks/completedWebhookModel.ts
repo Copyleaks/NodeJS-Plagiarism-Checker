@@ -1,30 +1,8 @@
-/*
- The MIT License(MIT)
-
- Copyright(c) 2016 Copyleaks LTD (https://copyleaks.com)
-
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
-
- The above copyright notice and this permission notice shall be included in all
- copies or substantial portions of the Software.
-
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- SOFTWARE.
-*/
 import { NotificationsModel } from "./helperModels/completedModels/notificationsModel.js";
 import { StatusWebhookModel } from "./helperModels/baseModels/statusWebhookModel.js";
 import { ResultsModel } from "./helperModels/completedModels/resultsModel.js";
 import { ScannedDocumentModel } from "./helperModels/completedModels/scannedDocumentModel.js";
+import { ReferencesValidationModel } from "./helperModels/completedModels/referencesValidationModel.js";
 import { AlertsModel } from "./helperModels/notificationsModels/alertsModel.js";
 import { CopyleaksAlertCodes } from "../../constants/CopyleaksAlertCodes.js";
 import { CopyleaksAiTextDetectionResponseModel } from "../../response/AiTextDetection/CopyleaksAiTextDetectionResponseModel.js";
@@ -33,6 +11,7 @@ export class CompletedWebhookModel extends StatusWebhookModel {
   results?: ResultsModel;
   notifications?: NotificationsModel;
   scannedDocument?: ScannedDocumentModel;
+  referencesValidation?: ReferencesValidationModel;
 
   /**
    * @param init Wire data. notifications.alerts items can be plain objects; they are mapped to AlertsModel instances.
@@ -49,16 +28,13 @@ export class CompletedWebhookModel extends StatusWebhookModel {
       if (init.scannedDocument) {
         this.scannedDocument = new ScannedDocumentModel(init.scannedDocument);
       }
+      if (init.referencesValidation) {
+        this.referencesValidation = new ReferencesValidationModel(init.referencesValidation);
+      }
     }
   }
 
-  /**
-   * Returns the first "suspected-ai-text" alert (CopyleaksAlertCodes.SUSPECTED_AI_TEXT) of the scan, or null.
-   *
-   * Returns null when the completed webhook contains no suspected-ai-text alert.
-   *
-   * @returns The AI alert, or null.
-   */
+  /** The first "suspected-ai-text" alert (`CopyleaksAlertCodes.SUSPECTED_AI_TEXT`) of the scan, or null. */
   public getAIDetectionAlert(): AlertsModel | null {
     const alerts = this.notifications?.alerts;
     if (!alerts) {
@@ -68,16 +44,9 @@ export class CompletedWebhookModel extends StatusWebhookModel {
   }
 
   /**
-   * Returns the decoded AI text detection result of the "suspected-ai-text" alert, or null.
-   * Same as getAIDetectionAlert()?.getAIDetectionResult().
-   *
-   * Null is returned when there is no AI alert (see getAIDetectionAlert),
-   * and also when the AI alert is present but its additionalData is missing, empty,
-   * or valid JSON that is not a JSON object.
-   * In that case AI text was detected, but the details are not available.
-   *
-   * @returns The decoded AI text detection result, or null.
-   * @throws {SyntaxError} When the alert's additionalData is not valid JSON.
+   * Same as `getAIDetectionAlert()?.getAIDetectionResult()`. Null when there is no AI alert, and also when
+   * its `additionalData` is empty or not a JSON object: AI text was detected, but without the details.
+   * @throws {SyntaxError} When the alert's `additionalData` is not valid JSON.
    */
   public getAIDetectionResult(): CopyleaksAiTextDetectionResponseModel | null {
     return this.getAIDetectionAlert()?.getAIDetectionResult() ?? null;

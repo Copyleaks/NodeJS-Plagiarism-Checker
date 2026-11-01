@@ -1,144 +1,72 @@
-/*
- The MIT License(MIT)
-
- Copyright(c) 2016 Copyleaks LTD (https://copyleaks.com)
-
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
-
- The above copyright notice and this permission notice shall be included in all
- copies or substantial portions of the Software.
-
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- SOFTWARE.
-*/
-
 import { AIGeneratedText } from './AIGeneratedText.js';
 import { AISourceMatch } from './AISourceMatch.js';
 import { SubmissionActions } from './Actions.js';
+import { SubmissionAssignment, SubmissionCourse, SubmissionInstitution } from './AnalyticsIdentifiers.js';
 import { SubmissionAuthor } from './Author.js';
 import { CustomMetadata } from './CustomMetadata.js';
 import { SubmissionExclude } from './Exclude.js';
 import { SubmissionFilter } from './Filter.js';
 import { SubmissionIndexing } from './Indexing.js';
+import { InternalAISourceMatch } from './InternalAISourceMatch.js';
+import { SubmissionOverview } from './Overview.js';
 import { SubmissionPDF } from './PdfProperties.js';
+import { SubmissionReferences } from './References.js';
 import { ScanMethodAlgorithm } from './ScanMethods.js';
 import { SubmissionScanning } from './Scanning.js';
 import { SubmissionSensitiveData } from './SensitiveDataProtection.js';
 import { SubmissionWebhooks } from './Webhooks.js';
+import { SubmissionWritingFeedback } from './WritingFeedback.js';
 
 export interface SubmissionProperties {
   webhooks: SubmissionWebhooks;
-  /**
-   * By default, Copyleaks will present the report in text format. If set to true, Copyleaks will also include html format.
-   */
+  /** Also produce the report in HTML format, not only text. */
   includeHtml?: boolean;
-  /**
-   * Add custom developer payload that will then be provided on the webhooks.
-   * https://api.copyleaks.com/documentation/v3/webhooks
-   */
+  /** Returned in the webhooks of the scan; up to 512 characters. */
   developerPayload?: string;
-  /**
-   * You can test the integration with the Copyleaks API for free using the sandbox mode.
-   *
-   * You will be able to submit content for a scan and get back mock results, simulating the way Copyleaks will work to make sure that you successfully integrated with the API.
-   *
-   * Turn off this feature on production environment.
-   */
+  /** Return mock results without using credits, to test your integration. Turn it off in production. */
   sandbox?: boolean;
-  /**
-   * Specify the maximum life span of a scan in hours on the Copyleaks servers.
-   *
-   * When expired, the scan will be deleted and will no longer be accessible.
-   */
+  /** Hours to keep the scan on the Copyleaks servers, 1 to 2880 (default 2880). It is then deleted. */
   expiration?: number;
   /**
-   * You can control the level of plagiarism sensitivity that will be identified according to the speed of the scan.
-   * If you prefer a faster scan with the results that contains the highest amount of plagiarism choose 1,
-   * and if a slower, more comprehensive scan, that will also detect the smallest instances choose 5.
+   * Plagiarism sensitivity, 1 to 5: 1 is a faster scan that finds the most plagiarism,
+   * 5 a slower one that also finds the smallest instances.
    */
   sensitivityLevel?: number;
-  /**
-   * Choose the algorithm goal. You can set this value depending on your use-case.
-   */
   scanMethodAlgorithm?: ScanMethodAlgorithm;
 
-  /**
-   * Add custom properties that will be attached to your document in a Copyleaks repository.
-   * 
-   * If this document is found as a repository result, your custom properties will be added to the result.
-   */
+  /** Custom properties of the document in a Copyleaks repository, added to its repository results. */
   customMetadata?: CustomMetadata[];
-  /**
-   * When set to true the submitted document will be checked for cheating. If a cheating will be detected, a scan alert will be added to the completed webhook.
-   */
+  /** Check the document for cheating. When found, a scan alert is added to the completed webhook. */
   cheatDetection?: boolean;
-/**
- * Detects whether the text was written by an AI.
- * 
- * Upon detection a scan alert of type "suspected-ai-text" will be added to the scan completion webhook.
- */
   aiGeneratedText?: AIGeneratedText;
-  /**
-   * Identifies online sources suspected of containing AI generated text.
-   * Currently only applies to documents detected as English.
-   * Leave it undefined to get the server default (disabled).
-   */
   aiSourceMatch?: AISourceMatch;
   /**
-   * The language the PDF report is generated in.
-   * Supported values are lowercase and case-sensitive: en, es, pt, fr, de, it.
-   * Any other value (for example "EN" or "en-US") is rejected by the server.
-   * Only takes effect when pdf.create is true.
-   * Leave it undefined to get the server default ("en"). Do not send null: the server would store it in place of the default.
+   * Language of the PDF report: en, es, pt, fr, de or it, lowercase (the server rejects "EN" or "en-US").
+   * Needs `pdf.create`. Leave it undefined to get the default ("en"); do not send null, the server would
+   * store it in place of the default.
    */
   displayLanguage?: string;
-  /**
-   * Types of content submission actions.
-   *
-   * * Possible values:
-   *  * Scan: Start scan immediately.
-   *  * Check Credits: Check how many credits will be used for this scan.
-   *  * Index Only: Only index the file in the Copyleaks internal database. No credits will be used.
-   */
+  /** Scan, only check credits, or only index, see `SubmissionActions`. */
   action?: SubmissionActions;
-  /**
-   * Check inner properties for more details.
-   */
   author?: SubmissionAuthor;
-  /**
-   * Check inner properties for more details.
-   */
   filters?: SubmissionFilter;
-  /**
-   * Check inner properties for more details.
-   */
   scanning?: SubmissionScanning;
-  /**
-   * Check inner properties for more details.
-   */
   indexing?: SubmissionIndexing;
-  /**
-   * Check inner properties for more details.
-   */
   exclude?: SubmissionExclude;
-  /**
-   * Check inner properties for more details.
-   */
   pdf?: SubmissionPDF;
-  /**
-   * Check inner properties for more details.
-   */
   sensitiveDataProtection?: SubmissionSensitiveData
+  /**
+   * Time zone of the scan time shown in the PDF report, as a case-sensitive IANA time zone name,
+   * for example "America/New_York". Default: the time zone of the user's country, or UTC.
+   */
+  scanTimeZone?: string;
+  course?: SubmissionCourse;
+  assignment?: SubmissionAssignment;
+  institution?: SubmissionInstitution;
+  writingFeedback?: SubmissionWritingFeedback;
+  overview?: SubmissionOverview;
+  internalAiSourceMatch?: InternalAISourceMatch;
+  references?: SubmissionReferences;
 }
 
 

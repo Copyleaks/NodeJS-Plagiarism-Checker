@@ -1,46 +1,12 @@
-/********************************************************************************
- The MIT License(MIT)
-
- Copyright(c) 2016 Copyleaks LTD (https://copyleaks.com)
-
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
-
- The above copyright notice and this permission notice shall be included in all
- copies or substantial portions of the Software.
-
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- SOFTWARE.
-********************************************************************************/
-
-/**
- * Positions of text segments.
- * Segment i starts at starts[i] and spans lengths[i] characters or words.
- */
+/** Positions of text segments: segment i starts at starts[i] and spans lengths[i] characters or words. */
 export class CopyleaksAiTextDetectionPositionsModel {
-    /**
-     * Start positions of the segments.
-     */
+    /** Start positions of the segments. */
     public starts!: number[];
 
-    /**
-     * Lengths of the segments, one for each start position.
-     */
+    /** Lengths of the segments, one for each start position. */
     public lengths!: number[];
 
-    /**
-     * Group id of each segment.
-     * Returned only for positions in the HTML version of the document.
-     */
+    /** Group id of each segment. Only for positions in the HTML version of the document. */
     public groupIds?: number[];
 
     /**

@@ -1,84 +1,94 @@
-/*
- The MIT License(MIT)
-
- Copyright(c) 2016 Copyleaks LTD (https://copyleaks.com)
-
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
-
- The above copyright notice and this permission notice shall be included in all
- copies or substantial portions of the Software.
-
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- SOFTWARE.
-*/
-import axios from "axios";
-import { CopyleaksConfig } from "../app.config.js";
 import {
-  UnderMaintenanceException,
-  RateLimitException,
-  CommandException,
-} from "../models/exceptions/index.js";
-import {
-    CopyleaksAiImageDetectionResponseModel,
+  CopyleaksAiImageDetectionResponseModel,
   CopyleaksAuthToken,
 } from "../models/response/index.js";
-import {
-  isSuccessStatusCode,
-  isUnderMaintenanceResponse,
-  isRateLimitResponse,
-} from "../utils/index.js";
 import { ClientUtils } from "../utils/client-utils.utils.js";
-import { CopyleaksAiImageDetectionRequestModel } from "../models/request/index.js";
+import {
+  CopyleaksAiImageDetectionAsyncRequestModel,
+  CopyleaksAiImageDetectionFileRequestModel,
+  CopyleaksAiImageDetectionRequestModel,
+} from "../models/request/index.js";
+import { CopyleaksHttp } from "../http/CopyleaksHttp.js";
+import { CopyleaksOptions } from "../http/CopyleaksOptions.js";
+import { buildMultipartForm } from "../http/wire.js";
 
+/** AI Image Detection. */
 export class AiImageDetectionClient {
+  private readonly http: CopyleaksHttp;
 
-      /**
-    This endpoint will receive submitted image to be checked. 
-     * 
-     * * Exceptions:
-     *  * CommandExceptions: Server reject the request. See response status code,
-     *     headers and content for more info.
-     *  * UnderMaintenanceException: Copyleaks servers are unavailable for maintenance.
-     *     We recommend to implement exponential backoff algorithm as described here:
-     *     https://api.copyleaks.com/documentation/v3/exponential-backoff
-     *  * RateLimitException: Too many requests have been sent. The request has been rejected.
-     * @param authToken Copyleaks authentication token
-     * @param scanId Attach your own scan Id
-     * @param submission Submission image request model
-     */
+  /**
+   * @param options Optional settings, see `CopyleaksOptions`. `new Copyleaks(options)` passes its own options.
+   */
+  constructor(options?: CopyleaksOptions) {
+    this.http = new CopyleaksHttp(options);
+  }
+
+  /**
+   * Checks a base64-encoded image for AI generation. To upload the raw bytes, use `submitFileAsync`.
+   * For more info: https://docs.copyleaks.com/reference/actions/ai-image-detector/check
+   * @param scanId Your own ID for the scan.
+   */
   public async submitAsync(
     authToken: CopyleaksAuthToken,
     scanId: string,
     submission: CopyleaksAiImageDetectionRequestModel
-  ) {
+  ): Promise<CopyleaksAiImageDetectionResponseModel> {
     ClientUtils.verifyAuthToken(authToken);
-    const url = `${CopyleaksConfig.API_SERVER_URI}/v1/ai-image-detector/${scanId}/check`;
+    const response = await this.http.request<CopyleaksAiImageDetectionResponseModel>({
+      method: "POST",
+      url: this.http.apiUrl(`/v1/ai-image-detector/${scanId}/check`),
+      authToken,
+      body: submission,
+    });
+    return new CopyleaksAiImageDetectionResponseModel(response.data);
+  }
 
-    const headers = {
-      "Content-Type": "application/json",
-      "User-Agent": CopyleaksConfig.USER_AGENT,
-      Authorization: `Bearer ${authToken["access_token"]}`,
-    };
+  /**
+   * Same as `submitAsync`, but uploads the raw image bytes as multipart/form-data, without the base64 overhead.
+   * For more info: https://docs.copyleaks.com/reference/actions/ai-image-detector/check
+   * @param scanId Your own ID for the scan.
+   */
+  public async submitFileAsync(
+    authToken: CopyleaksAuthToken,
+    scanId: string,
+    submission: CopyleaksAiImageDetectionFileRequestModel
+  ): Promise<CopyleaksAiImageDetectionResponseModel> {
+    ClientUtils.verifyAuthToken(authToken);
+    const form = buildMultipartForm(
+      { field: "image", data: submission.image, filename: submission.filename },
+      {
+        filename: submission.filename,
+        model: submission.model,
+        sandbox: String(submission.sandbox ?? false),
+        maskType: submission.maskType,
+        objectDetection: submission.objectDetection === undefined ? undefined : JSON.stringify(submission.objectDetection),
+      });
+    const response = await this.http.request<CopyleaksAiImageDetectionResponseModel>({
+      method: "POST",
+      url: this.http.apiUrl(`/v1/ai-image-detector/${scanId}/check`),
+      authToken,
+      body: form,
+    });
+    return new CopyleaksAiImageDetectionResponseModel(response.data);
+  }
 
-    const response = await axios.post(url, submission, { headers });
-    if (isSuccessStatusCode(response.status))
-      return new CopyleaksAiImageDetectionResponseModel(response.data);
-    else if (isUnderMaintenanceResponse(response.status)) {
-      throw new UnderMaintenanceException();
-    } else if (isRateLimitResponse(response.status)) {
-      throw new RateLimitException();
-    } else {
-      throw new CommandException(response);
-    }
+  /**
+   * Submits an image URL and returns once it is accepted (HTTP 201). Copyleaks downloads the image and POSTs
+   * the result, a `CopyleaksAiImageDetectionResponseModel`, to `submission.webhooks.url`.
+   * For more info: https://docs.copyleaks.com/reference/actions/ai-image-detector/submit
+   * @param scanId Your own ID for the scan.
+   */
+  public async submitUrlAsync(
+    authToken: CopyleaksAuthToken,
+    scanId: string,
+    submission: CopyleaksAiImageDetectionAsyncRequestModel
+  ): Promise<void> {
+    ClientUtils.verifyAuthToken(authToken);
+    await this.http.request({
+      method: "PUT",
+      url: this.http.apiUrl(`/v1/ai-image-detector-async/${scanId}/submit`),
+      authToken,
+      body: submission,
+    });
   }
 }

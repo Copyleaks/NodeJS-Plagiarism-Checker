@@ -67,4 +67,35 @@ export async function useEveryClient(): Promise<void> {
     labels: [new copyleaksSdk.CopyleaksTextModerationLabel(copyleaksSdk.CopyleaksTextModerationConstants.TOXIC_V1)],
   }));
   const moderationTyped: Equal<typeof moderation, copyleaksSdk.CopyleaksTextModerationResponseModel> = true;
+  const moderationModel: string | undefined = moderation.modelVersion;
+
+  // New endpoints
+  const configured = new copyleaksSdk.Copyleaks({ timeout: 60000, maxRetries: 1 });
+  const imagePlagiarism = await configured.imagePlagiarismClient.submitAsync(token, 'scan6', new copyleaksSdk.CopyleaksImagePlagiarismRequestModel(new Uint8Array([1]), 'a.png', true));
+  const imagePlagiarismTyped: Equal<typeof imagePlagiarism, copyleaksSdk.CopyleaksImagePlagiarismResponseModel> = true;
+  const video = await configured.aiVideoDetectionClient.submitAsync(token, 'scan7', new copyleaksSdk.CopyleaksAiVideoDetectionRequestModel({
+    url: 'https://example.com/v.mp4', filename: 'v.mp4', model: copyleaksSdk.CopyleaksAiVideoDetectionModels.AI_VIDEO_1_PRO, webhooks: { url: 'https://example.com/hook' },
+  }));
+  const videoTyped: Equal<typeof video, void> = true;
+  const asyncImage = await configured.aiImageDetectionClient.submitUrlAsync(token, 'scan8', new copyleaksSdk.CopyleaksAiImageDetectionAsyncRequestModel({
+    url: 'https://example.com/a.png', fileName: 'a.png', model: copyleaksSdk.CopyleaksAiImageDetectionModels.AI_IMAGE_1_ULTRA, webhooks: { url: 'https://example.com/hook' },
+  }));
+  const asyncImageTyped: Equal<typeof asyncImage, void> = true;
+  const aiCredits = await configured.aiDetectionClient.getCreditsBalanceAsync(token);
+  const aiCreditsTyped: Equal<typeof aiCredits, copyleaksSdk.CopyleaksAiTextDetectionCreditsResponseModel> = true;
+  const crossLanguages = await configured.getAllowedCrossLanguagesAsync();
+  const crossLanguagesTyped: Equal<typeof crossLanguages, copyleaksSdk.CopyleaksCrossLanguagesResponseModel> = true;
+  const aiFileTypes = await configured.getSupportedAiTextDetectionFileTypesAsync();
+  const aiFileTypesTyped: Equal<typeof aiFileTypes, copyleaksSdk.CopyleaksAiTextDetectionFileTypesResponseModel> = true;
+  const repository = await configured.getRepositoryInfoAsync(token, 'repo1');
+  const repositoryTyped: Equal<typeof repository, copyleaksSdk.CopyleaksRepositoryInfoResponseModel> = true;
+  const properties: submissionProperties.SubmissionProperties = {
+    webhooks: { status: 'https://example.com/webhook/{STATUS}' },
+    writingFeedback: { enable: true },
+    overview: { enable: true },
+    references: { validate: true },
+    scanning: { crossLanguages: { languages: [{ code: 'fr' }] } },
+  };
+  const networkError = new copyleaksSdk.NetworkException('timeout', { code: 'ECONNABORTED', isTimeout: true });
+  const isTimeout: boolean = networkError.isTimeout;
 }
