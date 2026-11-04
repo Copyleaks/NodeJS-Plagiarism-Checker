@@ -147,6 +147,11 @@ export async function useEveryClient(): Promise<void> {
   const correctionTypes = await copyleaks.writingAssistantClient.getCorrectionTypesAsync(token, 'en');
   const correctionTypesTyped: Equal<typeof correctionTypes, CopyleaksCorrectionTypesResponseModel> = true;
   const correctionTitles: string[] = correctionTypes.correctionTypes.map((type) => type.title);
+  const publicCorrectionTypes = await copyleaks.writingAssistantClient.getCorrectionTypesAsync('en');
+  const publicCorrectionTypesTyped: Equal<typeof publicCorrectionTypes, CopyleaksCorrectionTypesResponseModel> = true;
+  const optionalToken: CopyleaksAuthToken | undefined = Math.random() < 0.5 ? token : undefined;
+  const optionalTokenCorrectionTypes = await copyleaks.writingAssistantClient.getCorrectionTypesAsync(optionalToken, 'en');
+  const optionalTokenCorrectionTypesTyped: Equal<typeof optionalTokenCorrectionTypes, CopyleaksCorrectionTypesResponseModel> = true;
 
   // Text Moderation
   const moderation = await copyleaks.textModerationClient.submitTextAsync(token, 'scan7', new CopyleaksTextModerationRequestModel({

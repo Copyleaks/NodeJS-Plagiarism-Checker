@@ -32,15 +32,30 @@ export class WritingAssistantClient {
     }
 
     /**
-     * Correction types of the Grammar Checker. They apply to all supported languages.
+     * Correction types of the Grammar Checker. They apply to all supported languages. No login needed.
      * For more info: https://docs.copyleaks.com/reference/actions/writing-assistant/correction-types
      * @param languageCode Language of the returned texts.
      */
-    public async getCorrectionTypesAsync(authToken: CopyleaksAuthToken, languageCode: string): Promise<CopyleaksCorrectionTypesResponseModel> {
-        ClientUtils.verifyAuthToken(authToken);
+    public getCorrectionTypesAsync(languageCode: string): Promise<CopyleaksCorrectionTypesResponseModel>;
+    /**
+     * Correction types of the Grammar Checker. They apply to all supported languages.
+     * For more info: https://docs.copyleaks.com/reference/actions/writing-assistant/correction-types
+     * @param authToken Optional, the endpoint is public. When set, it is sent as the `Authorization` header and its expiry is not checked.
+     * @param languageCode Language of the returned texts.
+     */
+    public getCorrectionTypesAsync(authToken: CopyleaksAuthToken | undefined, languageCode: string): Promise<CopyleaksCorrectionTypesResponseModel>;
+    public async getCorrectionTypesAsync(authTokenOrLanguageCode: CopyleaksAuthToken | string | undefined, languageCode?: string): Promise<CopyleaksCorrectionTypesResponseModel> {
+        // A string first argument is the language only when no second argument follows, so a string passed in the
+        // token position (for example `token.access_token`) never ends up in the URL. A string is not a token, so it is not sent.
+        const languageOnly = typeof authTokenOrLanguageCode === 'string' && languageCode === undefined;
+        const language = languageOnly ? authTokenOrLanguageCode : languageCode;
+        const authToken = typeof authTokenOrLanguageCode === 'object' ? authTokenOrLanguageCode : undefined;
+        if (!language) {
+            throw new TypeError('languageCode is required');
+        }
         const response = await this.http.request<CopyleaksCorrectionTypesResponseModel>({
             method: 'GET',
-            url: this.http.apiUrl(`/v1/writing-feedback/correction-types/${languageCode}`),
+            url: this.http.apiUrl(`/v1/writing-feedback/correction-types/${language}`),
             authToken,
         });
         return response.data;

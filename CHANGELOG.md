@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Fixed
+
+- `WritingAssistantClient.getCorrectionTypesAsync` no longer needs a login token, because the correction types endpoint is public. Call it with only the language code, for example `getCorrectionTypesAsync('en')`, or pass `undefined` as the token. Without a token, no `Authorization` header is sent. Calls that pass a token work as before and still send it, but the SDK no longer checks its expiry first, so an expired token no longer throws `AuthExipredException` for this method.
+
 ## 7.0.0
 
 This is the first release under the new npm name `copyleaks`. It replaces the `plagiarism-checker` package, whose last version is 6.0.0. Existing class and method names are the same as in 6.0.0. The package name, the module entry points, the errors that failed calls throw, the default request timeout, the axios instance that sends the requests and some TypeScript types changed, so this is a major version. Read the upgrade notes before you upgrade.
