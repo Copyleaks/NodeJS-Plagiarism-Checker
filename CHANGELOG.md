@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+### Added
+
+- `CommandException`, `RateLimitException` and `UnderMaintenanceException` (through their base `CopyleaksApiException`) read the error object of the response, `{ "error": { "type", "id", "code", "message", "url", "details" } }`, into `errorType`, `errorId`, `errorCode`, `errorMessage`, `errorUrl` and `errorDetails`. A field the server did not send is `undefined`, and `errorDetails` is then empty. `errorCode` also accepts a numeric string. The message, `status`, `body`, `response` and retries do not change.
+- `CopyleaksErrorTypes`: constants for the documented error types `invalid_request_error`, `authentication_error`, `payment_error` and `api_error`.
+
 ## 7.0.0
 
 This is the first release under the new npm name `copyleaks`. It replaces the `plagiarism-checker` package, whose last version is 6.0.0. Existing class and method names are the same as in 6.0.0. The package name, the module entry points, the errors that failed calls throw, the default request timeout, the axios instance that sends the requests and some TypeScript types changed, so this is a major version. Read the upgrade notes before you upgrade.

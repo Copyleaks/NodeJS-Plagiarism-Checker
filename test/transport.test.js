@@ -8,7 +8,7 @@ const { startMockServer, validToken, guardNetwork } = require('./helpers/mock-se
 const {
   Copyleaks, CopyleaksConfig, AIDetectionClient, CommandException, RateLimitException,
   UnderMaintenanceException, NetworkException, AuthExipredException, CopyleaksNaturalLanguageSubmissionModel,
-  CopyleaksApiException,
+  CopyleaksApiException, CopyleaksErrorTypes,
 } = require('../dist');
 
 guardNetwork(CopyleaksConfig);
@@ -221,6 +221,153 @@ describe('transport', () => {
     const custom = new Copyleaks({ apiServerUri: server.url, httpAgent: agent });
     await custom.getReleaseNotesAsync();
     assert.equal(used, 1);
+  });
+
+  describe('error envelope', () => {
+    const FULL_ERROR = {
+      error: {
+        type: 'invalid_request_error',
+        id: 'missing_parameter',
+        code: 1,
+        message: 'Bad request. One or several required parameters are missing or incorrect.',
+        url: 'https://docs.copyleaks.com/using-the-apis/api-errors/#error-reference',
+        details: [{ param: 'labels', message: 'Id Label EXAMPLE-v1 is not supported' }],
+      },
+    };
+
+    function assertNoEnvelope(err) {
+      for (const field of ['errorType', 'errorId', 'errorCode', 'errorMessage', 'errorUrl']) {
+        assert.equal(err[field], undefined, field);
+      }
+      assert.deepEqual(err.errorDetails, []);
+    }
+
+    test('CommandException exposes every field of the error object, and the message, status and body stay the same', async () => {
+      server.reply(() => ({ status: 400, body: FULL_ERROR }));
+      const err = await copyleaks.getCreditsBalanceAsync(TOKEN).catch((e) => e);
+      assert.ok(err instanceof CommandException, `got ${err && err.name}`);
+      assert.equal(err.errorType, CopyleaksErrorTypes.INVALID_REQUEST_ERROR);
+      assert.equal(err.errorId, 'missing_parameter');
+      assert.equal(err.errorCode, 1);
+      assert.equal(err.errorMessage, 'Bad request. One or several required parameters are missing or incorrect.');
+      assert.equal(err.errorUrl, 'https://docs.copyleaks.com/using-the-apis/api-errors/#error-reference');
+      assert.deepEqual(err.errorDetails, [{ param: 'labels', message: 'Id Label EXAMPLE-v1 is not supported' }]);
+      assert.equal(err.status, 400);
+      assert.deepEqual(err.body, FULL_ERROR);
+      assert.equal(err.message, `Copyleaks API error: HTTP 400 Bad Request: ${JSON.stringify(FULL_ERROR)}`);
+      assert.ok(!util.inspect(err, { depth: 20, showHidden: true }).includes(TOKEN.access_token));
+    });
+
+    test('RateLimitException and UnderMaintenanceException expose the error object too', async () => {
+      server.reply(() => ({ status: 429, headers: { 'retry-after': '7' }, body: { error: { type: 'api_error', id: 'too_many_requests', code: 7 } } }));
+      const rateLimited = await copyleaks.getCreditsBalanceAsync(TOKEN).catch((e) => e);
+      assert.ok(rateLimited instanceof RateLimitException, `got ${rateLimited && rateLimited.name}`);
+      assert.equal(rateLimited.errorType, CopyleaksErrorTypes.API_ERROR);
+      assert.equal(rateLimited.errorId, 'too_many_requests');
+      assert.equal(rateLimited.errorCode, 7);
+      assert.equal(rateLimited.retryAfter, 7);
+      assert.equal(rateLimited.message, 'Too many requests. Please wait before calling again.');
+
+      server.reply(() => ({ status: 503, body: { error: { type: 'api_error', id: 'service_unavailable', message: 'Down for maintenance' } } }));
+      const maintenance = await copyleaks.getCreditsBalanceAsync(TOKEN).catch((e) => e);
+      assert.ok(maintenance instanceof UnderMaintenanceException, `got ${maintenance && maintenance.name}`);
+      assert.equal(maintenance.errorId, 'service_unavailable');
+      assert.equal(maintenance.errorMessage, 'Down for maintenance');
+      assert.equal(maintenance.message, 'Copyleaks is Under Maintenance, please visit https://status.copyleaks.com');
+    });
+
+    test('missing optional fields are undefined and details is empty', async () => {
+      server.reply(() => ({ status: 402, body: { error: { type: 'payment_error', id: 'insufficient_credits', code: 2 } } }));
+      const err = await copyleaks.getCreditsBalanceAsync(TOKEN).catch((e) => e);
+      assert.equal(err.errorType, CopyleaksErrorTypes.PAYMENT_ERROR);
+      assert.equal(err.errorId, 'insufficient_credits');
+      assert.equal(err.errorCode, 2);
+      assert.equal(err.errorMessage, undefined);
+      assert.equal(err.errorUrl, undefined);
+      assert.deepEqual(err.errorDetails, []);
+
+      server.reply(() => ({ status: 400, body: { error: {} } }));
+      assertNoEnvelope(await copyleaks.getCreditsBalanceAsync(TOKEN).catch((e) => e));
+    });
+
+    test('code accepts an integer or a numeric string, anything else is undefined', async () => {
+      const cases = [[12, 12], ['12', 12], [' -3 ', -3], ['1.5', undefined], [1.5, undefined], ['abc', undefined], [true, undefined], [null, undefined], [{}, undefined]];
+      for (const [code, expected] of cases) {
+        server.reply(() => ({ status: 400, body: { error: { id: 'x', code } } }));
+        const err = await copyleaks.getCreditsBalanceAsync(TOKEN).catch((e) => e);
+        assert.equal(err.errorCode, expected, `code ${JSON.stringify(code)}`);
+        assert.equal(err.errorId, 'x');
+      }
+    });
+
+    test('fields that are not strings are undefined', async () => {
+      server.reply(() => ({ status: 400, body: { error: { type: 1, id: ['x'], message: { text: 'm' }, url: false, code: 3 } } }));
+      const err = await copyleaks.getCreditsBalanceAsync(TOKEN).catch((e) => e);
+      assert.equal(err.errorType, undefined);
+      assert.equal(err.errorId, undefined);
+      assert.equal(err.errorMessage, undefined);
+      assert.equal(err.errorUrl, undefined);
+      assert.equal(err.errorCode, 3);
+    });
+
+    test('a body that is not JSON leaves every field empty', async () => {
+      for (const body of ['Bad gateway', '', '{"error": {"type": "api_error"', Buffer.from([0xff, 0xfe, 0x00])]) {
+        server.reply(() => ({ status: 400, body }));
+        const err = await copyleaks.getCreditsBalanceAsync(TOKEN).catch((e) => e);
+        assert.ok(err instanceof CommandException, `got ${err && err.name}`);
+        assertNoEnvelope(err);
+      }
+    });
+
+    test('JSON without an error object leaves every field empty', async () => {
+      for (const body of [{ error: 'scanId is invalid' }, { message: 'nope' }, { error: null }, { error: ['invalid_request_error'] }, [FULL_ERROR], 42]) {
+        server.reply(() => ({ status: 400, body: typeof body === 'number' ? String(body) : body, headers: { 'content-type': 'application/json' } }));
+        const err = await copyleaks.getCreditsBalanceAsync(TOKEN).catch((e) => e);
+        assert.ok(err instanceof CommandException, `got ${err && err.name}`);
+        assertNoEnvelope(err);
+      }
+    });
+
+    test('malformed details keep only object entries and their string param and message', async () => {
+      server.reply(() => ({ status: 400, body: { error: { id: 'x', details: 'labels is wrong' } } }));
+      assert.deepEqual((await copyleaks.getCreditsBalanceAsync(TOKEN).catch((e) => e)).errorDetails, []);
+
+      server.reply(() => ({ status: 400, body: { error: { id: 'x', details: { param: 'labels' } } } }));
+      assert.deepEqual((await copyleaks.getCreditsBalanceAsync(TOKEN).catch((e) => e)).errorDetails, []);
+
+      server.reply(() => ({
+        status: 400,
+        body: { error: { id: 'x', details: [{ param: 'labels', message: 'bad' }, 'text', null, 3, ['a'], { param: 5, message: 'only message' }, {}] } },
+      }));
+      const err = await copyleaks.getCreditsBalanceAsync(TOKEN).catch((e) => e);
+      assert.deepEqual(err.errorDetails, [{ param: 'labels', message: 'bad' }, { message: 'only message' }, {}]);
+    });
+
+    test('a text response is parsed too', async () => {
+      server.reply(() => ({ status: 400, body: JSON.stringify(FULL_ERROR) }));
+      const err = await copyleaks.getUsagesHistoryCsvAsync(TOKEN, '01-01-2026', '02-01-2026').catch((e) => e);
+      assert.ok(err instanceof CommandException, `got ${err && err.name}`);
+      assert.equal(typeof err.body, 'string');
+      assert.equal(err.errorId, 'missing_parameter');
+      assert.equal(err.errorCode, 1);
+    });
+
+    test('an exception built without a response has no error fields', () => {
+      assertNoEnvelope(new CommandException('failed'));
+      assertNoEnvelope(new RateLimitException());
+      const direct = new CommandException({ status: 400, statusText: 'Bad Request', headers: {}, data: { error: { code: '9', details: [{ param: 'p' }] } } });
+      assert.equal(direct.errorCode, 9);
+      assert.deepEqual(direct.errorDetails, [{ param: 'p' }]);
+    });
+
+    test('CopyleaksErrorTypes lists the documented types', () => {
+      assert.deepEqual(CopyleaksErrorTypes, {
+        INVALID_REQUEST_ERROR: 'invalid_request_error',
+        AUTHENTICATION_ERROR: 'authentication_error',
+        PAYMENT_ERROR: 'payment_error',
+        API_ERROR: 'api_error',
+      });
+    });
   });
 
   describe('retries', () => {

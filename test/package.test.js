@@ -12,6 +12,7 @@ const NEW_PUBLIC_NAMES = [
   'CopyleaksAiImageDetectionFileRequestModel', 'CopyleaksAiVideoDetectionResponseModel', 'CopyleaksAiVideoDetectionModels',
   'CopyleaksAiImageDetectionMaskTypes', 'CopyleaksImagePlagiarismMatchTypes', 'InternalAIDataModel', 'ReferencesValidationModel',
   'MAX_TEXT_MODERATION_LABELS', 'CopyleaksApiException', 'CopyleaksRangesModel', 'CopyleaksAiImageDetectionBaseRequestModel',
+  'CopyleaksErrorTypes',
 ];
 
 describe('package', () => {

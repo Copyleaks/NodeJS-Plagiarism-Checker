@@ -23,6 +23,7 @@ import {
   CopyleaksAiImageDetectionRequestModel,
   CopyleaksAlertCodes,
   CopyleaksConfig,
+  CopyleaksErrorTypes,
   CopyleaksDeleteRequestModel,
   CopyleaksExportModel,
   CopyleaksFileOcrSubmissionModel,
@@ -45,6 +46,7 @@ import type {
   CopyleaksAiTextDetectionFileTypesResponseModel,
   CopyleaksCrossLanguagesResponseModel,
   CopyleaksErrorResponse,
+  ErrorDetailsModel,
   CopyleaksExportedOverviewModel,
   CopyleaksImagePlagiarismResponseModel,
   CopyleaksOptions,
@@ -167,8 +169,18 @@ export async function useEveryClient(): Promise<void> {
       const body: unknown = error.body;
       const response: CopyleaksErrorResponse | undefined = error.response;
       const statusFromResponse: number | undefined = error.response?.status;
+      const errorType: string | undefined = error.errorType;
+      const isInvalidRequest: boolean = error.errorType === CopyleaksErrorTypes.INVALID_REQUEST_ERROR;
+      const errorTypeConstant: Equal<typeof CopyleaksErrorTypes.PAYMENT_ERROR, 'payment_error'> = true;
+      const errorId: string | undefined = error.errorId;
+      const errorCode: number | undefined = error.errorCode;
+      const errorMessage: string | undefined = error.errorMessage;
+      const errorUrl: string | undefined = error.errorUrl;
+      const errorDetails: ErrorDetailsModel[] = error.errorDetails;
+      const errorParam: string | undefined = error.errorDetails[0]?.param;
     } else if (error instanceof RateLimitException) {
       const retryAfter: number | undefined = error.retryAfter;
+      const rateLimitErrorId: string | undefined = error.errorId;
     } else if (error instanceof UnderMaintenanceException) {
       const status: number | undefined = error.status;
     } else if (error instanceof NetworkException) {
