@@ -70,7 +70,7 @@ A request that charges credits, such as a scan, is never retried after a timeout
 Failed calls throw these exceptions. None of them contains your token:
 
 ```javascript
-const { CommandException, RateLimitException, UnderMaintenanceException, NetworkException } = require('copyleaks');
+const { CommandException, RateLimitException, UnderMaintenanceException, NetworkException, CopyleaksErrorTypes } = require('copyleaks');
 
 try {
   await copyleaks.getCreditsBalanceAsync(authToken);
@@ -81,6 +81,9 @@ try {
     console.log('Copyleaks is under maintenance, retry later');
   } else if (err instanceof CommandException) {
     console.log(`Rejected with HTTP ${err.status}:`, err.body); // 400, 401, 402, 403, 404, 409...
+    if (err.errorType === CopyleaksErrorTypes.PAYMENT_ERROR) {
+      console.log(`${err.errorId} (${err.errorCode}): ${err.errorMessage}`); // for example insufficient_credits
+    }
   } else if (err instanceof NetworkException) {
     console.log(err.isTimeout ? 'Timed out' : `Connection error ${err.code}`);
   } else {
@@ -88,6 +91,8 @@ try {
   }
 }
 ```
+
+When the API sends its error object, `{ "error": { "type", "id", "code", "message", "url", "details" } }`, all three API exceptions also have `errorType`, `errorId`, `errorCode`, `errorMessage`, `errorUrl` and `errorDetails` (a list of `{ param, message }`). They are `undefined` (and `errorDetails` is empty) when the server did not send them. `CopyleaksErrorTypes` lists the documented types: `invalid_request_error`, `authentication_error`, `payment_error` and `api_error`.
 
 ## 📚 Documentation
 To learn more about how to use Copyleaks API please check out our [Documentation](https://docs.copyleaks.com/resources/sdks/javascript/). 
