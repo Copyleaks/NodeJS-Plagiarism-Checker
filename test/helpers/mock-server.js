@@ -124,7 +124,7 @@ function guardNetwork(CopyleaksConfig) {
 
 /** Asserts the headers the SDK controls: User-Agent, Authorization and Content-Type. */
 function assertSdkHeaders(assert, req, { token, contentType }) {
-  assert.equal(req.headers['user-agent'], 'node-sdk/7.0.0', 'User-Agent');
+  assert.equal(req.headers['user-agent'], 'node-sdk/7.1.0', 'User-Agent');
   assert.equal(req.headers.authorization, token === undefined ? undefined : `Bearer ${token}`, 'Authorization');
   if (contentType === 'multipart') {
     assert.match(req.headers['content-type'] || '', /^multipart\/form-data; boundary=/, 'Content-Type');

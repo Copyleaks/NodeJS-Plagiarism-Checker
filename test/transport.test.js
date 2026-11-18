@@ -33,7 +33,7 @@ describe('transport', () => {
     const req = server.last;
     assert.equal(req.method, 'POST');
     assert.equal(req.url, '/v3/account/login/api');
-    assert.equal(req.headers['user-agent'], 'node-sdk/7.0.0');
+    assert.equal(req.headers['user-agent'], 'node-sdk/7.1.0');
     assert.equal(req.headers['content-type'], 'application/json');
     assert.equal(req.headers.authorization, undefined);
     assert.deepEqual(req.json, { email: 'user@example.com', key: 'api-key' });
