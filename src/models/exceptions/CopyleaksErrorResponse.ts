@@ -1,3 +1,5 @@
+import type { ErrorDetailsModel } from '../submissions/webhooks/helperModels/errorModels/errorModel.js';
+
 /**
  * The HTTP response of a failed Copyleaks API call, as carried by `CommandException`,
  * `RateLimitException` and `UnderMaintenanceException`.
@@ -79,6 +81,77 @@ function bodyAsText(data: unknown): string {
   } catch {
     return String(data);
   }
+}
+
+/**
+ * The `error` object of a Copyleaks API error response, as parsed by `parseErrorEnvelope`.
+ * @internal
+ */
+export interface ParsedErrorEnvelope {
+  type?: string;
+  id?: string;
+  code?: number;
+  message?: string;
+  url?: string;
+  details: ErrorDetailsModel[];
+}
+
+/**
+ * Reads the `{ "error": { type, id, code, message, url, details } }` envelope of an error response body.
+ * Returns undefined when the body is not a JSON object with an `error` object. Never throws.
+ * @internal
+ */
+export function parseErrorEnvelope(data: unknown): ParsedErrorEnvelope | undefined {
+  let body = data;
+  if (typeof body === 'string') {
+    try {
+      body = JSON.parse(body);
+    } catch {
+      return undefined;
+    }
+  }
+  if (!isJsonObject(body) || !isJsonObject(body.error)) {
+    return undefined;
+  }
+  const error = body.error;
+  return {
+    type: stringOrUndefined(error.type),
+    id: stringOrUndefined(error.id),
+    code: integerOrUndefined(error.code),
+    message: stringOrUndefined(error.message),
+    url: stringOrUndefined(error.url),
+    details: Array.isArray(error.details)
+      ? error.details.filter(isJsonObject).map((entry) => {
+        const detail: ErrorDetailsModel = {};
+        if (typeof entry.param === 'string') {
+          detail.param = entry.param;
+        }
+        if (typeof entry.message === 'string') {
+          detail.message = entry.message;
+        }
+        return detail;
+      })
+      : [],
+  };
+}
+
+function isJsonObject(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null && !Array.isArray(value);
+}
+
+function stringOrUndefined(value: unknown): string | undefined {
+  return typeof value === 'string' ? value : undefined;
+}
+
+function integerOrUndefined(value: unknown): number | undefined {
+  if (typeof value === 'number') {
+    return Number.isSafeInteger(value) ? value : undefined;
+  }
+  if (typeof value === 'string' && /^\s*[+-]?\d+\s*$/.test(value)) {
+    const parsed = Number(value);
+    return Number.isSafeInteger(parsed) ? parsed : undefined;
+  }
+  return undefined;
 }
 
 /**

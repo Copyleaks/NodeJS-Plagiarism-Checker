@@ -5,3 +5,4 @@ export * from './CopyleaksAlertCodes.js';
 export * from './CopyleaksAiVideoDetectionModels.js';
 export * from './CopyleaksAiImageDetectionMaskTypes.js';
 export * from './CopyleaksImagePlagiarismMatchTypes.js';
+export * from './CopyleaksErrorTypes.js';

@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+### Added
+
+- `CommandException`, `RateLimitException` and `UnderMaintenanceException` (through their base `CopyleaksApiException`) read the error object of the response, `{ "error": { "type", "id", "code", "message", "url", "details" } }`, into `errorType`, `errorId`, `errorCode`, `errorMessage`, `errorUrl` and `errorDetails`. A field the server did not send is `undefined`, and `errorDetails` is then empty. `errorCode` also accepts a numeric string. The message, `status`, `body`, `response` and retries do not change.
+- `CopyleaksErrorTypes`: constants for the documented error types `invalid_request_error`, `authentication_error`, `payment_error` and `api_error`.
+
 ### Fixed
 
 - `WritingAssistantClient.getCorrectionTypesAsync` no longer needs a login token, because the correction types endpoint is public. Call it with only the language code, for example `getCorrectionTypesAsync('en')`, or pass `undefined` as the token. Without a token, no `Authorization` header is sent. Calls that pass a token work as before and still send it, but the SDK no longer checks its expiry first, so an expired token no longer throws `AuthExipredException` for this method.
