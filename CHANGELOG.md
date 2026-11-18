@@ -9,7 +9,7 @@
 
 ### Fixed
 
-- `WritingAssistantClient.getCorrectionTypesAsync` no longer needs a login token, because the correction types endpoint is public. Call it with only the language code, for example `getCorrectionTypesAsync('en')`, or pass `undefined` as the token. Without a token, no `Authorization` header is sent. Calls that pass a token work as before and still send it, but the SDK no longer checks its expiry first, so an expired token no longer throws `AuthExipredException` for this method.
+- `WritingAssistantClient.getCorrectionTypesAsync` no longer needs a login token, because the correction types endpoint is public. Call it with only the language code, for example `getCorrectionTypesAsync('en')`, or pass `undefined` as the token. Without a token, no `Authorization` header is sent. Calls that pass a token work exactly as before: the token is checked (an expired one throws `AuthExipredException`) and sent.
 
 ## 7.0.0
 

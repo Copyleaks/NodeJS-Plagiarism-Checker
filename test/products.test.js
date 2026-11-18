@@ -11,7 +11,7 @@ const {
   CopyleaksAiImageDetectionRequestModel, CopyleaksAiImageDetectionFileRequestModel, CopyleaksAiImageDetectionAsyncRequestModel,
   CopyleaksAiImageDetectionResponseModel, CopyleaksAiImageDetectionModels, CopyleaksAiImageDetectionMaskTypes,
   CopyleaksImagePlagiarismRequestModel, CopyleaksAiVideoDetectionRequestModel, CopyleaksAiVideoDetectionModels,
-  CopyleaksTextModerationResponseModel, MAX_TEXT_MODERATION_LABELS,
+  CopyleaksTextModerationResponseModel, MAX_TEXT_MODERATION_LABELS, AuthExipredException,
 } = sdk;
 
 guardNetwork(CopyleaksConfig);
@@ -97,7 +97,7 @@ describe('products', () => {
       assertSdkHeaders(assert, req, { token: TOKEN.access_token, contentType: undefined });
     });
 
-    test('getCorrectionTypesAsync is public: no token sends no Authorization header, an expired token is not checked', async () => {
+    test('getCorrectionTypesAsync is public: no token sends no Authorization header', async () => {
       server.reply(() => ({ body: { correctionTypes: [] } }));
       const client = copyleaks.writingAssistantClient;
       assert.deepEqual(await client.getCorrectionTypesAsync('en'), { correctionTypes: [] });
@@ -107,11 +107,12 @@ describe('products', () => {
       await client.getCorrectionTypesAsync(undefined, 'en');
       assert.equal(server.last.url, '/v1/writing-feedback/correction-types/en');
       assertSdkHeaders(assert, server.last, { token: undefined, contentType: undefined });
+    });
 
+    test('getCorrectionTypesAsync with an expired token throws AuthExipredException before any request, as before', async () => {
       const expired = { access_token: 'expired-token', '.issued': '', '.expires': new Date(0).toISOString() };
-      await client.getCorrectionTypesAsync(expired, 'en');
-      assert.equal(server.last.url, '/v1/writing-feedback/correction-types/en');
-      assertSdkHeaders(assert, server.last, { token: 'expired-token', contentType: undefined });
+      await assert.rejects(copyleaks.writingAssistantClient.getCorrectionTypesAsync(expired, 'en'), AuthExipredException);
+      assert.equal(server.requests.length, 0);
     });
 
     test('getCorrectionTypesAsync never puts a string passed as the token in the URL', async () => {

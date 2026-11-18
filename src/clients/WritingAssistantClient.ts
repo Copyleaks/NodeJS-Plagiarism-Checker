@@ -40,7 +40,8 @@ export class WritingAssistantClient {
     /**
      * Correction types of the Grammar Checker. They apply to all supported languages.
      * For more info: https://docs.copyleaks.com/reference/actions/writing-assistant/correction-types
-     * @param authToken Optional, the endpoint is public. When set, it is sent as the `Authorization` header and its expiry is not checked.
+     * @param authToken Optional, the endpoint is public. When set, it is checked like in every other method (an expired token throws
+     * `AuthExipredException`) and sent as the `Authorization` header.
      * @param languageCode Language of the returned texts.
      */
     public getCorrectionTypesAsync(authToken: CopyleaksAuthToken | undefined, languageCode: string): Promise<CopyleaksCorrectionTypesResponseModel>;
@@ -52,6 +53,10 @@ export class WritingAssistantClient {
         const authToken = typeof authTokenOrLanguageCode === 'object' ? authTokenOrLanguageCode : undefined;
         if (!language) {
             throw new TypeError('languageCode is required');
+        }
+        // A token that is passed is checked as before, so callers that pass one see no change
+        if (authToken) {
+            ClientUtils.verifyAuthToken(authToken);
         }
         const response = await this.http.request<CopyleaksCorrectionTypesResponseModel>({
             method: 'GET',
